@@ -1,6 +1,30 @@
 form{
+    padding-block: 8px;
     display: grid;
-    gap: 6px;
+    gap: 8px;
+
+    &[columns="1"]{
+        grid-template-columns: 1fr;
+    }
+
+    > header{
+        padding-block: 0 2px;
+        display: flex;
+        flex-flow: column wrap;
+        gap: 2px;
+
+        > p{
+            font: var(--font-size-xs)/1.2 var(--font-family-semibold);
+        }
+
+        > h2{
+            font: var(--font-size-h6)/1.2 var(--font-family-bold);
+        }
+    }
+
+    > fieldset{
+        inline-size: 100%;
+    }
 }
 
 fieldset{
@@ -8,10 +32,15 @@ fieldset{
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    gap: 8px;
+    gap: 4px 8px;
 
     > hr {
         flex-grow: 1;
         border: none;
+    }
+
+    > label{
+        font: var(--font-size-xs)/1.2 var(--font-family-semibold);
+        inline-size: 100%;
     }
 }

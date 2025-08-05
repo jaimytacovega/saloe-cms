@@ -43,5 +43,13 @@ main > container.WorkStation__container {
         display: flex;
         flex-flow: column wrap;
         flex-grow: 1;
+        
+        display: none;
+    }
+
+    > .WorkStation__form{
+        border-top: 1px solid var(--color-gray-3);
+        padding-inline: 16px;
+        padding-block: 2px 0;
     }
 }

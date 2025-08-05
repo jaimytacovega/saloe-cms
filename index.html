@@ -230,14 +230,54 @@
                   </td>
                 </tr>
               </tbody>
-              <tfoot>
-                <tr>
-                  <td colspan="2">
-                    <button class="Button PrimaryButton PrimaryBlue">Crear</button>
-                  </td>
-                </tr>
-              </tfoot>
             </table>
+          </div>
+          <div class="WorkStation__form">
+            <form columns="1">
+              <header>
+                <p>CATEGORÍA</p>
+                <h2>CAT-001</h2>
+              </header>
+              <fieldset>
+                <label for="name">Nombre</label>
+                <input type="text" id="name" placeholder="Nombre de la categoría"/>
+              </fieldset>
+              <fieldset>
+                <label for="description">Descripción (opcional)</label>
+                <textarea id="description" placeholder="Descripción de la categoría"></textarea>
+              </fieldset>
+              <fieldset>
+                <label for="image">Imagen</label>
+                <input type="file" id="image" name="image" accept="image/*"/>
+                <div class="InputFile__decorator">
+                  <div class="InputFile__decorator__thumbnail">
+                    <img loading="lazy" src="/img/icon/image-black.svg" width="24" height="24" alt="image">
+                  </div>
+                  <div class="InputFile__decorator__label">
+                    <span>Sube una imagen</span>
+                    <span>JPG, PNG o WEBP</span>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <label for="select">Select</label>
+                <select id="select">
+                  <option disabled selected>Selecciona una opción</option>
+                  <option value="1">Opción 1</option>
+                  <option value="2">Opción 2</option>
+                  <option value="3">Opción 3</option>
+                </select>
+              </fieldset>
+              <fieldset>
+                <label for="select-multiple">Select múltiple</label>
+                <select id="select-multiple" multiple>
+                  <option disabled selected>Selecciona una o más opciones</option>
+                  <option value="1">Opción 1</option>
+                  <option value="2">Opción 2</option>
+                  <option value="3">Opción 3</option>
+                </select>
+              </fieldset>
+            </form>
           </div>
         </section>
       </container>
