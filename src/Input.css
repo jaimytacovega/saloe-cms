@@ -1,0 +1,36 @@
+input{
+    font: var(--font-size-p)/1.2 var(--font-family-regular);
+    padding-inline: 12px;
+    padding-block: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--color-gray-2);
+    color: var(--color-gray-1);
+    outline: none;
+    background: none;
+}
+
+fieldset:has(> input[type="search"]){
+    border: 1px solid var(--color-gray-2);
+    border-radius: 8px;
+    padding-inline: 12px;
+
+    > input[type="search"]{
+        padding-inline: 0;
+        padding-block: 10px;
+        border: none;
+    }
+}
+
+fieldset:has(> input[type="search"]:focus){
+    outline: 1px solid var(--color-blue);
+    border: 1px solid var(--color-blue);
+    
+    > input[type="search"]{
+        flex-grow: 1;
+
+        &:focus{
+            outline: none;
+            border: none;
+        }
+    }
+}

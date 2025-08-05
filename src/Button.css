@@ -1,0 +1,21 @@
+.Button{
+    display: flex;
+    flex-flow: row wrap;
+
+    &.PrimaryButton{
+        font-family: var(--font-family-semibold);
+        border-radius: 8px;
+        padding-inline: 12px;
+        padding-block: 8px;
+
+        &.PrimaryGray{
+            background: var(--color-gray-3);
+            color: var(--color-gray-1);
+        }
+
+        &.PrimaryBlue{
+            background: var(--color-blue);
+            color: var(--color-white);
+        }
+    }
+}

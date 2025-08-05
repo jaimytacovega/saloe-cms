@@ -1,0 +1,50 @@
+table{
+    padding-block: 8px;
+    inline-size: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-flow: column wrap;
+    gap: 8px;
+    flex-grow: 1;
+
+    > tbody{
+        overflow-y: auto;
+        block-size: 1px;
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 2px;
+        flex-grow: 1;
+
+        > tr{
+            display: flex;
+
+            > td{
+                inline-size: 100%;
+            }
+        }
+    }
+}
+
+.Row{
+    inline-size: 100%;
+    padding-inline: 12px;
+    padding-block: 12px;
+    display: flex;
+    flex-flow: column wrap;
+    gap: 4px;
+    border-radius: 8px;
+    transition: background .3s ease;
+
+    &:is(:hover, [toggled]){
+        background: var(--color-gray-3);
+    }
+
+    > span{
+        color: var(--color-gray-1);
+
+        &:first-child{
+            font-family: var(--font-family-medium);
+            color: var(--color-black);
+        }
+    }
+}

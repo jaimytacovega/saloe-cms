@@ -1,0 +1,15 @@
+container.TopMenu__container{
+
+}
+
+.TopMenu{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-between;
+
+    > p{
+        font-family: var(--font-family-semibold);
+        color: var(--color-black);
+    }
+}
