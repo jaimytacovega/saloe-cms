@@ -85,6 +85,20 @@ select {
     &:has(option:checked:disabled) {
         color: var(--color-gray-1);
     }
+
+    &[multiple]{
+        display: none;
+
+        /* @media (pointer: fine) {
+            display: none;
+        }
+
+        & + select{
+            @media (pointer: coarse) {
+                display: none;
+            }
+        } */
+    }
 }
 
 fieldset:has(> input[type="search"]){

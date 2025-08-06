@@ -238,7 +238,7 @@
                 <p>CATEGORÍA</p>
                 <h2>CAT-001</h2>
               </header>
-              <fieldset>
+              <!-- <fieldset>
                 <label for="name">Nombre</label>
                 <input type="text" id="name" placeholder="Nombre de la categoría"/>
               </fieldset>
@@ -267,15 +267,32 @@
                   <option value="2">Opción 2</option>
                   <option value="3">Opción 3</option>
                 </select>
-              </fieldset>
+              </fieldset> -->
               <fieldset>
-                <label for="select-multiple">Select múltiple</label>
+                <label for="select-multiple__selector">Select múltiple</label>
                 <select id="select-multiple" multiple>
+                  <optgroup label="Selecciona una o más opciones">
+                    <option value="1">Opción 1</option>
+                    <option value="2">Opción 2</option>
+                    <option value="3">Opción 3</option>
+                  </optgroup>
+                </select>
+                <select id="select-multiple__selector">
                   <option disabled selected>Selecciona una o más opciones</option>
                   <option value="1">Opción 1</option>
                   <option value="2">Opción 2</option>
                   <option value="3">Opción 3</option>
                 </select>
+                <fieldset id="select-multiple__options">
+                  <!-- <button class="Button PrimaryButton PrimaryGray">
+                    <span>Opción 1</span>
+                    <img loading="lazy" src="/img/icon/close-gray-1.svg" width="16" height="16" alt="remove">
+                  </button>
+                  <button class="Button PrimaryButton PrimaryGray">
+                    <span>Opción 2</span>
+                    <img loading="lazy" src="/img/icon/close-gray-1.svg" width="16" height="16" alt="remove">
+                  </button> -->
+                </fieldset>
               </fieldset>
             </form>
           </div>
