@@ -1,11 +1,9 @@
 form{
     padding-block: 8px;
-    display: grid;
+    overflow-y: hidden;
+    display: flex;
+    flex-flow: column wrap;
     gap: 8px;
-
-    &[columns="1"]{
-        grid-template-columns: 1fr;
-    }
 
     > header{
         padding-block: 0 2px;
@@ -22,12 +20,32 @@ form{
         }
     }
 
-    > fieldset{
+    :is(fieldset, inputgroup){
         inline-size: 100%;
+    }
+
+    > .form__scroller{
+        inline-size: 100%;
+        overflow-y: auto;
+        block-size: 1px;
+        flex-grow: 1;
     }
 }
 
+
+
 fieldset{
+    border: none;
+    overflow-y: auto;
+    display: grid;
+    gap: 8px;
+
+    &[columns="1"]{
+        grid-template-columns: 1fr;
+    }
+}
+
+inputgroup{
     border: none;
     display: flex;
     flex-flow: row wrap;

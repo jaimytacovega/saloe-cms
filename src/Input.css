@@ -101,7 +101,7 @@ select {
     }
 }
 
-fieldset:has(> input[type="search"]){
+inputgroup:has(> input[type="search"]){
     border: 1px solid var(--color-gray-2);
     border-radius: 8px;
     padding-inline: 12px;
@@ -114,7 +114,7 @@ fieldset:has(> input[type="search"]){
     }
 }
 
-fieldset:has(> input[type="search"]:focus){
+inputgroup:has(> input[type="search"]:focus){
     outline: 1px solid var(--color-blue);
     border: 1px solid var(--color-blue);
     

@@ -33,17 +33,17 @@
           </header>
           <div class="WorkStation__toolbox">
             <form>
-              <fieldset>
+              <inputgroup>
                 <img loading="lazy" src="/img/icon/search-black.svg" width="16" height="16" alt="search">
                 <input type="search" placeholder="Buscar"/>
-              </fieldset>
-              <fieldset>
+              </inputgroup>
+              <inputgroup>
                 <button class="Button PrimaryButton PrimaryGray">Filtrar</button>
                 <button class="Button PrimaryButton PrimaryGray">Ir a</button>
                 <button class="Button PrimaryButton PrimaryGray">Ordenar</button>
                 <hr>
                 <button class="Button PrimaryButton PrimaryBlue">Crear</button>
-              </fieldset>
+              </inputgroup>
             </form>
           </div>
           <div class="WorkStation__table">
@@ -233,67 +233,70 @@
             </table>
           </div>
           <div class="WorkStation__form">
-            <form columns="1">
+            <form>
               <header>
                 <p>CATEGORÍA</p>
                 <h2>CAT-001</h2>
               </header>
-              <!-- <fieldset>
-                <label for="name">Nombre</label>
-                <input type="text" id="name" placeholder="Nombre de la categoría"/>
-              </fieldset>
-              <fieldset>
-                <label for="description">Descripción (opcional)</label>
-                <textarea id="description" placeholder="Descripción de la categoría"></textarea>
-              </fieldset>
-              <fieldset>
-                <label for="image">Imagen</label>
-                <input type="file" id="image" name="image" accept="image/*"/>
-                <div class="InputFile__decorator">
-                  <div class="InputFile__decorator__thumbnail">
-                    <img loading="lazy" src="/img/icon/image-black.svg" width="24" height="24" alt="image">
-                  </div>
-                  <div class="InputFile__decorator__label">
-                    <span>Sube una imagen</span>
-                    <span>JPG, PNG o WEBP</span>
-                  </div>
-                </div>
-              </fieldset>
-              <fieldset>
-                <label for="select">Select</label>
-                <select id="select">
-                  <option disabled selected>Selecciona una opción</option>
-                  <option value="1">Opción 1</option>
-                  <option value="2">Opción 2</option>
-                  <option value="3">Opción 3</option>
-                </select>
-              </fieldset> -->
-              <fieldset>
-                <label for="select-multiple__selector">Select múltiple</label>
-                <select id="select-multiple" multiple>
-                  <optgroup label="Selecciona una o más opciones">
-                    <option value="1">Opción 1</option>
-                    <option value="2">Opción 2</option>
-                    <option value="3">Opción 3</option>
-                  </optgroup>
-                </select>
-                <select id="select-multiple__selector">
-                  <option disabled selected>Selecciona una o más opciones</option>
-                  <option value="1">Opción 1</option>
-                  <option value="2">Opción 2</option>
-                  <option value="3">Opción 3</option>
-                </select>
-                <fieldset id="select-multiple__options">
-                  <!-- <button class="Button PrimaryButton PrimaryGray">
-                    <span>Opción 1</span>
-                    <img loading="lazy" src="/img/icon/close-gray-1.svg" width="16" height="16" alt="remove">
-                  </button>
-                  <button class="Button PrimaryButton PrimaryGray">
-                    <span>Opción 2</span>
-                    <img loading="lazy" src="/img/icon/close-gray-1.svg" width="16" height="16" alt="remove">
-                  </button> -->
+              <div class="form__scroller">
+                <fieldset columns="1">
+                  <inputgroup>
+                    <label for="name">Nombre</label>
+                    <input type="text" id="name" placeholder="Nombre de la categoría"/>
+                  </inputgroup>
+                  <inputgroup>
+                    <label for="description">Descripción (opcional)</label>
+                    <textarea id="description" placeholder="Descripción de la categoría"></textarea>
+                  </inputgroup>
+                  <inputgroup>
+                    <label for="image">Imagen</label>
+                    <input type="file" id="image" name="image" accept="image/*"/>
+                    <div class="InputFile__decorator">
+                      <div class="InputFile__decorator__thumbnail">
+                        <img loading="lazy" src="/img/icon/image-black.svg" width="24" height="24" alt="image">
+                      </div>
+                      <div class="InputFile__decorator__label">
+                        <span>Sube una imagen</span>
+                        <span>JPG, PNG o WEBP</span>
+                      </div>
+                    </div>
+                  </inputgroup>
+                  
+                  <inputgroup>
+                    <label for="select">Select</label>
+                    <select id="select">
+                      <option disabled selected>Selecciona una opción</option>
+                      <option value="1">Opción 1</option>
+                      <option value="2">Opción 2</option>
+                      <option value="3">Opción 3</option>
+                    </select>
+                  </inputgroup>
+                  <inputgroup>
+                    <label for="select-multiple__selector">Select múltiple</label>
+                    <select id="select-multiple" multiple>
+                      <optgroup label="Selecciona una o más opciones">
+                        <option value="1">Opción 1</option>
+                        <option value="2">Opción 2</option>
+                        <option value="3">Opción 3</option>
+                      </optgroup>
+                    </select>
+                    <select id="select-multiple__selector">
+                      <option disabled selected>Selecciona una o más opciones</option>
+                      <option value="1">Opción 1</option>
+                      <option value="2">Opción 2</option>
+                      <option value="3">Opción 3</option>
+                    </select>
+                    <inputgroup id="select-multiple__options"></inputgroup>
+                  </inputgroup>
                 </fieldset>
-              </fieldset>
+              </div>
+              <inputgroup>
+                <button class="Button PrimaryButton PrimaryGray">Filtrar</button>
+                <button class="Button PrimaryButton PrimaryGray">Ir a</button>
+                <button class="Button PrimaryButton PrimaryGray">Ordenar</button>
+                <hr>
+                <button class="Button PrimaryButton PrimaryBlue">Crear</button>
+              </inputgroup>
             </form>
           </div>
         </section>
