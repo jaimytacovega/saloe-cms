@@ -1,50 +1,74 @@
-form{
+form {
     padding-block: 8px;
     overflow-y: hidden;
     display: flex;
     flex-flow: column wrap;
     gap: 8px;
 
-    > header{
+    >header {
         padding-block: 0 2px;
         display: flex;
         flex-flow: column wrap;
         gap: 2px;
 
-        > p{
+        >p {
             font: var(--font-size-xs)/1.2 var(--font-family-semibold);
         }
 
-        > h2{
+        >h2 {
             font: var(--font-size-h6)/1.2 var(--font-family-bold);
         }
     }
 
-    :is(fieldset, inputgroup){
+    :is(fieldset, inputgroup) {
         inline-size: 100%;
     }
 
-    > .form__scroller{
+    >.form__scroller {
         inline-size: 100%;
-        overflow-y: auto;
+        overflow-y: scroll;
+        scrollbar-gutter: stable;
+        padding-inline: 0 16px;
         block-size: 1px;
         padding-block: 0 64px;
         flex-grow: 1;
+
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background-color: var(--color-gray-4);
+            border-radius: 5px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: var(--color-gray-2);
+            border-radius: 5px;
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+            background-color: var(--color-gray-1);
+        }
+
+        &::-webkit-scrollbar-corner {
+            background-color: var(--color-gray-2);
+        }
     }
 }
 
-fieldset{
+fieldset {
     border: none;
     overflow-y: auto;
     display: grid;
     gap: 8px;
 
-    &[columns="1"]{
+    &[columns="1"] {
         grid-template-columns: 1fr;
     }
 }
 
-inputgroup{
+inputgroup {
     position: relative;
     border: none;
     display: flex;
@@ -52,12 +76,12 @@ inputgroup{
     align-items: center;
     gap: 4px 8px;
 
-    > hr {
+    >hr {
         flex-grow: 1;
         border: none;
     }
 
-    > label{
+    >label {
         font: var(--font-size-xs)/1.2 var(--font-family-semibold);
         inline-size: 100%;
     }
