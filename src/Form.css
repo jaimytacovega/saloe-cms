@@ -38,22 +38,22 @@ form {
         }
 
         &::-webkit-scrollbar-track {
-            background-color: var(--color-gray-4);
+            background: var(--color-gray-4);
             border-radius: 5px;
         }
 
         &::-webkit-scrollbar-thumb {
-            background-color: var(--color-gray-2);
+            background: var(--color-gray-2);
             border-radius: 5px;
+            transition: all .3s ease;
         }
 
-        &::-webkit-scrollbar-thumb:hover {
-            background-color: var(--color-gray-1);
-            trans
+        &::-webkit-scrollbar-thumb:hover{
+            background: var(--color-gray-1);
         }
 
         &::-webkit-scrollbar-corner {
-            background-color: var(--color-gray-2);
+            background: var(--color-gray-2);
         }
     }
 }
