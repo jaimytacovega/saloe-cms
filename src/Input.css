@@ -21,10 +21,8 @@
     &[type="file"]{
         position: absolute;
         opacity: 0;
-        width: 0;
-        height: 0;
-        pointer-events: none;
-        z-index: -1;
+        inline-size: 100%;
+        block-size: 100%;
 
         &:focus{
             & + .InputFile__decorator{

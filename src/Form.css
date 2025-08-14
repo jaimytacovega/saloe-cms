@@ -28,11 +28,10 @@ form{
         inline-size: 100%;
         overflow-y: auto;
         block-size: 1px;
+        padding-block: 0 64px;
         flex-grow: 1;
     }
 }
-
-
 
 fieldset{
     border: none;
@@ -46,6 +45,7 @@ fieldset{
 }
 
 inputgroup{
+    position: relative;
     border: none;
     display: flex;
     flex-flow: row wrap;
