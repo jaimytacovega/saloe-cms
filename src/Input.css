@@ -14,8 +14,8 @@
     }
 
     &:focus{
-        outline: 1px solid var(--color-blue);
-        border: 1px solid var(--color-blue);
+        outline: 2px solid var(--color-blue);
+        outline-offset: -2px;
     }
 
     &[type="file"]{
@@ -26,8 +26,8 @@
 
         &:focus{
             & + .InputFile__decorator{
-                outline: 1px solid var(--color-blue);
-                border: 1px solid var(--color-blue);
+                outline: 2px solid var(--color-blue);
+                outline-offset: -2px;
             }
         }
 
@@ -113,8 +113,8 @@ inputgroup:has(> input[type="search"]){
 }
 
 inputgroup:has(> input[type="search"]:focus){
-    outline: 1px solid var(--color-blue);
-    border: 1px solid var(--color-blue);
+    outline: 2px solid var(--color-blue);
+    outline-offset: -2px;
     
     > input[type="search"]{
         flex-grow: 1;
