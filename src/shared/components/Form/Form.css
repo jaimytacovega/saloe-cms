@@ -32,29 +32,6 @@ form {
         block-size: 1px;
         padding-block: 0 64px;
         flex-grow: 1;
-
-        &::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        &::-webkit-scrollbar-track {
-            background: var(--color-gray-4);
-            border-radius: 5px;
-        }
-
-        &::-webkit-scrollbar-thumb {
-            background: var(--color-gray-2);
-            border-radius: 5px;
-            transition: all .3s ease;
-        }
-
-        &::-webkit-scrollbar-thumb:hover{
-            background: var(--color-gray-1);
-        }
-
-        &::-webkit-scrollbar-corner {
-            background: var(--color-gray-2);
-        }
     }
 }
 

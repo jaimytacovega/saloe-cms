@@ -4,11 +4,25 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "watch:dev": "ENV=dev vite build --watch",
+    "watch:qa": "ENV=qa vite build --watch",
+    "watch:prod": "ENV=prod vite build --watch",
+    "build:dev": "ENV=dev vite build",
+    "build:qa": "ENV=qa vite build",
+    "build:prod": "ENV=prod vite build",
+    "local:dev": "wrangler dev --env=dev --config wrangler.toml",
+    "local:qa": "wrangler dev --env=qa --config wrangler.toml",
+    "local:prod": "wrangler dev --env=prod --config wrangler.toml",
     "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
     "vite": "^5.0.0"
+  },
+  "dependencies": {
+    "@cloudflare/kv-asset-handler": "^0.4.0",
+    "saloe": "^0.0.89",
+    "vite-jsconfig-paths": "^2.0.1"
   }
-} 
+}

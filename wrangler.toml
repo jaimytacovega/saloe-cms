@@ -1,0 +1,38 @@
+name = "compy"
+main = "src/workers/cloudflare/CloudflareWorker.js"
+compatibility_date = "2023-10-30"
+
+minify = false
+
+[site]
+bucket = "./dist"
+
+[env.dev.vars]
+IS_CLOUDFLARE_WORKER = true
+APP_NAME = "saloe-cms"
+ENV = "dev"
+
+[env.qa.vars]
+IS_CLOUDFLARE_WORKER = true
+APP_NAME = "saloe-cms"
+ENV = "qa"
+
+[env.prod.vars]
+IS_CLOUDFLARE_WORKER = true
+APP_NAME = "saloe-cms"
+ENV = "prod"
+
+# [env.dev]
+# kv_namespaces = [
+#     { binding = "KV_API_CACHE", id = "1e57f8c64f8f4060968574b32dad4f34", preview_id = "f150eb8a194b444ebe4058114b9969ce" },
+# ]
+
+# [env.qa]
+# kv_namespaces = [
+#     { binding = "KV_API_CACHE", id = "1e57f8c64f8f4060968574b32dad4f34", preview_id = "f150eb8a194b444ebe4058114b9969ce" },
+# ]
+
+# [env.prod]
+# kv_namespaces = [
+#     { binding = "KV_API_CACHE", id = "1e57f8c64f8f4060968574b32dad4f34", preview_id = "f150eb8a194b444ebe4058114b9969ce" },
+# ]
