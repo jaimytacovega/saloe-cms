@@ -8,12 +8,7 @@ const page = async ({
     request, 
     env, 
     cookies,
-    urlPattern,
 }) => {
-    const url = new URL(request?.url)
-    const match = urlPattern?.exec(url?.href)
-    const categoryId = match?.pathname?.groups?.id
-
     return stream({
         head: () => html`
             <meta charset="UTF-8" />
@@ -34,7 +29,7 @@ const page = async ({
         body: async () => html`
             ${
                 await CategoryPage({
-                    categoryId,
+                    categoryId: 'new',
                 })
             }
         `,

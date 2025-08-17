@@ -1,12 +1,18 @@
 import { html } from 'saloe/html'
 
-import { DUMMY_CATEGORIES } from '@/features/cms/features/Category/utils/constants'
+import * as CategoryRepository from '@/shared/repositories/CategoryRepository'
+import { Source } from '@/shared/utils/constants'
 
 
-const CategoryForm = ({
+const CategoryForm = async ({
     categoryId,
 }) => {
-    const category = DUMMY_CATEGORIES.find((category) => category.id === categoryId)
+    const { data: categories } = await CategoryRepository.list({
+        source: Source.FIREBASE,
+        pageSize: 1,
+    })
+
+    const category = categories.find((category) => category?.id === categoryId)
 
     return html`
         <form>

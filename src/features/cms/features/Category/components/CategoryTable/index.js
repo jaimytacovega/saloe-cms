@@ -15,7 +15,7 @@ const CategoryTableRow = ({
     toggled,
 }) => {
     return html`
-        <a href="/categorias/${id}" class="Row" ${toggled ? 'toggled' : ''}>
+        <a href="/cms/categorias/${id}" class="Row" ${toggled ? 'toggled' : ''}>
             <span>${name}</span>
             <span>${code}</span>
             <span>${updatedAt ?? createdAt}</span>

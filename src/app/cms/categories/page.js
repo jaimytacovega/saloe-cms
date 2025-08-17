@@ -1,9 +1,6 @@
 import { html, stream } from 'saloe/html'
 
-import CategoryWorkStation from '@/features/cms/features/Category/components/CategoryWorkStation'
-
-import TopMenu from '@/shared/components/TopMenu'
-import { COMPANY_NAME } from '@/shared/utils/constants'
+import CategoryPage from '@/features/cms/features/Category/components/CategoryPage'
 
 
 const page = async ({ 
@@ -29,18 +26,9 @@ const page = async ({
             <link rel="stylesheet" href="/WorkStation.css">
         `,
         body: async () => html`
-            <main>
-                ${
-                    TopMenu({
-                        companyName: COMPANY_NAME,
-                    })
-                }
-                ${
-                    await CategoryWorkStation({
-                        // categoryId: 'new',
-                    })
-                }
-            </main>
+            ${
+                await CategoryPage()
+            }
         `,
         scripts: () => html``,
         env,

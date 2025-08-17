@@ -42,7 +42,11 @@ main > container.WorkStation__container {
         padding-block: 2px 0;
         display: flex;
         flex-flow: column wrap;
-        flex-grow: 1;        
+        flex-grow: 1;  
+        
+        &:has(~ .WorkStation__form){
+            display: none;
+        }
     }
 
     > .WorkStation__form{

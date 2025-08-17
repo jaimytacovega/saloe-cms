@@ -38,7 +38,7 @@ const CategoryWorkStation = async ({
                 form: Boolean(categoryId)
                     ? html`
                         ${
-                            CategoryForm({
+                            await CategoryForm({
                                 categoryId,
                             })
                         }
