@@ -12,7 +12,7 @@ const page = async ({
     cookies,
 }) => {
     return stream({
-        head: () =>html`
+        head: () => html`
             <meta charset="UTF-8" />
             <link rel="icon" type="image/svg+xml" href="/vite.svg" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -28,7 +28,7 @@ const page = async ({
             <link rel="stylesheet" href="/TopMenu.css">
             <link rel="stylesheet" href="/WorkStation.css">
         `,
-        body: () => html`
+        body: async () => html`
             <main>
                 ${
                     TopMenu({
@@ -36,7 +36,7 @@ const page = async ({
                     })
                 }
                 ${
-                    CategoryWorkStation({
+                    await CategoryWorkStation({
                         // categoryId: 'new',
                     })
                 }

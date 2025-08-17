@@ -6,7 +6,7 @@ import CategoryForm from '@/features/cms/features/Category/components/CategoryFo
 import WorkStation from '@/shared/components/WorkStation'
 
 
-const CategoryWorkStation = ({
+const CategoryWorkStation = async ({
     categoryId,
 }) => {
     return html`
@@ -32,7 +32,7 @@ const CategoryWorkStation = ({
                 `,
                 table: html`
                     ${
-                        CategoryTable()
+                        await CategoryTable()
                     }
                 `,
                 form: Boolean(categoryId)
