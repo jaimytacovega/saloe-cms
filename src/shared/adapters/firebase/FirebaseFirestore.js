@@ -72,6 +72,37 @@ const list = async ({
     }
 }
 
+const get = async ({
+    collectionName,
+    id,
+}) => {
+    try {
+        const docRef = await getDoc(doc(firestore, collectionName, id))
+        const data = {
+            id: docRef.id,
+            ...formatDoc({ data: docRef.data() })
+        }
+        return { data }
+    } catch (err) {
+        return { err }
+    }
+}
+
+const add = async ({ collectionName, docData }) => {
+    const { id, ...data } = docData
+    try {
+        const docRef = await addDoc(collection(firestore, collectionName), formatDocForDB({ doc: data }))
+        return {
+            data: {
+                id: docRef.id,
+                ...data,
+            }
+        }
+    } catch (err) {
+        return { err }
+    }
+}
+
 const formatDoc = ({ data }) => {
     for (const key of Object.keys(data))
         if (isTimestamp({ timestamp: data[key] }))
@@ -79,13 +110,25 @@ const formatDoc = ({ data }) => {
     return data
 }
 
+const formatDocForDB = ({ doc }) => {
+    const { id, ...data } = doc
+    for (const key of Object.keys(data))
+        if (typeof data[key] instanceof Date)
+            data[key] = dateToTimestamp({ date: data[key] })
+    return data
+}
+
 const isTimestamp = ({ timestamp }) => typeof timestamp?.seconds !== 'undefined' && typeof timestamp?.nanoseconds !== 'undefined'
 
 const timestampToDate = ({ timestamp }) => (new Timestamp(timestamp.seconds, timestamp.nanoseconds)).toDate()
+
+const dateToTimestamp = ({ date }) => Timestamp.fromDate(date)
 
 
 export {
     init,
 
     list,
+    get,
+    add,
 }

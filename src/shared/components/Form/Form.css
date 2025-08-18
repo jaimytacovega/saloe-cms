@@ -5,7 +5,7 @@ form {
     flex-flow: column wrap;
     gap: 8px;
 
-    >header {
+    > header {
         padding-block: 0 2px;
         display: flex;
         flex-flow: column wrap;
@@ -24,7 +24,14 @@ form {
         inline-size: 100%;
     }
 
-    >.form__scroller {
+    inputgroup > .form__error {
+        font: var(--font-size-xs)/1.2 var(--font-family-semibold);
+        inline-size: 100%;
+        color: var(--color-red);
+        padding-block: 0 4px;
+    }
+
+    > .form__scroller {
         inline-size: 100%;
         overflow-y: scroll;
         scrollbar-gutter: stable;
@@ -32,6 +39,31 @@ form {
         block-size: 1px;
         padding-block: 0 64px;
         flex-grow: 1;
+    }
+
+    &[submitting] [type="submit"] {
+        pointer-events: none;
+        position: relative;
+        opacity: .5;
+
+        &::after {
+            content: '';
+            inline-size: 1.2ch;
+            block-size: 1.2ch;
+            border-radius: 50%;
+            border: 3px solid rgb(255 255 255 / 25%);
+            border-top-color: var(--color-white);
+            animation: submitting-anim 1.5s linear infinite;
+        }
+    }
+}
+
+@keyframes submitting-anim {
+    0% {
+      rotate: 0deg;
+    }
+    100% {
+      rotate: 360deg;
     }
 }
 
