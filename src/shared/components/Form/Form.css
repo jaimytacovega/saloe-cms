@@ -60,6 +60,10 @@ form {
     inputgroup > small:has(~[type="submit"]) {
         color: var(--color-gray-1);
     }
+
+    inputgroup:has(> input[type="hidden"]) {
+        display: none;
+    }
 }
 
 @keyframes submitting-anim {

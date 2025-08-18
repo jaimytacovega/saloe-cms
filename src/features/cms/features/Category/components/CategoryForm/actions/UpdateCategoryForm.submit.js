@@ -9,10 +9,12 @@ const submit = async ({
 }) => {
     e.preventDefault()
 
+    const id = form.querySelector('#id').value.trim()
     const name = form.querySelector('#name').value.trim()
     const code = form.querySelector('#code').value.trim()
 
     const category = {
+        id,
         name,
         code,
         updatedAt: new Date(),

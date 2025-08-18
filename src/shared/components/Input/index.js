@@ -10,7 +10,13 @@ const Input = ({
 }) => {
     return html`
         <inputgroup>
-            <label for="${id}">${label}</label>
+            ${
+                label
+                    ? html`
+                        <label for="${id}">${label}</label>
+                    `
+                    : ''
+            }
             <input type="${type}" id="${id}" placeholder="${placeholder}" value="${value}" />
         </inputgroup>
     `

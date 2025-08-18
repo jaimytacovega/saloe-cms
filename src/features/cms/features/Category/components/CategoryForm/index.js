@@ -25,6 +25,13 @@ const CategoryForm = async ({
                 <fieldset columns="1">
                     ${
                         Input({
+                            id: 'id',
+                            value: categoryId,
+                            type: 'hidden',
+                        })
+                    }
+                    ${
+                        Input({
                             id: 'name',
                             label: 'Nombre',
                             value: category?.name ?? '',
