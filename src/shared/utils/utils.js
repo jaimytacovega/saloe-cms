@@ -8,8 +8,13 @@ const lastUpdatedMessage = ({ date }) => {
     else return `Modificado el ${date.toLocaleDateString()}`
 }
 
+const keywords = ({ keys }) => {
+    return keys.map((key) => `${key}`.toLowerCase())
+}
+
 
 export {
     delay,
     lastUpdatedMessage,
+    keywords,
 }

@@ -2,9 +2,10 @@ import { html } from 'saloe/html'
 
 import Table from '@/shared/components/Table'
 
-// import { DUMMY_CATEGORIES } from '@/features/cms/features/Category/utils/constants'
 import * as CategoryRepository from '@/shared/repositories/CategoryRepository'
 import { Source } from '@/shared/utils/constants'
+import { Operators } from '@/shared/services/DatabaseService'
+
 
 const CategoryTableRow = ({
     id,
@@ -23,10 +24,24 @@ const CategoryTableRow = ({
     `
 }
 
-const CategoryTable = async () => {
+const CategoryTable = async ({
+    searchParams,
+}) => {
+    const search = searchParams?.get('search')
+    const filters = search
+        ? [
+            {
+                field: 'keywords',
+                operator: Operators.Contains,
+                value: search,
+            }
+        ]
+        : []
+
     const { data: categories } = await CategoryRepository.list({
         source: Source.FIREBASE,
         pageSize: 20,
+        filters,
     })
 
     return html`

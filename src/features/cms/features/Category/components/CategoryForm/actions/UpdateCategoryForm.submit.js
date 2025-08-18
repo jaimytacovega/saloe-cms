@@ -1,9 +1,10 @@
 import * as CategoryRepository from '@/shared/repositories/CategoryRepository'
 import { Source } from '@/shared/utils/constants'
 import * as Form from '@/shared/components/Form'
+import { keywords } from '@/shared/utils/utils'
 
 
-const submit = async ({
+const submit = ({
     e,
     srcElement: form,
 }) => {
@@ -17,6 +18,7 @@ const submit = async ({
         id,
         name,
         code,
+        keywords: keywords({ keys: [name, code] }),
         updatedAt: new Date(),
     }
 

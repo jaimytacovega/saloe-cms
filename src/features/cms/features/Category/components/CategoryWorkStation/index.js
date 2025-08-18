@@ -9,6 +9,7 @@ import WorkStation from '@/shared/components/WorkStation'
 
 const CategoryWorkStation = async ({
     categoryId,
+    searchParams,
 }) => {
     return html`
         ${
@@ -20,12 +21,15 @@ const CategoryWorkStation = async ({
                     ${
                         CategoryToolbox({
                             categoryId,
+                            searchParams,
                         })
                     }
                 `,
                 table: html`
                     ${
-                        await CategoryTable()
+                        await CategoryTable({
+                            searchParams,
+                        })
                     }
                 `,
                 form: Boolean(categoryId)

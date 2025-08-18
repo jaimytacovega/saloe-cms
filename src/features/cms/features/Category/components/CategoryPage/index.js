@@ -8,8 +8,10 @@ import { COMPANY_NAME } from '@/shared/utils/constants'
 
 const CategoryPage = async ({
     categoryId,
+    searchParams,
 } = { 
     categoryId: null, 
+    searchParams: null,
 }) => {
     return html`
         <main>
@@ -21,6 +23,7 @@ const CategoryPage = async ({
             ${
                 await CategoryWorkStation({
                     categoryId,
+                    searchParams,
                 })
             }
         </main>

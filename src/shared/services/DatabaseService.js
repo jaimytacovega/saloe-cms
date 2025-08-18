@@ -2,6 +2,17 @@ import * as FirestoreAdapter from '@/shared/adapters/firebase/FirebaseFirestore'
 import { FIREBASE_CREDENTIALS, Source } from '@/shared/utils/constants'
 
 
+const Operators = {
+    LessThan: '<',
+    LessThanOrEqualTo: '<=',
+    EqualTo: '==',
+    GreaterThan: '>',
+    GreaterThanOrEqualTo: '>=',
+    NotEqualTo: '!=',
+    In: 'in',
+    Contains: 'array-contains',
+}
+
 const list = ({
     source,
     collectionName,
@@ -64,6 +75,8 @@ const update = ({
 
 
 export {
+    Operators,
+
     list,   
     get,
     add,

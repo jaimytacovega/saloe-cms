@@ -8,6 +8,8 @@ const page = async ({
     env, 
     cookies,
 }) => {
+    const searchParams = new URL(request.url).searchParams
+
     return stream({
         head: () => html`
             <meta charset="UTF-8" />
@@ -27,7 +29,9 @@ const page = async ({
         `,
         body: async () => html`
             ${
-                await CategoryPage()
+                await CategoryPage({
+                    searchParams,
+                })
             }
         `,
         scripts: () => html``,
