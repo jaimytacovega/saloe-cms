@@ -55,6 +55,7 @@ const CategoryTable = async ({
                     updatedAt: category.updatedAt,
                     toggled: idx === 0,
                 })),
+                createUrl: '/cms/categorias/crear',
             })
         }
     `
