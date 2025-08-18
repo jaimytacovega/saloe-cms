@@ -49,9 +49,21 @@ const update = ({
     })
 }
 
+const remove = ({
+    source,
+    id,
+}) => {
+    return DatabaseService.remove({
+        source,
+        collectionName: 'categories',
+        id,
+    })
+}
+
 export {
     list,
     get,
     add,
     update,
+    remove,
 }

@@ -73,6 +73,19 @@ const update = ({
     }
 }
 
+const remove = ({
+    source,
+    collectionName,
+    id,
+}) => {
+    if (source === Source.FIREBASE) {
+        FirestoreAdapter.init({ credentials: FIREBASE_CREDENTIALS })
+        return FirestoreAdapter.remove({
+            collectionName,
+            id,
+        })
+    }
+}
 
 export {
     Operators,
@@ -81,4 +94,5 @@ export {
     get,
     add,
     update,
+    remove,
 }

@@ -103,4 +103,8 @@ inputgroup {
         font: var(--font-size-xs)/1.2 var(--font-family-semibold);
         inline-size: 100%;
     }
+
+    > p{
+        font-size: var(--font-size-sm);
+    }
 }

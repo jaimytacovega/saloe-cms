@@ -13,6 +13,7 @@ import {
     runTransaction,
     increment,
     orderBy,
+    deleteDoc,
 } from 'firebase/firestore/lite'
 
 import { getApp } from '@/shared/adapters/firebase/FirebaseApp'
@@ -119,6 +120,21 @@ const update = async ({ collectionName, docData }) => {
     }
 }
 
+const remove = async ({ collectionName, id }) => {
+    const docRef = doc(firestore, collectionName, id)
+    try {
+        await deleteDoc(docRef)
+        return {
+            data: {
+                id,
+            }
+        }
+    }
+    catch (err) {
+        return { err }
+    }
+}
+
 const formatDoc = ({ data }) => {
     for (const key of Object.keys(data))
         if (isTimestamp({ timestamp: data[key] }))
@@ -148,4 +164,5 @@ export {
     get,
     add,
     update,
+    remove,
 }

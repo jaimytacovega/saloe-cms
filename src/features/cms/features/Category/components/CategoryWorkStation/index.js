@@ -3,6 +3,7 @@ import { html } from 'saloe/html'
 import CategoryToolbox from '@/features/cms/features/Category/components/CategoryToolbox'
 import CategoryTable from '@/features/cms/features/Category/components/CategoryTable'
 import CategoryForm from '@/features/cms/features/Category/components/CategoryForm'
+import CategoryDeleteDialog from '@/features/cms/features/Category/components/CategoryDeleteDialog'
 
 import WorkStation from '@/shared/components/WorkStation'
 
@@ -36,6 +37,11 @@ const CategoryWorkStation = async ({
                     ? html`
                         ${
                             await CategoryForm({
+                                categoryId,
+                            })
+                        }
+                        ${
+                            CategoryDeleteDialog({
                                 categoryId,
                             })
                         }

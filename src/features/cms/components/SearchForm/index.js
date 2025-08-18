@@ -9,7 +9,7 @@ const SearchForm = ({
         <form on-submit="SearchForm.submit">
             <inputgroup>
                 <img loading="lazy" src="/img/icon/search-black.svg" width="16" height="16" alt="search">
-                <input type="search" placeholder="Buscar" value="${searchParams?.get('search') ?? ''}"/>
+                <input id="search" type="search" placeholder="Buscar" value="${searchParams?.get('search') ?? ''}"/>
             </inputgroup>
             <inputgroup>
                 <button type="button" class="Button PrimaryButton PrimaryGray">Filtrar</button>

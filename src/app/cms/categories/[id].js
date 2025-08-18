@@ -27,6 +27,7 @@ const page = async ({
             <link rel="stylesheet" href="/Input.css">
             <link rel="stylesheet" href="/Form.css">
             <link rel="stylesheet" href="/Table.css">
+            <link rel="stylesheet" href="/Dialog.css">
 
             <link rel="stylesheet" href="/TopMenu.css">
             <link rel="stylesheet" href="/WorkStation.css">

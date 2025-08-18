@@ -133,6 +133,7 @@ a, button{
     background: none;
     text-decoration: none;
     color: inherit;
+    cursor: pointer;
 }
 
 main{

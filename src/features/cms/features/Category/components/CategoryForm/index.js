@@ -57,7 +57,7 @@ const CategoryForm = async ({
                             </a>
                         `
                         : html`
-                            <button class="Button PrimaryButton PrimaryGray">
+                            <button popovertarget="DeleteCategoryDialog-${categoryId}" type="button" class="Button PrimaryButton PrimaryGray">
                                 <img src="/img/icon/trash-black.svg" width="18" height="18" alt="trash">
                             </button>
                         `
@@ -74,12 +74,6 @@ const CategoryForm = async ({
             </inputgroup>
         </form>
     `
-}
-
-const test = 1
-
-export {
-    test,
 }
 
 export default CategoryForm
