@@ -12,7 +12,7 @@ const InputFile = ({
     return html`
         <inputgroup>
             <label for="${id}">${label}</label>
-            <input type="file" id="${id}" accept="${accept ?? 'image/*'}"/>
+            <input type="file" id="${id}" accept="${accept ?? 'image/*'}" on-change="InputFile.change"/>
             <div class="InputFile__decorator">
                 <div class="InputFile__decorator__thumbnail">
                     <img loading="lazy" src="/img/icon/image-black.svg" width="24" height="24" alt="${alt ?? 'image'}">

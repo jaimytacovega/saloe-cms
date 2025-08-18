@@ -1,3 +1,5 @@
+import * as A5 from '@/shared/components/InputFile/actions/InputFile.change'
+console.log(A5)
 
 import * as A1 from '@/features/cms/components/SearchForm/actions/SearchForm.submit'
 console.log(A1)

@@ -42,6 +42,20 @@
             align-items: center;
             gap: 12px;
 
+            &[loaded="true"]{
+                > .InputFile__decorator__thumbnail{
+                    padding-inline: 0;
+                    padding-block: 0;
+
+                    > img{
+                        object-fit: cover;
+                        border-radius: 8px;
+                        inline-size: 48px;
+                        block-size: 48px;
+                    }
+                }
+            }
+
             > .InputFile__decorator__thumbnail{
                 padding-inline: 12px;
                 padding-block: 12px;

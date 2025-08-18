@@ -1,6 +1,7 @@
 import { html } from 'saloe/html'
 
 import Input from '@/shared/components/Input'
+import InputFile from '@/shared/components/InputFile'
 
 import * as CategoryRepository from '@/shared/repositories/CategoryRepository'
 import { Source } from '@/shared/utils/constants'
@@ -44,6 +45,13 @@ const CategoryAddOrUpdateForm = async ({
                             label: 'Código',
                             value: category?.code ?? '',
                             placeholder: 'Ingresa el código de la categoría',
+                        })
+                    }
+                    ${
+                        InputFile({
+                            id: 'image',
+                            label: 'Imagen',
+                            value: category?.image ?? '',
                         })
                     }
                 </fieldset>
