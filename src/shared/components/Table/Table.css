@@ -24,6 +24,38 @@ table{
             }
         }
     }
+
+    &[empty]{
+        > tbody{
+            padding-inline: 0;
+            
+            > tr {
+                block-size: 100%;
+
+                > td{
+                    text-align: center;
+                    block-size: 100%;
+                    display: flex;
+                    flex-flow: column wrap;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 12px;
+
+                    > header{
+                        display: flex;
+                        flex-flow: column wrap;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 4px;
+
+                        > p{
+                            font-size: var(--font-size-sm);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 .Row{
