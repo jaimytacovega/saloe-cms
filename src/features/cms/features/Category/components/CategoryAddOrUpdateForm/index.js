@@ -7,7 +7,7 @@ import { Source } from '@/shared/utils/constants'
 import { lastUpdatedMessage } from '@/shared/utils/utils'
 
 
-const CategoryForm = async ({
+const CategoryAddOrUpdateForm = async ({
     categoryId,
 }) => {
     const { data: category } = await CategoryRepository.get({
@@ -76,4 +76,4 @@ const CategoryForm = async ({
     `
 }
 
-export default CategoryForm
+export default CategoryAddOrUpdateForm
