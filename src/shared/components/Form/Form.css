@@ -56,6 +56,10 @@ form {
             animation: submitting-anim 1.5s linear infinite;
         }
     }
+
+    inputgroup > small:has(~[type="submit"]) {
+        color: var(--color-gray-1);
+    }
 }
 
 @keyframes submitting-anim {

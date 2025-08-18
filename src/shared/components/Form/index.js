@@ -1,7 +1,7 @@
 import { html } from 'saloe/html'
 
+import { delay } from '@/shared/utils/utils'
 
-const delay = ({ ms }) => new Promise(resolve => setTimeout(resolve, ms))
 
 const removeError = ({ form }) => {
     const formError = form.querySelector('.form__error')

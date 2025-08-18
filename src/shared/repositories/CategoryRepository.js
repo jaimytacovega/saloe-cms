@@ -38,8 +38,20 @@ const add = ({
     })
 }
 
+const update = ({
+    source,
+    data,
+}) => {
+    return DatabaseService.update({
+        source,
+        collectionName: 'categories',
+        data,
+    })
+}
+
 export {
     list,
     get,
     add,
+    update,
 }

@@ -4,6 +4,7 @@ import Input from '@/shared/components/Input'
 
 import * as CategoryRepository from '@/shared/repositories/CategoryRepository'
 import { Source } from '@/shared/utils/constants'
+import { lastUpdatedMessage } from '@/shared/utils/utils'
 
 
 const CategoryForm = async ({
@@ -15,7 +16,7 @@ const CategoryForm = async ({
     })
 
     return html`
-        <form on-submit="AddCategoryForm.submit">
+        <form on-submit="${categoryId === 'new' ? 'Add' : 'Update'}CategoryForm.submit">
             <header>
                 <p>CATEGORÍA</p>
                 <h2>${category?.code ?? 'Nueva categoría'}</h2>
@@ -55,6 +56,13 @@ const CategoryForm = async ({
                         `
                 }
                 <hr>
+                ${
+                    categoryId !== 'new'
+                        ? html`
+                            <small>${lastUpdatedMessage({ date: category.updatedAt ?? category.createdAt })}</small>
+                        `
+                        : ''
+                }
                 <button class="Button PrimaryButton PrimaryBlue" type="submit">Guardar</button>
             </inputgroup>
         </form>

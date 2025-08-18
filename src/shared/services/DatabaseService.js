@@ -48,8 +48,24 @@ const add = ({
     }
 }
 
+const update = ({
+    source,
+    collectionName,
+    data,
+}) => {
+    if (source === Source.FIREBASE) {
+        FirestoreAdapter.init({ credentials: FIREBASE_CREDENTIALS })
+        return FirestoreAdapter.update({
+            collectionName,
+            docData: data,
+        })
+    }
+}
+
+
 export {
     list,   
     get,
     add,
+    update,
 }

@@ -103,6 +103,22 @@ const add = async ({ collectionName, docData }) => {
     }
 }
 
+const update = async ({ collectionName, docData }) => {
+    const { id, ...data } = docData
+    const docRef = doc(firestore, collectionName, id)
+    try {
+        await updateDoc(docRef, formatDocForDB({ doc: data }))
+        return {
+            data: {
+                id: docRef.id,
+                ...data
+            }
+        }
+    } catch (err) {
+        return { err }
+    }
+}
+
 const formatDoc = ({ data }) => {
     for (const key of Object.keys(data))
         if (isTimestamp({ timestamp: data[key] }))
@@ -131,4 +147,5 @@ export {
     list,
     get,
     add,
+    update,
 }
