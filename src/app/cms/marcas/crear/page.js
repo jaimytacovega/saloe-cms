@@ -1,4 +1,5 @@
 import { html, stream } from 'saloe/html'
+import { getScriptListener } from 'saloe/listener'
 
 import BrandPage from '@/features/cms/features/Brand/components/BrandPage'
 
@@ -8,8 +9,6 @@ const page = async ({
     env, 
     cookies,
 }) => {
-    const searchParams = new URL(request.url).searchParams
-
     return stream({
         head: () => html`
             <meta charset="UTF-8" />
@@ -30,11 +29,17 @@ const page = async ({
         body: async () => html`
             ${
                 await BrandPage({
-                    searchParams,
+                    brandId: 'new',
                 })
             }
         `,
-        scripts: () => html``,
+        scripts: () => html`
+            ${
+                getScriptListener({
+                    listenAfterMs: 500,
+                })
+            }
+        `,
         env,
     })
 }

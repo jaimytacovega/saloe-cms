@@ -5,34 +5,34 @@ import InputFile from '@/shared/components/InputFile'
 
 import NotFoundItem from '@/features/cms/components/NotFoundItem'
 
-import * as CategoryRepository from '@/shared/repositories/CategoryRepository'
+import * as BrandRepository from '@/shared/repositories/BrandRepository'
 import { Source } from '@/shared/utils/constants'
 import { lastUpdatedMessage } from '@/shared/utils/utils'
 
 
-const CategoryAddOrUpdateForm = async ({
-    categoryId,
+const BrandAddOrUpdateForm = async ({
+    brandId,
 }) => {
-    const { data: category } = categoryId === 'new'
+    const { data: brand } = brandId === 'new'
         ? { data: {} }
-        : await CategoryRepository.get({
+        : await BrandRepository.get({
             source: Source.FIREBASE,
-            id: categoryId,
+            id: brandId,
         })
 
-    return Boolean(category)
+    return Boolean(brand)
         ? html`
-            <form on-submit="${categoryId === 'new' ? 'Add' : 'Update'}CategoryForm.submit">
+            <form on-submit="${brandId === 'new' ? 'Add' : 'Update'}BrandForm.submit">
                 <header>
-                    <p>CATEGORÍA</p>
-                    <h2>${category?.code ?? 'Nueva categoría'}</h2>
+                    <p>MARCA</p>
+                    <h2>${brand?.code ?? 'Nueva marca'}</h2>
                 </header>
                 <div class="form__scroller">
                     <fieldset columns="1">
                         ${
                             Input({
                                 id: 'id',
-                                value: categoryId,
+                                value: brandId,
                                 type: 'hidden',
                             })
                         }
@@ -40,22 +40,14 @@ const CategoryAddOrUpdateForm = async ({
                             Input({
                                 id: 'name',
                                 label: 'Nombre',
-                                value: category?.name ?? '',
-                                placeholder: 'Ingresa el nombre de la categoría',
-                            })
-                        }
-                        ${
-                            Input({
-                                id: 'code',
-                                label: 'Código',
-                                value: category?.code ?? '',
-                                placeholder: 'Ingresa el código de la categoría',
+                                value: brand?.name ?? '',
+                                placeholder: 'Ingresa el nombre de la marca',
                             })
                         }
                         ${
                             Input({
                                 id: 'path',
-                                value: category?.image?.path ?? '',
+                                value: brand?.image?.path ?? '',
                                 type: 'hidden',
                             })
                         }
@@ -63,30 +55,30 @@ const CategoryAddOrUpdateForm = async ({
                             InputFile({
                                 id: 'image',
                                 label: 'Imagen',
-                                src: category?.image?.downloadURL ?? '',
+                                src: brand?.image?.downloadURL ?? '',
                             })
                         }
                     </fieldset>
                 </div>
                 <inputgroup>
                     ${
-                        categoryId === 'new'
+                        brandId === 'new'
                             ? html`
                                 <a href="/cms/categorias" class="Button PrimaryButton PrimaryGray">
                                     <img src="/img/icon/corner-up-left-black.svg" width="18" height="18" alt="go back">
                                 </a>
                             `
                             : html`
-                                <button popovertarget="DeleteCategoryDialog-${categoryId}" type="button" class="Button PrimaryButton PrimaryGray">
+                                <button popovertarget="DeleteBrandDialog-${brandId}" type="button" class="Button PrimaryButton PrimaryGray">
                                     <img src="/img/icon/trash-black.svg" width="18" height="18" alt="trash">
                                 </button>
                             `
                     }
                     <hr>
                     ${
-                        categoryId !== 'new'
+                        brandId !== 'new'
                             ? html`
-                                <small>${lastUpdatedMessage({ date: category.updatedAt ?? category.createdAt })}</small>
+                                <small>${lastUpdatedMessage({ date: brand.updatedAt ?? brand.createdAt })}</small>
                             `
                             : ''
                     }
@@ -99,4 +91,4 @@ const CategoryAddOrUpdateForm = async ({
         })
 }
 
-export default CategoryAddOrUpdateForm
+export default BrandAddOrUpdateForm
