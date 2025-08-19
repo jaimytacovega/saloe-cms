@@ -12,13 +12,17 @@ const submit = ({
 
     const name = form.querySelector('#name').value.trim()
     const code = form.querySelector('#code').value.trim()
+    const image = form.querySelector('#image').files[0]
 
     const category = {
         name,
         code,
+        image,
         keywords: keywords({ keys: [name, code] }),
         createdAt: new Date(),
     }
+
+    console.log('category =', category)
 
     Form.submit({
         form,
@@ -29,6 +33,7 @@ const submit = ({
             })
 
             if (addResult?.err) throw addResult.err
+            console.log('addResult =', addResult)
             return addResult
         },
         onSuccess: ({ result }) => {

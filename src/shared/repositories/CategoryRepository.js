@@ -1,5 +1,13 @@
 import * as DatabaseService from '@/shared/services/DatabaseService'
+import * as StorageService from '@/shared/services/StorageService'
 
+
+const storagePath = ({
+    id = null,
+    name,
+}) => {
+    return `/uploads/categories${id ? `/${id}` : ''}/${Date.now()}-${name}`
+}
 
 const list = ({
     source,
@@ -27,10 +35,19 @@ const get = ({
     })
 }
 
-const add = ({
+const add = async ({
     source,
     data,
 }) => {
+    const storageResult = await StorageService.add({
+        source,
+        file: data.image,
+        path: storagePath({ name: data.image.name }),
+    })
+
+    if (storageResult?.err) return storageResult
+    data.image = storageResult.data
+
     return DatabaseService.add({
         source,
         collectionName: 'categories',
@@ -38,10 +55,21 @@ const add = ({
     })
 }
 
-const update = ({
+const update = async({
     source,
     data,
 }) => {
+    const storageResult = await StorageService.update({
+        source,
+        file: data.image,
+        path: storagePath({ id: data.id, name: data.image.name }),
+        oldPath: data.oldPath,
+    })
+
+    if (storageResult?.err) return storageResult
+    data.image = storageResult.data
+    delete data.oldPath
+
     return DatabaseService.update({
         source,
         collectionName: 'categories',

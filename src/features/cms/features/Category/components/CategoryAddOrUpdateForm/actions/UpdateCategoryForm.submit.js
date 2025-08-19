@@ -13,11 +13,15 @@ const submit = ({
     const id = form.querySelector('#id').value.trim()
     const name = form.querySelector('#name').value.trim()
     const code = form.querySelector('#code').value.trim()
+    const image = form.querySelector('#image').files[0]
+    const oldPath = form.querySelector('#path').value.trim()
 
     const category = {
         id,
         name,
         code,
+        image,
+        oldPath,
         keywords: keywords({ keys: [name, code] }),
         updatedAt: new Date(),
     }

@@ -8,80 +8,116 @@ import { Source } from '@/shared/utils/constants'
 import { lastUpdatedMessage } from '@/shared/utils/utils'
 
 
+const NotFoundCategory = ({
+    createUrl,
+}) => {
+    return html`
+        <table empty>
+            <tbody>
+                <tr>
+                    <td>
+                        <header>
+                            <h5>Aun no se registran datos</h5>
+                            <p>Crea nuevos registros y gestionalos desde esta sección</p>
+                        </header>
+                        <a href="${createUrl}" class="Button PrimaryButton PrimaryBlue">
+                            <img loading="lazy" src="/img/icon/plus-white.svg" width="16" height="16" alt="Crear">
+                            <span>Crear</span>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    `
+}
+
 const CategoryAddOrUpdateForm = async ({
     categoryId,
 }) => {
-    const { data: category } = await CategoryRepository.get({
-        source: Source.FIREBASE,
-        id: categoryId,
-    })
+    const { data: category } = categoryId === 'new'
+        ? { data: {} }
+        : await CategoryRepository.get({
+            source: Source.FIREBASE,
+            id: categoryId,
+        })
 
-    return html`
-        <form on-submit="${categoryId === 'new' ? 'Add' : 'Update'}CategoryForm.submit">
-            <header>
-                <p>CATEGORÍA</p>
-                <h2>${category?.code ?? 'Nueva categoría'}</h2>
-            </header>
-            <div class="form__scroller">
-                <fieldset columns="1">
+    return Boolean(category)
+        ? html`
+            <form on-submit="${categoryId === 'new' ? 'Add' : 'Update'}CategoryForm.submit">
+                <header>
+                    <p>CATEGORÍA</p>
+                    <h2>${category?.code ?? 'Nueva categoría'}</h2>
+                </header>
+                <div class="form__scroller">
+                    <fieldset columns="1">
+                        ${
+                            Input({
+                                id: 'id',
+                                value: categoryId,
+                                type: 'hidden',
+                            })
+                        }
+                        ${
+                            Input({
+                                id: 'name',
+                                label: 'Nombre',
+                                value: category?.name ?? '',
+                                placeholder: 'Ingresa el nombre de la categoría',
+                            })
+                        }
+                        ${
+                            Input({
+                                id: 'code',
+                                label: 'Código',
+                                value: category?.code ?? '',
+                                placeholder: 'Ingresa el código de la categoría',
+                            })
+                        }
+                        ${
+                            Input({
+                                id: 'path',
+                                value: category?.image?.path ?? '',
+                                type: 'hidden',
+                            })
+                        }
+                        ${
+                            InputFile({
+                                id: 'image',
+                                label: 'Imagen',
+                                src: category?.image?.downloadURL ?? '',
+                            })
+                        }
+                    </fieldset>
+                </div>
+                <inputgroup>
                     ${
-                        Input({
-                            id: 'id',
-                            value: categoryId,
-                            type: 'hidden',
-                        })
+                        categoryId === 'new'
+                            ? html`
+                                <a href="/cms/categorias" class="Button PrimaryButton PrimaryGray">
+                                    <img src="/img/icon/corner-up-left-black.svg" width="18" height="18" alt="go back">
+                                </a>
+                            `
+                            : html`
+                                <button popovertarget="DeleteCategoryDialog-${categoryId}" type="button" class="Button PrimaryButton PrimaryGray">
+                                    <img src="/img/icon/trash-black.svg" width="18" height="18" alt="trash">
+                                </button>
+                            `
                     }
+                    <hr>
                     ${
-                        Input({
-                            id: 'name',
-                            label: 'Nombre',
-                            value: category?.name ?? '',
-                            placeholder: 'Ingresa el nombre de la categoría',
-                        })
+                        categoryId !== 'new'
+                            ? html`
+                                <small>${lastUpdatedMessage({ date: category.updatedAt ?? category.createdAt })}</small>
+                            `
+                            : ''
                     }
-                    ${
-                        Input({
-                            id: 'code',
-                            label: 'Código',
-                            value: category?.code ?? '',
-                            placeholder: 'Ingresa el código de la categoría',
-                        })
-                    }
-                    ${
-                        InputFile({
-                            id: 'image',
-                            label: 'Imagen',
-                            value: category?.image ?? '',
-                        })
-                    }
-                </fieldset>
-            </div>
-            <inputgroup>
-                ${
-                    categoryId === 'new'
-                        ? html`
-                            <a href="/cms/categorias" class="Button PrimaryButton PrimaryGray">
-                                <img src="/img/icon/corner-up-left-black.svg" width="18" height="18" alt="go back">
-                            </a>
-                        `
-                        : html`
-                            <button popovertarget="DeleteCategoryDialog-${categoryId}" type="button" class="Button PrimaryButton PrimaryGray">
-                                <img src="/img/icon/trash-black.svg" width="18" height="18" alt="trash">
-                            </button>
-                        `
-                }
-                <hr>
-                ${
-                    categoryId !== 'new'
-                        ? html`
-                            <small>${lastUpdatedMessage({ date: category.updatedAt ?? category.createdAt })}</small>
-                        `
-                        : ''
-                }
-                <button class="Button PrimaryButton PrimaryBlue" type="submit">Guardar</button>
-            </inputgroup>
-        </form>
-    `
+                    <button class="Button PrimaryButton PrimaryBlue" type="submit">Guardar</button>
+                </inputgroup>
+            </form>
+        `
+        : NotFoundCategory({
+            createUrl: '/cms/categorias',
+        })
 }
 
 export default CategoryAddOrUpdateForm
