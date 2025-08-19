@@ -5,6 +5,7 @@ import Table from '@/shared/components/Table'
 import * as CategoryRepository from '@/shared/repositories/CategoryRepository'
 import { Source } from '@/shared/utils/constants'
 import { Operators } from '@/shared/services/DatabaseService'
+import { lastUpdatedMessage } from '@/shared/utils/utils'
 
 
 const CategoryTableRow = ({
@@ -19,7 +20,7 @@ const CategoryTableRow = ({
         <a href="/cms/categorias/${id}" class="Row" ${toggled ? 'toggled' : ''}>
             <span>${name}</span>
             <span>${code}</span>
-            <span>${updatedAt ?? createdAt}</span>
+            <span>${lastUpdatedMessage({ date: updatedAt ?? createdAt })}</span>
         </a>
     `
 }
