@@ -1,12 +1,12 @@
 import { html } from 'saloe/html'
 
 
-const SearchForm = ({
+const CmsSearchForm = ({
     createUrl,
     searchParams,
 }) => {
     return html`
-        <form on-submit="SearchForm.submit">
+        <form on-submit="CmsSearchForm.submit">
             <inputgroup>
                 <img loading="lazy" src="/img/icon/search-black.svg" width="16" height="16" alt="search">
                 <input id="search" type="search" placeholder="Buscar" value="${searchParams?.get('search') ?? ''}"/>
@@ -22,4 +22,4 @@ const SearchForm = ({
     `
 }
 
-export default SearchForm
+export default CmsSearchForm

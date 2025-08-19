@@ -1,7 +1,7 @@
 import * as A5 from '@/shared/components/InputFile/actions/InputFile.change'
 console.log(A5)
 
-import * as A1 from '@/features/cms/components/SearchForm/actions/SearchForm.submit'
+import * as A1 from '@/features/cms/components/CmsSearchForm/actions/CmsSearchForm.submit'
 console.log(A1)
 import * as A2 from '@/features/cms/features/Category/components/CategoryAddOrUpdateForm/actions/AddCategoryForm.submit'
 console.log(A2)
