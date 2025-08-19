@@ -3,10 +3,20 @@ import { html } from 'saloe/html'
 import Dialog from '@/shared/components/Dialog'
 import Input from '@/shared/components/Input'
 
+import * as CategoryRepository from '@/shared/repositories/CategoryRepository'
+import { Source } from '@/shared/utils/constants'
 
-const CategoryDeleteDialog = ({
+
+const CategoryDeleteDialog = async ({
     categoryId,
 }) => {
+    const { data: category } = categoryId === 'new'
+        ? { data: {} }
+        : await CategoryRepository.get({
+            source: Source.FIREBASE,
+            id: categoryId,
+        })
+
     const dialogId = `DeleteCategoryDialog-${categoryId}`
 
     return Dialog({
@@ -18,8 +28,15 @@ const CategoryDeleteDialog = ({
                 </header>
                 ${
                     Input({
-                        id: 'categoryId',
+                        id: 'id',
                         value: categoryId,
+                        type: 'hidden',
+                    })
+                }
+                ${
+                    Input({
+                        id: 'path',
+                        value: category?.image?.path ?? '',
                         type: 'hidden',
                     })
                 }

@@ -9,14 +9,16 @@ const submit = ({
 }) => {
     e.preventDefault()
 
-    const categoryId = form.querySelector('#categoryId').value
+    const id = form.querySelector('#id').value
+    const path = form.querySelector('#path').value
 
     Form.submit({
         form,
         onProcess: async () => {
             const removeResult = await CategoryRepository.remove({
                 source: Source.FIREBASE,
-                id: categoryId,
+                id,
+                path,
             })
 
             if (removeResult.err) throw removeResult.err

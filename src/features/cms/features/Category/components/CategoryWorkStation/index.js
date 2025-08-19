@@ -41,7 +41,7 @@ const CategoryWorkStation = async ({
                             })
                         }
                         ${
-                            CategoryDeleteDialog({
+                            await CategoryDeleteDialog({
                                 categoryId,
                             })
                         }

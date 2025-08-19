@@ -77,10 +77,18 @@ const update = async({
     })
 }
 
-const remove = ({
+const remove = async ({
     source,
     id,
+    path,
 }) => {
+    const storageResult = await StorageService.remove({
+        source,
+        path,
+    })
+
+    if (storageResult?.err) return storageResult
+
     return DatabaseService.remove({
         source,
         collectionName: 'categories',
