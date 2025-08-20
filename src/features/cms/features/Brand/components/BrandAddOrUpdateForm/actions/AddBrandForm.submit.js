@@ -28,7 +28,7 @@ const submit = ({
         form,
         onProcess: async () => {
             const schemaResult = AddBrandSchema.safeParse(brand)
-            if (!schemaResult.success) throw getError({ error: schemaResult.error })
+            if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
 
             const addResult = await BrandRepository.add({
                 source: Source.FIREBASE,

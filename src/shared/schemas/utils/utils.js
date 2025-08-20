@@ -1,10 +1,7 @@
-import { z } from 'zod'
-
-
-const getError = ({ error }) => {
+const prettifyError = ({ error }) => {
     return error.issues[0].message
 }
 
 export {
-    getError,
+    prettifyError,
 }

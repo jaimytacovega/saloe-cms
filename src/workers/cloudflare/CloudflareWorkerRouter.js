@@ -6,6 +6,7 @@ import * as CmsCategoriesByIdPage from '@/app/cms/categories/[id]'
 
 import * as CmsBrandsPage from '@/app/cms/marcas/page'
 import * as CmsBrandsCreatePage from '@/app/cms/marcas/crear/page'
+import * as CmsBrandsByIdPage from '@/app/cms/marcas/[id]'  
 
 
 const setRouter = () => {
@@ -15,6 +16,7 @@ const setRouter = () => {
 
     addRoute({ pathname: '/cms/marcas', route: CmsBrandsPage.default })
     addRoute({ pathname: '/cms/marcas/crear', route: CmsBrandsCreatePage.default })
+    addRoute({ pathname: '/cms/marcas/:id', route: CmsBrandsByIdPage.default })
 }
 
 export {
