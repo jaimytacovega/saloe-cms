@@ -22,8 +22,6 @@ const submit = ({
         createdAt: new Date(),
     }
 
-    console.log('category =', category)
-
     Form.submit({
         form,
         onProcess: async () => {
@@ -33,7 +31,6 @@ const submit = ({
             })
 
             if (addResult?.err) throw addResult.err
-            console.log('addResult =', addResult)
             return addResult
         },
         onSuccess: ({ result }) => {

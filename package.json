@@ -24,6 +24,7 @@
     "@cloudflare/kv-asset-handler": "^0.4.0",
     "firebase": "^12.1.0",
     "saloe": "^0.0.89",
-    "vite-jsconfig-paths": "^2.0.1"
+    "vite-jsconfig-paths": "^2.0.1",
+    "zod": "^4.0.17"
   }
 }

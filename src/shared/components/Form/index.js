@@ -20,7 +20,7 @@ const submit = async ({
     onProcess,
     onError,
     onSuccess,
-    timeout = 2_000,
+    timeout = 1_000,
 }) => {
     try{
         form.setAttribute('submitting', true)
@@ -32,7 +32,10 @@ const submit = async ({
         ])
 
         const processResult = promisesResult.at(0)
-        if (processResult.status === 'rejected') throw promisesResult.at(0).reason.message
+        if (processResult.status === 'rejected') {
+            const reason = promisesResult.at(0).reason
+            throw reason.message ?? reason
+        }
         
         if (onSuccess) await onSuccess({ result: processResult.value })
     }catch(err){
