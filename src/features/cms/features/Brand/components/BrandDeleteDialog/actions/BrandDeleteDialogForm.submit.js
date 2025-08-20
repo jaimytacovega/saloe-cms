@@ -1,8 +1,6 @@
-import * as BrandRepository from '@/shared/repositories/BrandRepository'
+import * as BrandManager from '@/shared/managers/BrandManager'
 import { Source } from '@/shared/utils/constants'
 import * as Form from '@/shared/components/Form'
-import { DeleteBrandSchema } from '@/shared/schemas/BrandSchema'
-import { prettifyError } from '@/shared/schemas/utils/utils'
 
 
 const submit = ({
@@ -17,10 +15,7 @@ const submit = ({
     Form.submit({
         form,
         onProcess: async () => {
-            const schemaResult = DeleteBrandSchema.safeParse({ id, path })
-            if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
-
-            const removeResult = await BrandRepository.remove({
+            const removeResult = await BrandManager.remove({
                 source: Source.FIREBASE,
                 id,
                 path,

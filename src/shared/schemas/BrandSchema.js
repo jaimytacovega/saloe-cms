@@ -9,6 +9,7 @@ const AddBrandSchema = z.object({
 })
 
 const UpdateBrandSchema = z.object({
+    id: z.string().min(1, 'El id es obligatorio').trim(),
     name: z.string().min(1, 'El nombre es obligatorio').trim(),
     image: z.instanceof(File, 'La imagen es obligatoria'),
     oldPath: z.string().min(1, 'La ruta es obligatoria').trim(),

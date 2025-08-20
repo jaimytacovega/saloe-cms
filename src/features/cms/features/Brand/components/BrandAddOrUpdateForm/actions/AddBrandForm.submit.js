@@ -1,10 +1,7 @@
 import * as Form from '@/shared/components/Form'
-
-import * as BrandRepository from '@/shared/repositories/BrandRepository'
 import { Source } from '@/shared/utils/constants'
 import { keywords } from '@/shared/utils/utils'
-import { AddBrandSchema } from '@/shared/schemas/BrandSchema'
-import { prettifyError } from '@/shared/schemas/utils/utils'
+import * as BrandManager from '@/shared/managers/BrandManager'
 
 
 const submit = ({
@@ -23,16 +20,12 @@ const submit = ({
         createdAt: new Date(),
     }
 
-
     Form.submit({
         form,
         onProcess: async () => {
-            const schemaResult = AddBrandSchema.safeParse(brand)
-            if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
-
-            const addResult = await BrandRepository.add({
+            const addResult = await BrandManager.add({
                 source: Source.FIREBASE,
-                data: schemaResult.data,
+                data: brand,
             })
 
             if (addResult?.err) throw addResult.err
