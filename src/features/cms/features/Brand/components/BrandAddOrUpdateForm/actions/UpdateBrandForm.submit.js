@@ -1,9 +1,8 @@
-import * as Form from '@/shared/components/Form'
-
 import * as BrandRepository from '@/shared/repositories/BrandRepository'
 import { Source } from '@/shared/utils/constants'
+import * as Form from '@/shared/components/Form'
 import { keywords } from '@/shared/utils/utils'
-import { AddBrandSchema } from '@/shared/schemas/BrandSchema'
+import { UpdateBrandSchema } from '@/shared/schemas/BrandSchema'
 import { prettifyError } from '@/shared/schemas/utils/utils'
 
 
@@ -13,37 +12,39 @@ const submit = ({
 }) => {
     e.preventDefault()
 
+    const id = form.querySelector('#id').value.trim()
     const name = form.querySelector('#name').value.trim()
     const image = form.querySelector('#image').files[0]
+    const oldPath = form.querySelector('#path').value.trim()
 
     const brand = {
+        id,
         name,
         image,
+        oldPath,
         keywords: keywords({ keys: [name] }),
-        createdAt: new Date(),
+        updatedAt: new Date(),
     }
-
 
     Form.submit({
         form,
         onProcess: async () => {
-            const schemaResult = AddBrandSchema.safeParse(brand)
+            const schemaResult = UpdateBrandSchema.safeParse(brand)
             if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
 
-            const addResult = await BrandRepository.add({
+            const updateResult = await BrandRepository.update({
                 source: Source.FIREBASE,
-                data: schemaResult.data,
+                data: brand,
             })
 
-            if (addResult?.err) throw addResult.err
-            return addResult
+            if (updateResult?.err) throw updateResult.err
+            return updateResult
         },
-        onSuccess: ({ result }) => {    
-            location.href = `/cms/marcas/${result.data.id}`
+        onSuccess: () => {
+            location.reload()
         },
     })
 }
-
 
 export {
     submit,
