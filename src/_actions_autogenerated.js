@@ -7,9 +7,11 @@ import * as A3 from '@/features/cms/features/Brand/components/BrandAddOrUpdateFo
 console.log(A3)
 import * as A4 from '@/features/cms/features/Brand/components/BrandAddOrUpdateForm/actions/UpdateBrandForm.submit'
 console.log(A4)
-import * as A5 from '@/features/cms/features/Category/components/CategoryAddOrUpdateForm/actions/AddCategoryForm.submit'
+import * as A5 from '@/features/cms/features/Brand/components/BrandDeleteDialog/actions/BrandDeleteDialogForm.submit'
 console.log(A5)
-import * as A6 from '@/features/cms/features/Category/components/CategoryAddOrUpdateForm/actions/UpdateCategoryForm.submit'
+import * as A6 from '@/features/cms/features/Category/components/CategoryAddOrUpdateForm/actions/AddCategoryForm.submit'
 console.log(A6)
-import * as A7 from '@/features/cms/features/Category/components/CategoryDeleteDialog/actions/CategoryDeleteDialogForm.submit'
+import * as A7 from '@/features/cms/features/Category/components/CategoryAddOrUpdateForm/actions/UpdateCategoryForm.submit'
 console.log(A7)
+import * as A8 from '@/features/cms/features/Category/components/CategoryDeleteDialog/actions/CategoryDeleteDialogForm.submit'
+console.log(A8)

@@ -16,7 +16,13 @@ const UpdateBrandSchema = z.object({
     updatedAt: z.date(),
 })
 
+const DeleteBrandSchema = z.object({
+    id: z.string().min(1, 'El id es obligatorio').trim(),
+    path: z.string().min(1, 'La ruta es obligatoria').trim(),
+})
+
 export {
     AddBrandSchema,
     UpdateBrandSchema,
+    DeleteBrandSchema,
 }
