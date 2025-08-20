@@ -2,7 +2,8 @@ import { html } from 'saloe/html'
 
 import Table from '@/shared/components/Table'
 
-import * as BrandRepository from '@/shared/repositories/BrandRepository'
+// import * as BrandRepository from '@/shared/repositories/BrandRepository'
+import * as BrandManager from '@/shared/managers/BrandManager'
 import { Source } from '@/shared/utils/constants'
 import { Operators } from '@/shared/services/DatabaseService'
 import { lastUpdatedMessage } from '@/shared/utils/utils'
@@ -37,7 +38,7 @@ const BrandTable = async ({
         ]
         : []
 
-    const { data: brands } = await BrandRepository.list({
+    const { data: brands } = await BrandManager.list({
         source: Source.FIREBASE,
         pageSize: 20,
         filters,

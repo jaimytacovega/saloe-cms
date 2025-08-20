@@ -1,4 +1,5 @@
-import { z } from 'zod';
+import { z } from 'zod'
+import { FileSchema } from '@/shared/schemas/utils/FileSchema'
 
 
 const AddBrandSchema = z.object({
@@ -22,8 +23,21 @@ const DeleteBrandSchema = z.object({
     path: z.string().min(1, 'La ruta es obligatoria').trim(),
 })
 
+const ListBrandSchema = z.object({
+    id: z.string().min(1, 'El id es obligatorio').trim(),
+    name: z.string().min(1, 'El nombre es obligatorio').trim(),
+    image: FileSchema,
+    keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
+    createdAt: z.date(),
+    updatedAt: z.date().optional(),
+})
+
+const ListBrandArraySchema = z.array(ListBrandSchema)
+
 export {
     AddBrandSchema,
     UpdateBrandSchema,
     DeleteBrandSchema,
+    ListBrandSchema,
+    ListBrandArraySchema,
 }

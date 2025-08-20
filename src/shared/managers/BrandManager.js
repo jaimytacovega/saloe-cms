@@ -1,7 +1,33 @@
 import * as BrandRepository from '@/shared/repositories/BrandRepository'
-import { AddBrandSchema, UpdateBrandSchema, DeleteBrandSchema } from '@/shared/schemas/BrandSchema'
+import { AddBrandSchema, UpdateBrandSchema, DeleteBrandSchema, ListBrandArraySchema } from '@/shared/schemas/BrandSchema'
 import { prettifyError } from '@/shared/schemas/utils/utils'
 
+
+const list = async ({
+    source,
+    filters,
+    sorters,
+    pageSize,
+}) => {
+    try{
+        const listResult = await BrandRepository.list({
+            source,
+            filters,
+            sorters,
+            pageSize,
+        })
+
+        if (listResult?.err) throw listResult.err
+
+        const schemaResult = ListBrandArraySchema.safeParse(listResult.data)
+        if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
+            
+        return { data: schemaResult.data }
+    } catch (err) {
+        console.error(err)
+        return { err }
+    }
+}
 
 const add = async ({
     source,
@@ -16,7 +42,7 @@ const add = async ({
             data: schemaResult.data,
         })
 
-        if (addResult.err) throw addResult.err
+        if (addResult?.err) throw addResult.err
         return addResult
     } catch (err) {
         console.error(err)
@@ -37,7 +63,7 @@ const update = async ({
             data: schemaResult.data,
         })
 
-        if (updateResult.err) throw updateResult.err
+        if (updateResult?.err) throw updateResult.err
         return updateResult
     } catch (err) {
         console.error(err)
@@ -60,7 +86,7 @@ const remove = async ({
             path,
         })
 
-        if (removeResult.err) throw removeResult.err
+        if (removeResult?.err) throw removeResult.err
         return removeResult
     } catch (err) {
         console.error(err)
@@ -70,6 +96,7 @@ const remove = async ({
 
 
 export {
+    list,
     add,
     update,
     remove,
