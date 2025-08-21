@@ -22,7 +22,7 @@ const CategoryAddOrUpdateForm = async ({
 
     return Boolean(category)
         ? html`
-            <form on-submit="${categoryId === 'new' ? 'Add' : 'Update'}CategoryForm.submit">
+            <form on-submit="Category${categoryId === 'new' ? 'Add' : 'Update'}Form.submit">
                 <header>
                     <p>CATEGORÍA</p>
                     <h2>${category?.code ?? 'Nueva categoría'}</h2>

@@ -24,13 +24,15 @@ const PromotionAddOrUpdateForm = async ({
             id: promotionId,
         })
 
+    console.log('promotion', promotion)
+
     const { data: brands } = await BrandManager.list({
         source: Source.FIREBASE,
     })
 
     return Boolean(promotion)
         ? html`
-            <form on-submit="${promotionId === 'new' ? 'Add' : 'Update'}PromotionForm.submit">
+            <form on-submit="Promotion${promotionId === 'new' ? 'Add' : 'Update'}Form.submit">
                 <header>
                     <p>PROMOCIÓN</p>
                     <h2>${promotion?.code ?? 'Nueva promoción'}</h2>

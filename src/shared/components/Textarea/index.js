@@ -10,7 +10,7 @@ const Textarea = ({
     return html`
         <inputgroup>
             <label for="${id}">${label}</label>
-            <textarea id="${id}" placeholder="${placeholder}" value="${value}"></textarea>
+            <textarea id="${id}" placeholder="${placeholder}">${value}</textarea>
         </inputgroup>   
     `
 }

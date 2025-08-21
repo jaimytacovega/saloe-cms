@@ -1,4 +1,4 @@
-import * as PromotionManager from '@/shared/managers/PromotionManager'
+import * as BrandManager from '@/shared/managers/BrandManager'
 import * as PromotionRepository from '@/shared/repositories/PromotionRepository'
 import { 
     ListPromotionArraySchema, 
@@ -70,7 +70,7 @@ const add = async ({
         const schemaResult = AddPromotionSchema.safeParse(data)
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
 
-        const brandResult = await PromotionManager.get({
+        const brandResult = await BrandManager.get({
             source,
             id: schemaResult.data.brandId,
         })

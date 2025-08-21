@@ -84,12 +84,9 @@ const update = async ({
     data,
 }) => {
     try {
-        console.log('raw data', data)
         const schemaResult = UpdateBrandSchema.safeParse(data)
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
-        
-        console.log('schema data', schemaResult.data)
-        
+                
         const updateResult = await BrandRepository.update({
             source,
             data: schemaResult.data,
