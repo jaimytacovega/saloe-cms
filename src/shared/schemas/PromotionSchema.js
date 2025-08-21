@@ -2,29 +2,35 @@ import { z } from 'zod'
 import { FileSchema } from '@/shared/schemas/utils/FileSchema'
 
 
-const BrandSchema = z.object({
+const PromotionSchema = z.object({
     id: z.string().min(1, 'El id es obligatorio').trim(),
     name: z.string().min(1, 'El nombre es obligatorio').trim(),
+    description: z.string().trim().optional(),
     image: FileSchema,
+    brandId: z.string().min(1, 'El id de la marca es obligatorio').trim(),
     keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
     createdAt: z.date(),
     updatedAt: z.date().optional(),
 })
 
-const ListBrandArraySchema = z.array(BrandSchema)
+const ListPromotionArraySchema = z.array(PromotionSchema)
 
-const AddBrandSchema = z.object({
+const AddPromotionSchema = z.object({
     name: z.string().min(1, 'El nombre es obligatorio').trim(),
+    description: z.string().trim().optional(),
     image: z.instanceof(File, 'La imagen es obligatoria'),
+    brandId: z.string().min(1, 'El id de la marca es obligatorio').trim(),
     keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
     createdAt: z.date(),
 })
 
-const UpdateBrandSchema = z.object({
+const UpdatePromotionSchema = z.object({
     id: z.string().min(1, 'El id es obligatorio').trim(),
     name: z.string().min(1, 'El nombre es obligatorio').trim(),
+    description: z.string().trim().optional(),
     image: z.union([z.instanceof(File), z.undefined()]),
     oldPath: z.string().min(1, 'La ruta es obligatoria').trim(),
+    brandId: z.string().min(1, 'El id de la marca es obligatorio').trim(),
     keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
     updatedAt: z.date(),
 }).transform((data) => {
@@ -35,15 +41,15 @@ const UpdateBrandSchema = z.object({
     return data
 })
 
-const DeleteBrandSchema = z.object({
+const DeletePromotionSchema = z.object({
     id: z.string().min(1, 'El id es obligatorio').trim(),
     path: z.string().min(1, 'La ruta es obligatoria').trim(),
 })
 
 export {
-    BrandSchema,
-    ListBrandArraySchema,
-    AddBrandSchema,
-    UpdateBrandSchema,
-    DeleteBrandSchema,
+    PromotionSchema,
+    ListPromotionArraySchema,
+    AddPromotionSchema,
+    UpdatePromotionSchema,
+    DeletePromotionSchema,
 }

@@ -6,7 +6,7 @@ const storagePath = ({
     id = null,
     name,
 }) => {
-    return `/uploads/brands${id ? `/${id}` : ''}/${Date.now()}-${name}`
+    return `/uploads/promotions${id ? `/${id}` : ''}/${Date.now()}-${name}`
 }
 
 const list = ({
@@ -17,7 +17,7 @@ const list = ({
 }) => {
     return DatabaseService.list({
         source,
-        collectionName: 'brands',
+        collectionName: 'promotions',
         filters,
         sorters,
         pageSize,
@@ -30,7 +30,7 @@ const get = ({
 }) => {
     return DatabaseService.get({
         source,
-        collectionName: 'brands',
+        collectionName: 'promotions',
         id,
     })
 }
@@ -50,7 +50,7 @@ const add = async ({
 
     return DatabaseService.add({
         source,
-        collectionName: 'brands',
+        collectionName: 'promotions',
         data,
     })
 }
@@ -75,7 +75,7 @@ const update = async({
 
     return DatabaseService.update({
         source,
-        collectionName: 'brands',
+        collectionName: 'promotions',
         data,
     })
 }
@@ -94,7 +94,7 @@ const remove = async ({
 
     return DatabaseService.remove({
         source,
-        collectionName: 'brands',
+        collectionName: 'promotions',
         id,
     })
 }

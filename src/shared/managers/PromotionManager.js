@@ -1,11 +1,12 @@
-import * as BrandRepository from '@/shared/repositories/BrandRepository'
+import * as PromotionManager from '@/shared/managers/PromotionManager'
+import * as PromotionRepository from '@/shared/repositories/PromotionRepository'
 import { 
-    ListBrandArraySchema, 
-    BrandSchema,
-    AddBrandSchema, 
-    UpdateBrandSchema, 
-    DeleteBrandSchema, 
-} from '@/shared/schemas/BrandSchema'
+    ListPromotionArraySchema, 
+    PromotionSchema,
+    AddPromotionSchema, 
+    UpdatePromotionSchema, 
+    DeletePromotionSchema, 
+} from '@/shared/schemas/PromotionSchema'
 import { prettifyError } from '@/shared/schemas/utils/utils'
 
 
@@ -16,7 +17,7 @@ const list = async ({
     pageSize,
 }) => {
     try{
-        const listResult = await BrandRepository.list({
+        const listResult = await PromotionRepository.list({
             source,
             filters,
             sorters,
@@ -25,7 +26,7 @@ const list = async ({
 
         if (listResult?.err) throw listResult.err
 
-        const schemaResult = ListBrandArraySchema.safeParse(listResult.data)
+        const schemaResult = ListPromotionArraySchema.safeParse(listResult.data)
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
             
         return { data: schemaResult.data }
@@ -40,15 +41,17 @@ const get = async ({
     id,
 }) => {
     try{
-        const getResult = await BrandRepository.get({
+        const getResult = await PromotionRepository.get({
             source,
-            collectionName: 'brands',
+            collectionName: 'promotions',
             id,
         })
+
+        console.log('getResult', getResult)
     
         if (getResult?.err) throw getResult.err
     
-        const schemaResult = BrandSchema.safeParse(getResult.data)
+        const schemaResult = PromotionSchema.safeParse(getResult.data)
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
     
         return { data: schemaResult.data }
@@ -63,10 +66,18 @@ const add = async ({
     data,
 }) => {
     try {
-        const schemaResult = AddBrandSchema.safeParse(data)
+        console.log('data', data)
+        const schemaResult = AddPromotionSchema.safeParse(data)
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
 
-        const addResult = await BrandRepository.add({
+        const brandResult = await PromotionManager.get({
+            source,
+            id: schemaResult.data.brandId,
+        })
+
+        if (brandResult?.err) throw brandResult.err
+
+        const addResult = await PromotionRepository.add({
             source,
             data: schemaResult.data,
         })
@@ -84,13 +95,10 @@ const update = async ({
     data,
 }) => {
     try {
-        console.log('raw data', data)
-        const schemaResult = UpdateBrandSchema.safeParse(data)
+        const schemaResult = UpdatePromotionSchema.safeParse(data)
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
-        
-        console.log('schema data', schemaResult.data)
-        
-        const updateResult = await BrandRepository.update({
+
+        const updateResult = await PromotionRepository.update({
             source,
             data: schemaResult.data,
         })
@@ -109,10 +117,10 @@ const remove = async ({
     path,
 }) => {
     try{
-        const schemaResult = DeleteBrandSchema.safeParse({ id, path })
+        const schemaResult = DeletePromotionSchema.safeParse({ id, path })
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
 
-        const removeResult = await BrandRepository.remove({
+        const removeResult = await PromotionRepository.remove({
             source,
             id,
             path,

@@ -2,7 +2,7 @@ import { Source } from '@/shared/utils/constants'
 import * as Form from '@/shared/components/Form'
 import { keywords } from '@/shared/utils/utils'
 
-import * as BrandManager from '@/shared/managers/BrandManager'
+import * as PromotionManager from '@/shared/managers/PromotionManager'
 
 
 const submit = ({
@@ -13,12 +13,16 @@ const submit = ({
 
     const id = form.querySelector('#id').value.trim()
     const name = form.querySelector('#name').value.trim()
+    const description = form.querySelector('#description').value.trim()
+    const brandId = form.querySelector('#brandId').selectedOptions[0].value.trim()
     const oldPath = form.querySelector('#path').value.trim()
     const image = form.querySelector('#image').files[0]
 
-    const brand = {
+    const promotion = {
         id,
         name,
+        description,
+        brandId,
         image,
         oldPath,
         keywords: keywords({ keys: [name] }),
@@ -28,9 +32,9 @@ const submit = ({
     Form.submit({
         form,
         onProcess: async () => {
-            const updateResult = await BrandManager.update({
+            const updateResult = await PromotionManager.update({
                 source: Source.FIREBASE,
-                data: brand,
+                data: promotion,
             })
 
             if (updateResult?.err) throw updateResult.err

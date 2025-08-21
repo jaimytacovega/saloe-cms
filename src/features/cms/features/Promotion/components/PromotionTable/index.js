@@ -2,13 +2,13 @@ import { html } from 'saloe/html'
 
 import Table from '@/shared/components/Table'
 
-import * as BrandManager from '@/shared/managers/BrandManager'
+import * as PromotionManager from '@/shared/managers/PromotionManager'
 import { Source } from '@/shared/utils/constants'
 import { Operators } from '@/shared/services/DatabaseService'
 import { lastUpdatedMessage } from '@/shared/utils/utils'
 
 
-const BrandTableRow = ({
+const PromotionTableRow = ({
     id,
     name,
     createdAt,
@@ -16,14 +16,14 @@ const BrandTableRow = ({
     toggled,
 }) => {
     return html`
-        <a href="/cms/marcas/${id}" class="Row" ${toggled ? 'toggled' : ''}>
+        <a href="/cms/promociones/${id}" class="Row" ${toggled ? 'toggled' : ''}>
             <span>${name}</span>
             <span>${lastUpdatedMessage({ date: updatedAt ?? createdAt })}</span>
         </a>
     `
 }
 
-const BrandTable = async ({
+const PromotionTable = async ({
     searchParams,
 }) => {
     const search = searchParams?.get('search')
@@ -37,7 +37,7 @@ const BrandTable = async ({
         ]
         : []
 
-    const { data: brands } = await BrandManager.list({
+    const { data: promotions } = await PromotionManager.list({
         source: Source.FIREBASE,
         pageSize: 20,
         filters,
@@ -46,17 +46,17 @@ const BrandTable = async ({
     return html`
         ${
             Table({
-                rows: brands.map((brand, idx) => BrandTableRow({
-                    id: brand.id,
-                    name: brand.name,
-                    createdAt: brand.createdAt,
-                    updatedAt: brand.updatedAt,
+                rows: promotions.map((promotion, idx) => PromotionTableRow({
+                    id: promotion.id,
+                    name: promotion.name,
+                    createdAt: promotion.createdAt,
+                    updatedAt: promotion.updatedAt,
                     toggled: idx === 0,
                 })),
-                createUrl: '/cms/marcas/crear',
+                createUrl: '/cms/promociones/crear',
             })
         }
     `
 }
 
-export default BrandTable
+export default PromotionTable

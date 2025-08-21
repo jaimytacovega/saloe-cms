@@ -5,7 +5,7 @@ import InputFile from '@/shared/components/InputFile'
 
 import NotFoundItem from '@/features/cms/components/NotFoundItem'
 
-import * as BrandRepository from '@/shared/repositories/BrandRepository'
+import * as BrandManager from '@/shared/managers/BrandManager'
 import { Source } from '@/shared/utils/constants'
 import { lastUpdatedMessage } from '@/shared/utils/utils'
 
@@ -15,7 +15,7 @@ const BrandAddOrUpdateForm = async ({
 }) => {
     const { data: brand } = brandId === 'new'
         ? { data: {} }
-        : await BrandRepository.get({
+        : await BrandManager.get({
             source: Source.FIREBASE,
             id: brandId,
         })
@@ -64,7 +64,7 @@ const BrandAddOrUpdateForm = async ({
                     ${
                         brandId === 'new'
                             ? html`
-                                <a href="/cms/categorias" class="Button PrimaryButton PrimaryGray">
+                                <a href="/cms/marcas" class="Button PrimaryButton PrimaryGray">
                                     <img src="/img/icon/corner-up-left-black.svg" width="18" height="18" alt="go back">
                                 </a>
                             `
@@ -87,7 +87,7 @@ const BrandAddOrUpdateForm = async ({
             </form>
         `
         : NotFoundItem({
-            createUrl: '/cms/categorias',
+            createUrl: '/cms/marcas',
         })
 }
 
