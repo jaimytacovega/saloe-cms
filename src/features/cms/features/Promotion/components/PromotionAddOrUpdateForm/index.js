@@ -24,8 +24,6 @@ const PromotionAddOrUpdateForm = async ({
             id: promotionId,
         })
 
-    console.log('promotion', promotion)
-
     const { data: brands } = await BrandManager.list({
         source: Source.FIREBASE,
     })

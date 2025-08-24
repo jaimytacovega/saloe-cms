@@ -1,4 +1,4 @@
-name = "compy"
+name = "saloe-cms"
 main = "src/workers/cloudflare/CloudflareWorker.js"
 compatibility_date = "2023-10-30"
 
@@ -22,10 +22,10 @@ IS_CLOUDFLARE_WORKER = true
 APP_NAME = "saloe-cms"
 ENV = "prod"
 
-# [env.dev]
-# kv_namespaces = [
-#     { binding = "KV_API_CACHE", id = "1e57f8c64f8f4060968574b32dad4f34", preview_id = "f150eb8a194b444ebe4058114b9969ce" },
-# ]
+[env.dev]
+kv_namespaces = [
+    { binding = "HOOKS_DEV", id = "5a1ea699847d49039787a22fca6407c4", preview_id = "5a1ea699847d49039787a22fca6407c4" },
+]
 
 # [env.qa]
 # kv_namespaces = [

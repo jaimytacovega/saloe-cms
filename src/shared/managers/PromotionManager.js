@@ -46,8 +46,6 @@ const get = async ({
             collectionName: 'promotions',
             id,
         })
-
-        console.log('getResult', getResult)
     
         if (getResult?.err) throw getResult.err
     
@@ -66,7 +64,6 @@ const add = async ({
     data,
 }) => {
     try {
-        console.log('data', data)
         const schemaResult = AddPromotionSchema.safeParse(data)
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
 

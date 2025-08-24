@@ -7,6 +7,8 @@ import { Source } from '@/shared/utils/constants'
 import { Operators } from '@/shared/services/DatabaseService'
 import { lastUpdatedMessage } from '@/shared/utils/utils'
 
+import * as BrandHook from '@/shared/hooks/BrandHook'
+
 
 const BrandTableRow = ({
     id,
@@ -37,11 +39,21 @@ const BrandTable = async ({
         ]
         : []
 
-    const { data: brands } = await BrandManager.list({
+    // const { data: brands } = await BrandManager.list({
+    //     source: Source.FIREBASE,
+    //     pageSize: 20,
+    //     filters,
+    // })
+
+    const { data: brands, isCached } = await BrandHook.useList({
         source: Source.FIREBASE,
         pageSize: 20,
         filters,
+        ttl: 60_000,
     })
+
+    console.log('brands', brands)
+    console.log('isCached', isCached)
 
     return html`
         ${

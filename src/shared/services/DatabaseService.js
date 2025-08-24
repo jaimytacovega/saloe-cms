@@ -87,6 +87,35 @@ const remove = ({
     }
 }
 
+const listArgumentsToQueryString = ({
+    filters,
+    sorters,
+    pageSize,
+}) => {
+    const searchParams = new URLSearchParams()
+
+    if (filters) {
+        searchParams.set('filters', filters.reduce((acc, filter) => {
+            acc += `${filter.field}${filter.operator}${filter.value},`
+            return acc
+        }, ''))
+    }
+
+    if (sorters) {
+        searchParams.set('sorters', sorters.reduce((acc, sorter) => {
+            acc += `${sorter.field}:${sorter.direction},`
+            return acc
+        }, ''))
+    }
+
+    if (pageSize) {
+        searchParams.set('pageSize', pageSize)
+    }
+
+    return searchParams.toString()
+}
+
+
 export {
     Operators,
 
@@ -95,4 +124,6 @@ export {
     add,
     update,
     remove,
+
+    listArgumentsToQueryString,
 }

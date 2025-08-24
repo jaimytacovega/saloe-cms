@@ -9,11 +9,13 @@ import {
     getRoute,
 } from 'saloe/router'
 import { getStaticResponse } from 'saloe/cloudflare-worker'
-
 import { setRouter } from '@/workers/cloudflare/CloudflareWorkerRouter'
+import { setKvGetterSetter } from '@/workers/cloudflare/CloudflareWorkerKVGetterSetter'
+import { setContext } from '@/shared/lib/@saloe-context'
 
 
 setRouter()
+setKvGetterSetter()
 
 const CloudflareWorker = {
     fetch: async ({ request, env, ctx }) => {
@@ -21,6 +23,12 @@ const CloudflareWorker = {
 
         const urlPattern = findPatternFromUrl({ url })
         const route = getRoute({ pathname: urlPattern?.pathname })
+
+        if (route){
+            setContext({ key: 'env', value: env })
+            setContext({ key: 'request', value: request })
+        }
+        
         const routeResult = route 
             ? await route({ 
                 request, 

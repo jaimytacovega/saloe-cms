@@ -12,6 +12,11 @@ import * as CmsPromotionsPage from '@/app/cms/promociones/page'
 import * as CmsPromotionsCreatePage from '@/app/cms/promociones/crear/page'
 import * as CmsPromotionsByIdPage from '@/app/cms/promociones/[id]'
 
+import * as CmsSubCategoriesPage from '@/app/cms/subcategorias/page'
+// import * as CmsSubCategoriesCreatePage from '@/app/cms/subcategorias/crear/page'
+// import * as CmsSubCategoriesByIdPage from '@/app/cms/subcategorias/[id]'
+
+
 
 const setRouter = () => {
     addRoute({ pathname: '/cms/categorias', route: CmsCategoriesPage.default })
@@ -25,6 +30,10 @@ const setRouter = () => {
     addRoute({ pathname: '/cms/promociones', route: CmsPromotionsPage.default })
     addRoute({ pathname: '/cms/promociones/crear', route: CmsPromotionsCreatePage.default })
     addRoute({ pathname: '/cms/promociones/:id', route: CmsPromotionsByIdPage.default })
+
+    addRoute({ pathname: '/cms/subcategorias', route: CmsSubCategoriesPage.default })
+    // addRoute({ pathname: '/cms/subcategorias/crear', route: CmsSubCategoriesCreatePage.default })
+    // addRoute({ pathname: '/cms/subcategorias/:id', route: CmsSubCategoriesByIdPage.default })
 }
 
 export {
