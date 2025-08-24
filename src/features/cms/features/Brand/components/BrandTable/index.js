@@ -52,7 +52,6 @@ const BrandTable = async ({
         ttl: 60_000,
     })
 
-    console.log('brands', brands)
     console.log('isCached', isCached)
 
     return html`
@@ -60,7 +59,7 @@ const BrandTable = async ({
             Table({
                 rows: brands.map((brand, idx) => BrandTableRow({
                     id: brand.id,
-                    name: brand.name,
+                    name: `${brand.name} ~ ${isCached ? 'cached' : 'not cached'}`,
                     createdAt: brand.createdAt,
                     updatedAt: brand.updatedAt,
                     toggled: idx === 0,

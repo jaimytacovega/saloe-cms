@@ -23,10 +23,19 @@ const CloudflareWorker = {
 
         const urlPattern = findPatternFromUrl({ url })
         const route = getRoute({ pathname: urlPattern?.pathname })
-
+        const isDocument = request.headers.get('accept')?.includes('text/html') && request.method === 'GET'
+        
         if (route){
             setContext({ key: 'env', value: env })
             setContext({ key: 'request', value: request })
+        }
+
+        if (isDocument){
+            const cacheControl = request.headers.get('cache-control')
+            const pragma = request.headers.get('pragma')
+            const isHardReload = cacheControl?.includes('no-cache') || pragma === 'no-cache'
+
+            setContext({ key: 'isHardReload', value: isHardReload })
         }
         
         const routeResult = route 
