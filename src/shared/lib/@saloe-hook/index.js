@@ -1,6 +1,6 @@
 import { isCloudflareWorker } from 'saloe/util'
-import { getNavigateState, NAVIGATE_STATE } from '@/shared/lib/@saloe-hook/utils'
 import { getContext } from '@/shared/lib/@saloe-context/index'
+import { prettifyError } from '@/shared/schemas/utils/utils'
 
 
 const CACHE_NAME = 'HOOKS_DEV'
@@ -128,6 +128,7 @@ const setCacheAsCloudflareWorker = async ({ cacheUrl, data }) => {
 const useQuery = async ({
     queryKey,
     queryFn,
+    querySchema,
     ttl = 0,
 }) => {
     try{
@@ -151,7 +152,16 @@ const useQuery = async ({
         const isExpired = isCachedData && Date.now() - cachedResult.data.timestamp > ttl
         const isHardReload = getContext({ key: 'isHardReload' }) ?? true
 
-        if (isCachedData && !isExpired && !isHardReload) return { data: cachedResult.data.data, isCached: true }
+        if (isCachedData && !isExpired && !isHardReload){
+            if (querySchema) {
+                const schemaResult = querySchema.safeParse(cachedResult.data.data)
+                if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
+
+                return { data: schemaResult.data, isCached: true }
+            }
+
+            return { data: cachedResult.data.data, isCached: true }
+        }
 
         const queryFnResult = await queryFn()
         if (queryFnResult?.err) throw queryFnResult

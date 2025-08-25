@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { FileSchema } from '@/shared/schemas/utils/FileSchema'
+import { DateSchema } from '@/shared/schemas/utils/DateSchema'
 
 
 const BrandSchema = z.object({
@@ -7,8 +8,8 @@ const BrandSchema = z.object({
     name: z.string().min(1, 'El nombre es obligatorio').trim(),
     image: FileSchema,
     keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
-    createdAt: z.date(),
-    updatedAt: z.date().optional(),
+    createdAt: DateSchema,
+    updatedAt: DateSchema.optional(),
 })
 
 const ListBrandArraySchema = z.array(BrandSchema)
