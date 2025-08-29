@@ -20,7 +20,6 @@ setKvGetterSetter()
 const CloudflareWorker = {
     fetch: async ({ request, env, ctx }) => {
         const url = new URL(request.url)
-
         const urlPattern = findPatternFromUrl({ url })
         const route = getRoute({ pathname: urlPattern?.pathname })
         const isDocument = request.headers.get('accept')?.includes('text/html') && request.method === 'GET'
@@ -30,10 +29,12 @@ const CloudflareWorker = {
             setContext({ key: 'request', value: request })
         }
 
+        const isForcingHardReload = url.searchParams.get('hard-reload') === 'true'
+
         if (isDocument){
             const cacheControl = request.headers.get('cache-control')
             const pragma = request.headers.get('pragma')
-            const isHardReload = cacheControl?.includes('no-cache') || pragma === 'no-cache'
+            const isHardReload = isForcingHardReload || cacheControl?.includes('no-cache') || pragma === 'no-cache'
 
             setContext({ key: 'isHardReload', value: isHardReload })
         }

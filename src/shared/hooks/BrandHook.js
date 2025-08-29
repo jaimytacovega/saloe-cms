@@ -1,7 +1,7 @@
 import * as BrandManager from '@/shared/managers/BrandManager'
 import { useQuery } from '@/shared/lib/@saloe-hook'
 import { listArgumentsToQueryString } from '@/shared/services/DatabaseService'
-import { ListBrandArraySchema } from '@/shared/schemas/BrandSchema'
+import { ListBrandArraySchema, BrandSchema } from '@/shared/schemas/BrandSchema'
 
 
 const useList = ({
@@ -19,6 +19,20 @@ const useList = ({
     })
 }
 
+const useGet = ({
+    source,
+    id,
+    ttl,
+}) => {
+    return useQuery({
+        queryKey: ['brand', 'get', source, id],
+        queryFn: () => BrandManager.get({ source, id }),
+        querySchema: BrandSchema,
+        ttl,
+    })
+}
+
 export {
     useList,
+    useGet,
 }

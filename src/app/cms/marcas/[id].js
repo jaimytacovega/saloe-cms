@@ -13,7 +13,7 @@ const page = async ({
     const url = new URL(request?.url)
     const match = urlPattern?.exec(url?.href)
     const brandId = match?.pathname?.groups?.id
-
+    
     return stream({
         head: () => html`
             <meta charset="UTF-8" />

@@ -48,36 +48,36 @@ const transformQueryKey = ({ queryKey }) => {
 //     }
 // }
 
-// const setCacheAsServiceWorker = async ({ cacheUrl, data }) => {
-//     try{
-//         const request = getContext({ key: 'request' })
-//         if (!request) throw 'request-not-found'
+const setCacheAsServiceWorker = async ({ cacheUrl, data }) => {
+    try{
+        const request = getContext({ key: 'request' })
+        if (!request) throw 'request-not-found'
 
-//         const origin = (new URL(request.url)).origin
-//         const kvSetUrl = `${origin}/~/kv/setter`
+        const origin = (new URL(request.url)).origin
+        const kvSetUrl = `${origin}/~/kv/setter`
 
-//         const timestamp = Date.now()
+        const timestamp = Date.now()
         
-//         const kvSetResponse = await fetch(kvSetUrl, {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify({
-//                 key: cacheUrl,
-//                 data: { data, timestamp },
-//                 store: CACHE_NAME,
-//             }),
-//         })
+        const kvSetResponse = await fetch(kvSetUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                key: cacheUrl,
+                data: { data, timestamp },
+                store: CACHE_NAME,
+            }),
+        })
 
-//         if (!kvSetResponse.ok) throw kvSetResponse
+        if (!kvSetResponse.ok) throw kvSetResponse
 
-//         return { data, timestamp }
-//     }catch(err){
-//         console.error(err)
-//         return { err }
-//     }
-// }
+        return { data, timestamp }
+    }catch(err){
+        console.error(err)
+        return { err }
+    }
+}
 
 const getCacheAsCloudflareWorker = async ({ cacheUrl }) => {
     try{
@@ -125,6 +125,35 @@ const setCacheAsCloudflareWorker = async ({ cacheUrl, data }) => {
     }
 }
 
+const useGetCache = async ({ queryKey }) => {
+    const env = getContext({ key: 'env' })
+    if (!env) throw 'env-not-found'
+
+    const getCacheFn = isCloudflareWorker({ env }) 
+        ? getCacheAsCloudflareWorker 
+        : null
+
+    const cacheUrl = useGetCacheUrl({ queryKey })
+    return getCacheFn({ cacheUrl })
+}
+
+const useSetCache = async ({ queryKey, data }) => {
+    const env = getContext({ key: 'env' })
+    if (!env) throw 'env-not-found'
+    
+    const setCacheFn = isCloudflareWorker({ env }) 
+        ? setCacheAsCloudflareWorker 
+        : setCacheAsServiceWorker
+
+    const cacheUrl = useGetCacheUrl({ queryKey })
+    return setCacheFn({ cacheUrl, data })
+}
+
+const useGetCacheUrl = ({ queryKey }) => {
+    const cacheKey = transformQueryKey({ queryKey })
+    return `~/hooks/${cacheKey}`
+}
+
 const useQuery = async ({
     queryKey,
     queryFn,
@@ -132,21 +161,7 @@ const useQuery = async ({
     ttl = 0,
 }) => {
     try{
-        const env = getContext({ key: 'env' })
-        if (!env) throw 'env-not-found'
-
-        const getCache = isCloudflareWorker({ env }) 
-            ? getCacheAsCloudflareWorker 
-            : null
-
-        const setCache = isCloudflareWorker({ env }) 
-            ? setCacheAsCloudflareWorker 
-            : null
-
-        const cacheKey = transformQueryKey({ queryKey })
-        const cacheUrl = `~/hooks/${cacheKey}`
-
-        const cachedResult = await getCache({ cacheUrl })
+        const cachedResult = await useGetCache({ queryKey })
 
         const isCachedData = Boolean(cachedResult?.data)
         const isExpired = isCachedData && Date.now() - cachedResult.data.timestamp > ttl
@@ -166,7 +181,7 @@ const useQuery = async ({
         const queryFnResult = await queryFn()
         if (queryFnResult?.err) throw queryFnResult
             
-        const setCacheResult = await setCache({ cacheUrl, data: queryFnResult?.data })
+        const setCacheResult = await useSetCache({ queryKey, data: queryFnResult?.data })
         if (setCacheResult?.err) throw setCacheResult
 
         return { data: queryFnResult?.data, isCached: false }
@@ -178,4 +193,6 @@ const useQuery = async ({
 
 export {
     useQuery,
+    useGetCache,
+    useSetCache,
 }

@@ -37,7 +37,9 @@ const submit = ({
             return updateResult
         },
         onSuccess: () => {
-            location.reload()
+            const url = new URL(location.href)
+            url.searchParams.set('hard-reload', 'true')
+            location.href = url.toString()
         },
     })
 }

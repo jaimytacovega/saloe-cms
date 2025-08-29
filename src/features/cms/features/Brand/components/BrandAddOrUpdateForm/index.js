@@ -6,6 +6,7 @@ import InputFile from '@/shared/components/InputFile'
 import NotFoundItem from '@/features/cms/components/NotFoundItem'
 
 import * as BrandManager from '@/shared/managers/BrandManager'
+import * as BrandHook from '@/shared/hooks/BrandHook'
 import { Source } from '@/shared/utils/constants'
 import { lastUpdatedMessage } from '@/shared/utils/utils'
 
@@ -13,19 +14,30 @@ import { lastUpdatedMessage } from '@/shared/utils/utils'
 const BrandAddOrUpdateForm = async ({
     brandId,
 }) => {
-    const { data: brand } = brandId === 'new'
-        ? { data: {} }
-        : await BrandManager.get({
+    // const { data: brand } = brandId === 'new'
+    //     ? { data: {} }
+    //     : await BrandManager.get({
+    //         source: Source.FIREBASE,
+    //         id: brandId,
+    //     })
+
+    const { data: brand, isCached } = brandId === 'new'
+        ? { data: {}, isCached: false }
+        : await BrandHook.useGet({
             source: Source.FIREBASE,
             id: brandId,
+            ttl: 10_000,
         })
+
+    console.log('brand =', brand)
+    console.log('isCached =', isCached)
 
     return Boolean(brand)
         ? html`
             <form on-submit="Brand${brandId === 'new' ? 'Add' : 'Update'}Form.submit">
                 <header>
                     <p>MARCA</p>
-                    <h2>${brand?.code ?? 'Nueva marca'}</h2>
+                    <h2>${brand?.code ?? 'Nueva marca'} ~ ${isCached ? 'cached' : 'not cached'}</h2>
                 </header>
                 <div class="form__scroller">
                     <fieldset columns="1">
