@@ -10,43 +10,36 @@ const transformQueryKey = ({ queryKey }) => {
     return queryKey
 }
 
-// const getCacheAsServiceWorker = async ({ cacheUrl }) => {
-//     try{
-//         // const cache = await Cache.get(CACHE_NAME)
-//         // if (!cache) throw 'cache-not-found'
+const getCacheAsServiceWorker = async ({ cacheUrl }) => {
+    try{
+        const request = getContext({ key: 'request' })
+        if (!request) throw 'request-not-found'
 
-//         // const cachedResponse = await cache.get(cacheUrl)
+        const origin = (new URL(request.url)).origin
+        const kvGetUrl = `${origin}/~/kv/getter`
 
-//         // return { data: cachedResponse }
+        const kvGetResponse = await fetch(kvGetUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                key: cacheUrl,
+                store: CACHE_NAME,
+            }),
+        })
 
-//         const request = getContext({ key: 'request' })
-//         if (!request) throw 'request-not-found'
+        if (!kvGetResponse.ok) return { err: 'kv-get-failed' }
 
-//         const origin = (new URL(request.url)).origin
-//         const kvGetUrl = `${origin}/~/kv/getter`
+        const kvGetJson = await kvGetResponse.json()
+        if (kvGetJson?.err) throw kvGetJson.err
 
-//         const kvGetResponse = await fetch(kvGetUrl, {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify({
-//                 key: cacheUrl,
-//                 store: CACHE_NAME,
-//             }),
-//         })
-
-//         if (!kvGetResponse.ok) return { err: 'kv-get-failed' }
-
-//         const kvGetJson = await kvGetResponse.json()
-//         if (kvGetJson?.err) throw kvGetJson.err
-
-//         return { data: JSON.parse(kvGetJson.data) }
-//     }catch(err){
-//         console.error(err)
-//         return { err }
-//     }
-// }
+        return { data: JSON.parse(kvGetJson.data) }
+    }catch(err){
+        console.error(err)
+        return { err }
+    }
+}
 
 const setCacheAsServiceWorker = async ({ cacheUrl, data }) => {
     try{
@@ -131,7 +124,7 @@ const useGetCache = async ({ queryKey }) => {
 
     const getCacheFn = isCloudflareWorker({ env }) 
         ? getCacheAsCloudflareWorker 
-        : null
+        : getCacheAsServiceWorker
 
     const cacheUrl = useGetCacheUrl({ queryKey })
     return getCacheFn({ cacheUrl })
@@ -154,13 +147,88 @@ const useGetCacheUrl = ({ queryKey }) => {
     return `~/hooks/${cacheKey}`
 }
 
+const QUERIES_BY_KEY = new Map()
+const QUERIES_BY_GROUP = new Map()
+
+const configRevalidate = ({
+    queryKey,
+    queryGroup,
+    queryFn,
+    querySchema,
+}) => {
+    QUERIES_BY_KEY.set(queryKey, ({ ttl }) => {
+        return useQuery({ 
+            queryKey, 
+            queryGroup,
+            queryFn, 
+            querySchema, 
+            ttl: ttl, 
+        })
+    })
+
+    if (queryGroup){
+        QUERIES_BY_GROUP.set(queryGroup, ({ ttl }) => {
+            return useQuery({ 
+                queryKey, 
+                queryGroup,
+                queryFn, 
+                querySchema, 
+                ttl: ttl, 
+            })
+        })
+    }
+}
+
+const useRevalidate = async ({ 
+    queryKey, 
+    queryGroup, 
+    queryKeys,
+    queryGroups,
+}) => {
+    if (queryKey){
+        const query = QUERIES_BY_KEY.get(queryKey)
+        if (query) return query({ ttl: 0 })
+    }
+
+    if (queryGroup){
+        const query = QUERIES_BY_GROUP.get(queryGroup)
+        if (query) return query({ ttl: 0 })
+    }
+
+    if (queryKeys || queryGroups){
+        try{
+            const revalidateResults = await Promise.allSettled(
+                [
+                    ...(queryKeys ?? []).map((queryKey) => {
+                        return useRevalidate({ queryKey })
+                    }),
+                    ...(queryGroups ?? []).map((queryGroup) => {
+                        return useRevalidate({ queryGroup })
+                    }),
+                ]
+            )
+
+            const rejectedRevalidateResults = revalidateResults.filter((revalidateResult) => revalidateResult.status === 'rejected')
+            if (rejectedRevalidateResults.length > 0) throw rejectedRevalidateResults[0].reason
+
+            return { data: revalidateResults.map((revalidateResult) => revalidateResult.value) }
+        }catch(err){
+            console.error(err)
+            return { err }
+        }
+    }
+}
+
 const useQuery = async ({
     queryKey,
+    queryGroup,
     queryFn,
     querySchema,
     ttl = 0,
 }) => {
     try{
+        configRevalidate({ queryKey, queryGroup, queryFn, querySchema })
+
         const cachedResult = await useGetCache({ queryKey })
 
         const isCachedData = Boolean(cachedResult?.data)
@@ -195,4 +263,5 @@ export {
     useQuery,
     useGetCache,
     useSetCache,
+    useRevalidate,
 }

@@ -2,7 +2,7 @@ import { Source } from '@/shared/utils/constants'
 import * as Form from '@/shared/components/Form'
 import { keywords } from '@/shared/utils/utils'
 
-import * as BrandManager from '@/shared/managers/BrandManager'
+import * as BrandHook from '@/shared/hooks/BrandHook'
 
 
 const submit = ({
@@ -28,7 +28,7 @@ const submit = ({
     Form.submit({
         form,
         onProcess: async () => {
-            const updateResult = await BrandManager.update({
+            const updateResult = await BrandHook.useUpdate({
                 source: Source.FIREBASE,
                 data: brand,
             })
@@ -37,9 +37,7 @@ const submit = ({
             return updateResult
         },
         onSuccess: () => {
-            const url = new URL(location.href)
-            url.searchParams.set('hard-reload', 'true')
-            location.href = url.toString()
+            location.reload()
         },
     })
 }
