@@ -98,6 +98,10 @@ const BrandAddOrUpdateForm = async ({
             </form>
         `
         : NotFoundItem({
+            header: html`
+                <h5>Aun no se registran datos</h5>
+                <p>Crea nuevos registros y gestionalos desde esta sección</p>
+            `,
             createUrl: '/cms/marcas',
         })
 }

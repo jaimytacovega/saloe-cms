@@ -115,7 +115,11 @@ const SubCategoryAddOrUpdateForm = async ({
             </form>
         `
         : NotFoundItem({
-            createUrl: '/cms/subcategorías',
+            header: html`
+                <h5>Aun no se registran datos</h5>
+                <p>Crea nuevos registros y gestionalos desde esta sección</p>
+            `,
+            createUrl: '/cms/subcategorias',
         })
 }
 

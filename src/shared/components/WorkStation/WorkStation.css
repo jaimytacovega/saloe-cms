@@ -19,8 +19,20 @@ main > container.WorkStation__container {
     gap: 8px;
     flex-grow: 1;
 
+    @container workstation (min-inline-size: 1000px){
+        display: grid;
+        grid-template-columns: 5fr 4fr;
+        grid-template-rows: auto auto 1fr;
+        gap: 8px 0;
+    }
+
     > header{
         padding-inline: 16px;
+
+        @container workstation (min-inline-size: 1000px){
+            grid-column: 1 / -1;
+            grid-row: 1 / 2;
+        }
 
         > h1{
             font: var(--font-size-p)/1.2 var(--font-family-bold);
@@ -32,13 +44,18 @@ main > container.WorkStation__container {
         padding-block: 0 2px;
         display: flex;
 
+        @container workstation (min-inline-size: 1000px){
+            grid-column: 1 / -1;
+            grid-row: 2 / 3;
+        }
+
         > form{
             inline-size: 100%;
         }
     }
 
     > .WorkStation__table{
-        border-top: 1px solid var(--color-gray-3);
+        border-block-start: 1px solid var(--color-gray-3);
         padding-inline: 16px;
         padding-block: 2px 0;
         display: flex;
@@ -47,16 +64,27 @@ main > container.WorkStation__container {
         
         &:has(~ .WorkStation__form){
             display: none;
+
+            @container workstation (min-inline-size: 1000px){
+                display: flex;
+                grid-column: 1 / 2;
+                grid-row: 3 / 4;
+            }
         }
     }
 
     > .WorkStation__form{
-        border-top: 1px solid var(--color-gray-3);
+        border-block-start: 1px solid var(--color-gray-3);
         padding-inline: 16px;
         padding-block: 2px 0;
         display: flex;
         flex-flow: column wrap;
         flex-grow: 1;
+
+        @container workstation (min-inline-size: 1000px){
+            border-inline-start: 1px solid var(--color-gray-3);
+            flex-grow: 1;
+        }
 
         > form{
             flex-grow: 1;

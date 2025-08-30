@@ -5,6 +5,7 @@ import BrandAddOrUpdateForm from '@/features/cms/features/Brand/components/Brand
 import BrandDeleteDialog from '@/features/cms/features/Brand/components/BrandDeleteDialog'
 
 import WorkStation from '@/shared/components/WorkStation'
+import NotFoundItem from '@/features/cms/components/NotFoundItem'
 
 import CmsToolbox from '@/features/cms/components/CmsToolbox'
 
@@ -50,7 +51,15 @@ const BrandWorkStation = async ({
                             })
                         }
                     ` 
-                    : '',
+                    : html`
+                        ${
+                            NotFoundItem({
+                                header: html`
+                                    <h5>Selecciona una marca para ver detalles</h5>
+                                `,
+                            })
+                        }   
+                    `,
             })
         }
     `

@@ -52,7 +52,7 @@ form {
             block-size: 1.2ch;
             border-radius: 50%;
             border: 3px solid rgb(255 255 255 / 25%);
-            border-top-color: var(--color-white);
+            border-block-start-color: var(--color-white);
             animation: submitting-anim 1.5s linear infinite;
         }
     }
