@@ -1,7 +1,8 @@
-import * as BrandManager from '@/shared/managers/BrandManager'
 import { useQuery } from '@/shared/lib/@saloe-hook'
-import { listArgumentsToQueryString } from '@/shared/services/DatabaseService'
+
+import * as BrandManager from '@/shared/managers/BrandManager'
 import { ListBrandArraySchema, BrandSchema } from '@/shared/schemas/BrandSchema'
+import { listArgumentsToQueryString } from '@/shared/services/DatabaseService'
 
 
 const useList = ({

@@ -9,6 +9,8 @@ import NotFoundItem from '@/features/cms/components/NotFoundItem'
 
 import * as PromotionManager from '@/shared/managers/PromotionManager'
 import * as BrandManager from '@/shared/managers/BrandManager'
+import * as PromotionHook from '@/shared/hooks/PromotionHook'
+import * as BrandHook from '@/shared/hooks/BrandHook'
 
 import { Source } from '@/shared/utils/constants'
 import { lastUpdatedMessage } from '@/shared/utils/utils'
@@ -17,23 +19,44 @@ import { lastUpdatedMessage } from '@/shared/utils/utils'
 const PromotionAddOrUpdateForm = async ({
     promotionId,
 }) => {
-    const { data: promotion } = promotionId === 'new'
-        ? { data: {} }
-        : await PromotionManager.get({
-            source: Source.FIREBASE,
-            id: promotionId,
-        })
+    // const { data: promotion } = promotionId === 'new'
+    //     ? { data: {} }
+    //     : await PromotionManager.get({
+    //         source: Source.FIREBASE,
+    //         id: promotionId,
+    //     })
 
-    const { data: brands } = await BrandManager.list({
-        source: Source.FIREBASE,
-    })
+    // const { data: brands } = await BrandManager.list({
+    //     source: Source.FIREBASE,
+    // })
+
+    const [promotionGetResult, brandListResult] = await Promise.allSettled([
+        promotionId === 'new'
+            ? new Promise((resolve) => resolve({ data: {}, isCached: false }))
+            : PromotionHook.useGet({
+                source: Source.FIREBASE,
+                id: promotionId,
+                ttl: 10_000,
+            })
+        ,
+        BrandHook.useList({
+            source: Source.FIREBASE,
+            ttl: 10_000,
+        }),
+    ])
+
+    // TODO: Make error page
+    if (promotionGetResult.status === 'rejected' || brandListResult.status === 'rejected') return html`error`
+
+    const { data: promotion, isCached } = promotionGetResult.value
+    const { data: brands } = brandListResult.value
 
     return Boolean(promotion)
         ? html`
             <form on-submit="Promotion${promotionId === 'new' ? 'Add' : 'Update'}Form.submit">
                 <header>
                     <p>PROMOCIÓN</p>
-                    <h2>${promotion?.code ?? 'Nueva promoción'}</h2>
+                    <h2>${promotion?.code ?? 'Nueva promoción'} ~ ${isCached ? 'cached' : 'not cached'}</h2>
                 </header>
                 <div class="form__scroller">
                     <fieldset columns="1">

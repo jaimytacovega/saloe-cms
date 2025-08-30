@@ -21,3 +21,9 @@ import * as A10 from '@/features/cms/features/Promotion/components/PromotionAddO
 console.log(A10)
 import * as A11 from '@/features/cms/features/Promotion/components/PromotionDeleteDialog/actions/PromotionDeleteDialogForm.submit'
 console.log(A11)
+import * as A12 from '@/features/cms/features/SubCategory/components/SubCategoryAddOrUpdateForm/actions/SubCategoryAddForm.submit'
+console.log(A12)
+import * as A13 from '@/features/cms/features/SubCategory/components/SubCategoryAddOrUpdateForm/actions/SubCategoryUpdateForm.submit'
+console.log(A13)
+import * as A14 from '@/features/cms/features/SubCategory/components/SubCategoryDeleteDialog/actions/SubCategoryDeleteDialogForm.submit'
+console.log(A14)

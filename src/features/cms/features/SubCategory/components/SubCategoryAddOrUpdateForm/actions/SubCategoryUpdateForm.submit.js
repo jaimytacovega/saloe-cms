@@ -2,8 +2,7 @@ import { Source } from '@/shared/utils/constants'
 import * as Form from '@/shared/components/Form'
 import { keywords } from '@/shared/utils/utils'
 
-// import * as PromotionManager from '@/shared/managers/PromotionManager'
-import * as PromotionHook from '@/shared/hooks/PromotionHook'
+import * as SubCategoryHook from '@/shared/hooks/SubCategoryHook'
 
 
 const submit = ({
@@ -15,32 +14,27 @@ const submit = ({
     const id = form.querySelector('#id').value.trim()
     const name = form.querySelector('#name').value.trim()
     const description = form.querySelector('#description').value.trim()
-    const brandId = form.querySelector('#brandId').selectedOptions[0].value.trim()
     const oldPath = form.querySelector('#path').value.trim()
     const image = form.querySelector('#image').files[0]
+    const seoKeywords = form.querySelector('#seoKeywords').value.trim()
 
-    const promotion = {
+    const subCategory = {
         id,
         name,
         description,
-        brandId,
         image,
         oldPath,
-        keywords: keywords({ keys: [name] }),
+        seoKeywords,
+        keywords: keywords({ keys: [name, description, seoKeywords] }),
         updatedAt: new Date(),
     }
 
     Form.submit({
         form,
         onProcess: async () => {
-            // const updateResult = await PromotionManager.update({
-            //     source: Source.FIREBASE,
-            //     data: promotion,
-            // })
-
-            const updateResult = await PromotionHook.useUpdate({
+            const updateResult = await SubCategoryHook.useUpdate({
                 source: Source.FIREBASE,
-                data: promotion,
+                data: subCategory,
             })
 
             if (updateResult?.err) throw updateResult.err

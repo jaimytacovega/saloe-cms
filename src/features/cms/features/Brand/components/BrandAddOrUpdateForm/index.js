@@ -5,7 +5,6 @@ import InputFile from '@/shared/components/InputFile'
 
 import NotFoundItem from '@/features/cms/components/NotFoundItem'
 
-import * as BrandManager from '@/shared/managers/BrandManager'
 import * as BrandHook from '@/shared/hooks/BrandHook'
 import { Source } from '@/shared/utils/constants'
 import { lastUpdatedMessage } from '@/shared/utils/utils'
