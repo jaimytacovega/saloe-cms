@@ -135,6 +135,70 @@ const remove = async ({ collectionName, id }) => {
     }
 }
 
+const getDocRef = ({ collectionName, id }) => {
+    return id 
+        ? doc(firestore, collectionName, id) 
+        : doc(collection(firestore, collectionName))
+}
+
+const incrementCounter = async ({
+    collectionName,
+    id,
+    value,
+}) => {
+    const docRef = getDocRef({ collectionName, id })
+    const updateResult = await updateDoc(docRef, {
+        count: increment(value),
+    })
+    if (updateResult?.err) return updateResult
+
+    return get({ collectionName, id })
+}
+
+const onTransaction = async ({ transaction }) => {
+    try{
+        const transactionResult = await runTransaction(firestore, transaction)
+        return { data: transactionResult }
+    }catch(err){
+        return { err }
+    }
+}
+
+const getWithTransaction = async ({
+    tx,
+    collectionName,
+    id,
+}) => {
+    const ref = getDocRef({ collectionName, id })
+    const refDoc = await tx.get(ref)
+    const data = refDoc.exists() 
+        ? refDoc.data() 
+        : null
+
+    return {
+        ref, 
+        data,
+    }
+}
+
+const addWithTransaction = ({
+    tx,
+    collectionName,
+    ref,
+    data,
+}) => {
+    return tx.set(ref ?? getDocRef({ collectionName, id: data?.id }), formatDocForDB({ doc: data }))
+}
+
+const updateWithTransaction = ({
+    tx,
+    collectionName,
+    ref,
+    data,
+}) => {
+    return tx.update(ref ?? getDocRef({ collectionName, id: data?.id }), formatDocForDB({ doc: data }))
+}
+
 const formatDoc = ({ data }) => {
     for (const key of Object.keys(data))
         if (isTimestamp({ timestamp: data[key] }))
@@ -165,4 +229,11 @@ export {
     add,
     update,
     remove,
+
+    incrementCounter,
+
+    onTransaction,
+    getWithTransaction,
+    addWithTransaction,
+    updateWithTransaction,
 }

@@ -12,7 +12,7 @@ const CmsToolbox = ({
 }) => {
     return id
         ? html`
-            <a href="${listUrl}" class="Button PrimaryButton PrimaryGray">
+            <a href="${listUrl}?${searchParams?.toString()}" class="Button PrimaryButton PrimaryGray">
                 <img src="/img/icon/corner-up-left-gray-1.svg" width="18" height="18" alt="regresar">
                 <span>Regresar a ${title}</span>
             </a>

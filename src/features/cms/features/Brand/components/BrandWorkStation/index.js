@@ -34,6 +34,7 @@ const BrandWorkStation = async ({
                 table: html`
                     ${
                         await BrandTable({
+                            brandId,
                             searchParams,
                         })
                     }

@@ -16,7 +16,7 @@ const CmsSearchForm = ({
                 <button type="button" class="Button PrimaryButton PrimaryGray">Ir a</button>
                 <button type="button" class="Button PrimaryButton PrimaryGray">Ordenar</button>
                 <hr>
-                <a href="${createUrl}" class="Button PrimaryButton PrimaryBlue">Crear</a>
+                <a href="${createUrl}?${searchParams?.toString()}" class="Button PrimaryButton PrimaryBlue">Crear</a>
             </inputgroup>
         </form>
     `

@@ -39,20 +39,92 @@ const add = async ({
     source,
     data,
 }) => {
-    const storageResult = await StorageService.add({
+    const addResult = await DatabaseService.onTransaction({
         source,
-        file: data.image,
-        path: storagePath({ name: data.image.name }),
+        transaction: async (tx) => {
+            try{
+                const storageResult = await StorageService.add({
+                    source,
+                    file: data.image,
+                    path: storagePath({ name: data.image.name }),
+                })
+                if (storageResult?.err) throw storageResult.err
+
+                const counterTx = await DatabaseService.getWithTransaction({
+                    source,
+                    tx,
+                    collectionName: 'counters',
+                    id: 'brands',
+                })
+
+                const count = counterTx?.data 
+                    ? counterTx.data.count + 1 
+                    : 1
+
+                const brandTx = await DatabaseService.getWithTransaction({
+                    source,
+                    tx,
+                    collectionName: 'brands',
+                })
+
+                const brand = {
+                    ...data,
+                    image: storageResult.data,
+                    count,
+                }
+
+                Boolean(counterTx?.data)
+                    ? await DatabaseService.updateWithTransaction({
+                        source,
+                        tx,
+                        ref: counterTx.ref,
+                        data: { count },
+                    })
+                    : await DatabaseService.addWithTransaction({
+                        source,
+                        tx,
+                        ref: counterTx.ref,
+                        data: { count },
+                    })
+
+                await DatabaseService.addWithTransaction({
+                    source,
+                    tx,
+                    ref: brandTx.ref,
+                    data: brand,
+                })
+                
+                return { 
+                    id: brandTx.ref.id,
+                    ...brand, 
+                }
+            }catch(err){
+                Promise.reject(err)
+            }
+        }
     })
 
-    if (storageResult?.err) return storageResult
-    data.image = storageResult.data
+    console.log(addResult)
+    return addResult
 
-    return DatabaseService.add({
-        source,
-        collectionName: 'brands',
-        data,
-    })
+    // const counterResult = await incrementCounter({ source, id: 'brands', value: 1 })
+    // if (counterResult?.err) return counterResult
+    // data.count = counterResult.data.count
+
+    // const storageResult = await StorageService.add({
+    //     source,
+    //     file: data.image,
+    //     path: storagePath({ name: data.image.name }),
+    // })
+
+    // if (storageResult?.err) return storageResult
+    // data.image = storageResult.data
+
+    // return DatabaseService.add({
+    //     source,
+    //     collectionName: 'brands',
+    //     data,
+    // })
 }
 
 const update = async({
@@ -99,10 +171,25 @@ const remove = async ({
     })
 }
 
+const incrementCounter = ({
+    source,
+    id,
+    count,
+}) => {
+    return DatabaseService.incrementCounter({
+        source,
+        collectionName: 'brands',
+        id,
+        count,
+    })
+}
+
 export {
     list,
     get,
     add,
     update,
     remove,
+
+    incrementCounter,
 }

@@ -5,6 +5,7 @@ import { DateSchema } from '@/shared/schemas/utils/DateSchema'
 
 const BrandSchema = z.object({
     id: z.string().min(1, 'El id es obligatorio').trim(),
+    count: z.number(),
     name: z.string().min(1, 'El nombre es obligatorio').trim(),
     image: FileSchema,
     keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
@@ -19,7 +20,8 @@ const AddBrandSchema = z.object({
     image: z.instanceof(File, 'La imagen es obligatoria'),
     keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
     createdAt: z.date(),
-})
+    updatedAt: z.date(),
+})  
 
 const UpdateBrandSchema = z.object({
     id: z.string().min(1, 'El id es obligatorio').trim(),

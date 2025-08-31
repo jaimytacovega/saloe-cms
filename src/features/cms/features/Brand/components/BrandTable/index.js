@@ -3,7 +3,7 @@ import { html } from 'saloe/html'
 import Table from '@/shared/components/Table'
 
 import { Source } from '@/shared/utils/constants'
-import { Operators } from '@/shared/services/DatabaseService'
+import { Operators, searchParamsToListArguments } from '@/shared/services/DatabaseService'
 import { lastUpdatedMessage } from '@/shared/utils/utils'
 
 import * as BrandHook from '@/shared/hooks/BrandHook'
@@ -15,9 +15,10 @@ const BrandTableRow = ({
     createdAt,
     updatedAt,
     toggled,
+    searchParams,
 }) => {
     return html`
-        <a href="/cms/marcas/${id}" class="Row" ${toggled ? 'toggled' : ''}>
+        <a href="/cms/marcas/${id}?${searchParams?.toString()}" class="Row" ${toggled ? 'toggled' : ''}>
             <span>${name}</span>
             <span>${lastUpdatedMessage({ date: updatedAt ?? createdAt })}</span>
         </a>
@@ -25,43 +26,30 @@ const BrandTableRow = ({
 }
 
 const BrandTable = async ({
+    brandId,
     searchParams,
 }) => {
-    const search = searchParams?.get('search')
-    const filters = search
-        ? [
-            {
-                field: 'keywords',
-                operator: Operators.Contains,
-                value: search,
-            }
-        ]
-        : []
-
-    // const { data: brands } = await BrandManager.list({
-    //     source: Source.FIREBASE,
-    //     pageSize: 20,
-    //     filters,
-    // })
-
+    const listArguments = searchParamsToListArguments({ searchParams })
     const { data: brands, isCached } = await BrandHook.useList({
         source: Source.FIREBASE,
         pageSize: 20,
-        filters,
+        ...listArguments,
         ttl: 60_000,
     })
 
+    console.log('brands', brands)
     console.log('isCached', isCached)
 
     return html`
         ${
             Table({
-                rows: brands.map((brand, idx) => BrandTableRow({
+                rows: brands.map((brand) => BrandTableRow({
                     id: brand.id,
                     name: `${brand.name} ~ ${isCached ? 'cached' : 'not cached'}`,
                     createdAt: brand.createdAt,
                     updatedAt: brand.updatedAt,
-                    toggled: idx === 0,
+                    toggled: brand.id === brandId,
+                    searchParams,
                 })),
                 createUrl: '/cms/marcas/crear',
             })

@@ -1,6 +1,7 @@
 import { html, stream } from 'saloe/html'
 
 import BrandPage from '@/features/cms/features/Brand/components/BrandPage'
+import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE, DEFAULT_SORTERS } from '@/shared/utils/constants'
 
 
 const page = async ({ 
@@ -9,6 +10,18 @@ const page = async ({
     cookies,
 }) => {
     const searchParams = new URL(request.url).searchParams
+    if (
+        !searchParams.get('page') || 
+        !searchParams.get('pageSize') ||
+        !searchParams.get('sort')
+    ) {
+        const redirectUrl = new URL(request.url)
+        redirectUrl.searchParams.set('page', DEFAULT_PAGE)
+        redirectUrl.searchParams.set('pageSize', DEFAULT_PAGE_SIZE)
+        redirectUrl.searchParams.set('sort', DEFAULT_SORTERS)
+        
+        return { response: Response.redirect(redirectUrl.toString()) }
+    }
 
     return stream({
         head: () => html`

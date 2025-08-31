@@ -38,13 +38,10 @@ const useUpdate = async ({
     source,
     data,
 }) => {
-    console.log('useUpdate')
     const updateResult = await PromotionManager.update({ source, data })
-    console.log('updateResult =', updateResult)
     if (updateResult?.err) return updateResult
 
     const useGetResult = await useGet({ source, id: data.id, ttl: 0 })
-    console.log('useGetResult =', useGetResult)
     if (useGetResult?.err) return useGetResult
     
     return updateResult

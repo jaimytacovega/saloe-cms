@@ -1,3 +1,6 @@
+import { CMS_CODES } from '@/shared/utils/constants'
+
+
 const delay = ({ ms }) => new Promise(resolve => setTimeout(resolve, ms))
 
 const lastUpdatedMessage = ({ date }) => {
@@ -9,7 +12,19 @@ const lastUpdatedMessage = ({ date }) => {
 }
 
 const keywords = ({ keys }) => {
-    return keys.map((key) => `${key}`.toLowerCase())
+    return keys.flatMap((key) => `${key}`.toLowerCase().split(' '))
+}
+
+const formatCount = ({ count }) => {
+    return count.toString().padStart(4, '0')
+}
+
+const getCMSCode = ({ collectionName }) => {
+    return CMS_CODES[collectionName]
+}
+
+const getCMSCorrelative = ({ collectionName, count }) => {
+    return `${getCMSCode({ collectionName })}${formatCount({ count })}`
 }
 
 
@@ -17,4 +32,5 @@ export {
     delay,
     lastUpdatedMessage,
     keywords,
+    getCMSCorrelative,
 }

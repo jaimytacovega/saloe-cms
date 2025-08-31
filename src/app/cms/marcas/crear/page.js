@@ -2,6 +2,7 @@ import { html, stream } from 'saloe/html'
 import { getScriptListener } from 'saloe/listener'
 
 import BrandPage from '@/features/cms/features/Brand/components/BrandPage'
+import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE } from '@/shared/utils/constants'
 
 
 const page = async ({ 
@@ -9,6 +10,15 @@ const page = async ({
     env, 
     cookies,
 }) => {
+    const searchParams = new URL(request.url).searchParams
+    if (!searchParams.get('page') || !searchParams.get('pageSize')) {
+        const redirectUrl = new URL(request.url)
+        redirectUrl.searchParams.set('page', DEFAULT_PAGE)
+        redirectUrl.searchParams.set('pageSize', DEFAULT_PAGE_SIZE)
+        
+        return { response: Response.redirect(redirectUrl.toString()) }
+    }
+
     return stream({
         head: () => html`
             <meta charset="UTF-8" />
@@ -30,6 +40,7 @@ const page = async ({
             ${
                 await BrandPage({
                     brandId: 'new',
+                    searchParams,
                 })
             }
         `,

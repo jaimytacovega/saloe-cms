@@ -1,6 +1,7 @@
 import { Source } from '@/shared/utils/constants'
 import * as Form from '@/shared/components/Form'
 import { keywords } from '@/shared/utils/utils'
+import { searchParamsToListArguments } from '@/shared/services/DatabaseService'
 
 import * as BrandHook from '@/shared/hooks/BrandHook'
 
@@ -28,9 +29,14 @@ const submit = ({
     Form.submit({
         form,
         onProcess: async () => {
+            const listArguments = searchParamsToListArguments({
+                searchParams: (new URL(location.href)).searchParams,
+            })
+
             const updateResult = await BrandHook.useUpdate({
                 source: Source.FIREBASE,
                 data: brand,
+                ...listArguments,
             })
 
             if (updateResult?.err) throw updateResult.err

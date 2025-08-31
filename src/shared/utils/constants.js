@@ -13,8 +13,20 @@ const Source = {
     FIREBASE: 'firebase',
 }
 
+const DEFAULT_PAGE_SIZE = 20
+const DEFAULT_PAGE = 1
+const DEFAULT_SORTERS = 'updatedAt:desc,createdAt:desc'
+
+const CMS_CODES = {
+    brands: 'MAR',
+}
+
 export {
     COMPANY_NAME,
     FIREBASE_CREDENTIALS,
     Source,
+    DEFAULT_PAGE_SIZE,
+    DEFAULT_PAGE,
+    DEFAULT_SORTERS,
+    CMS_CODES,
 }
