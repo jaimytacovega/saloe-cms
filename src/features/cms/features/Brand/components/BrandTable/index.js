@@ -3,8 +3,8 @@ import { html } from 'saloe/html'
 import Table from '@/shared/components/Table'
 
 import { Source } from '@/shared/utils/constants'
-import { Operators, searchParamsToListArguments } from '@/shared/services/DatabaseService'
-import { lastUpdatedMessage } from '@/shared/utils/utils'
+import { searchParamsToListArguments } from '@/shared/services/DatabaseService'
+import { getCMSCorrelative, lastUpdatedMessage } from '@/shared/utils/utils'
 
 import * as BrandHook from '@/shared/hooks/BrandHook'
 
@@ -12,6 +12,7 @@ import * as BrandHook from '@/shared/hooks/BrandHook'
 const BrandTableRow = ({
     id,
     name,
+    correlative,
     createdAt,
     updatedAt,
     toggled,
@@ -20,6 +21,7 @@ const BrandTableRow = ({
     return html`
         <a href="/cms/marcas/${id}?${searchParams?.toString()}" class="Row" ${toggled ? 'toggled' : ''}>
             <span>${name}</span>
+            <span>${correlative}</span>
             <span>${lastUpdatedMessage({ date: updatedAt ?? createdAt })}</span>
         </a>
     `
@@ -46,6 +48,7 @@ const BrandTable = async ({
                 rows: brands.map((brand) => BrandTableRow({
                     id: brand.id,
                     name: `${brand.name} ~ ${isCached ? 'cached' : 'not cached'}`,
+                    correlative: getCMSCorrelative({ collectionName: 'brands', count: brand.count }),
                     createdAt: brand.createdAt,
                     updatedAt: brand.updatedAt,
                     toggled: brand.id === brandId,
