@@ -16,6 +16,10 @@ const BrandPage = async ({
     brandId: null, 
     searchParams: null,
 }) => {
+    const createUrl = '/cms/marcas/crear'
+    const listUrl = '/cms/marcas'
+    const title = 'marcas'
+    
     return html`
         ${
             await CmsPage({
@@ -29,9 +33,9 @@ const BrandPage = async ({
                         CmsToolbox({
                             id: brandId,
                             searchParams,
-                            createUrl: '/cms/marcas/crear',
-                            listUrl: '/cms/marcas',
-                            title: 'marcas',
+                            createUrl,
+                            listUrl,
+                            title,
                         })
                     }
                 `,
@@ -40,6 +44,8 @@ const BrandPage = async ({
                         await BrandTable({
                             brandId,
                             searchParams,
+                            createUrl,
+                            listUrl,
                         })
                     }
                 `,

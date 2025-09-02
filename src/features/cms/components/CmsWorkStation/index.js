@@ -20,11 +20,21 @@ const CmsWorkStation = async ({
                 table,
                 form: Boolean(id)
                     ? html`
-                        ${await addOrUpdateForm({ id })}
-                        ${await deleteDialog({ id })}
+                        ${
+                            addOrUpdateForm
+                                ? await addOrUpdateForm({ id })
+                                : ''
+                        }
+                        ${
+                            deleteDialog
+                                ? await deleteDialog({ id })
+                                : ''
+                        }
                     ` 
                     : html`
-                        ${notFoundItem}   
+                        ${
+                            notFoundItem ?? ''
+                        }   
                     `,
             })
         }

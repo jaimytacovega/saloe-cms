@@ -1,7 +1,9 @@
+import * as SubCategoryHook from '@/shared/hooks/SubCategoryHook'
+
 import * as Form from '@/shared/components/Form'
 import { Source } from '@/shared/utils/constants'
 import { keywords } from '@/shared/utils/utils'
-import * as SubCategoryManager from '@/shared/managers/SubCategoryManager'
+import { searchParamsToListArguments } from '@/shared/services/DatabaseService'
 
 
 const submit = ({
@@ -14,29 +16,36 @@ const submit = ({
     const description = form.querySelector('#description').value.trim()
     const image = form.querySelector('#image').files[0]
     const seoKeywords = form.querySelector('#seoKeywords').value.trim()
+    const now = new Date()
 
-    const subCatergory = {
+    const subCategory = {
         name,
         description,
         seoKeywords,
         image,
         keywords: keywords({ keys: [name, description, seoKeywords] }),
-        createdAt: new Date(),
+        createdAt: now,
+        updatedAt: now,
     }
 
     Form.submit({
         form,
         onProcess: async () => {
-            const addResult = await SubCategoryManager.add({
+            const listArguments = searchParamsToListArguments({
+                searchParams: (new URL(location.href)).searchParams,
+            })
+
+            const addResult = await SubCategoryHook.useAdd({
                 source: Source.FIREBASE,
-                data: subCatergory,
+                data: subCategory,
+                ...listArguments,
             })
 
             if (addResult?.err) throw addResult.err
             return addResult
         },
         onSuccess: ({ result }) => {    
-            location.href = `/cms/subcategorias/${result.data.id}`
+            location.href = `/cms/subcategorias/${result.data.id}${location.search}`
         },
     })
 }

@@ -1,10 +1,9 @@
+import * as BrandHook from '@/shared/hooks/BrandHook'
+
 import * as Form from '@/shared/components/Form'
 import { Source } from '@/shared/utils/constants'
 import { keywords } from '@/shared/utils/utils'
 import { searchParamsToListArguments } from '@/shared/services/DatabaseService'
-
-import * as BrandManager from '@/shared/managers/BrandManager'
-import * as BrandHook from '@/shared/hooks/BrandHook'
 
 
 const submit = ({

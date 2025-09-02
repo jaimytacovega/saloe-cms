@@ -104,27 +104,7 @@ const add = async ({
         }
     })
 
-    console.log(addResult)
     return addResult
-
-    // const counterResult = await incrementCounter({ source, id: 'brands', value: 1 })
-    // if (counterResult?.err) return counterResult
-    // data.count = counterResult.data.count
-
-    // const storageResult = await StorageService.add({
-    //     source,
-    //     file: data.image,
-    //     path: storagePath({ name: data.image.name }),
-    // })
-
-    // if (storageResult?.err) return storageResult
-    // data.image = storageResult.data
-
-    // return DatabaseService.add({
-    //     source,
-    //     collectionName: 'brands',
-    //     data,
-    // })
 }
 
 const update = async({

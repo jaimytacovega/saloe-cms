@@ -17,9 +17,10 @@ const BrandTableRow = ({
     updatedAt,
     toggled,
     searchParams,
+    listUrl,
 }) => {
     return html`
-        <a href="/cms/marcas/${id}?${searchParams?.toString()}" class="Row" ${toggled ? 'toggled' : ''}>
+        <a href="${listUrl}/${id}?${searchParams?.toString()}" class="Row" ${toggled ? 'toggled' : ''}>
             <span>${name}</span>
             <span>${correlative}</span>
             <span>${lastUpdatedMessage({ date: updatedAt ?? createdAt })}</span>
@@ -30,6 +31,8 @@ const BrandTableRow = ({
 const BrandTable = async ({
     brandId,
     searchParams,
+    createUrl,
+    listUrl,
 }) => {
     const listArguments = searchParamsToListArguments({ searchParams })
     const { data: brands, isCached } = await BrandHook.useList({
@@ -53,8 +56,9 @@ const BrandTable = async ({
                     updatedAt: brand.updatedAt,
                     toggled: brand.id === brandId,
                     searchParams,
+                    listUrl,
                 })),
-                createUrl: '/cms/marcas/crear',
+                createUrl,
             })
         }
     `

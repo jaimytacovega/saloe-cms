@@ -8,7 +8,7 @@ import NotFoundItem from '@/features/cms/components/NotFoundItem'
 
 import * as SubCategoryHook from '@/shared/hooks/SubCategoryHook'
 import { Source } from '@/shared/utils/constants'
-import { lastUpdatedMessage } from '@/shared/utils/utils'
+import { lastUpdatedMessage, getCMSCorrelative } from '@/shared/utils/utils'
 
 
 const SubCategoryAddOrUpdateForm = async ({
@@ -37,7 +37,11 @@ const SubCategoryAddOrUpdateForm = async ({
             <form on-submit="SubCategory${subCategoryId === 'new' ? 'Add' : 'Update'}Form.submit">
                 <header>
                     <p>SUBCATEGORÍA</p>
-                    <h2>${subCategory?.code ?? 'Nueva subcategoría'} ~ ${isCached ? 'cached' : 'not cached'}</h2>
+                    ${
+                        subCategoryId === 'new'
+                            ? 'Nueva subcategoría'
+                            : `${getCMSCorrelative({ collectionName: 'subCategories', count: subCategory.count })}`
+                    }
                 </header>
                 <div class="form__scroller">
                     <fieldset columns="1">

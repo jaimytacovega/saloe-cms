@@ -19,6 +19,7 @@ const DEFAULT_SORTERS = 'updatedAt:desc,createdAt:desc'
 
 const CMS_CODES = {
     brands: 'MAR',
+    subCategories: 'SUBCAT',
 }
 
 export {

@@ -22,7 +22,7 @@ const list = async ({
             sorters,
             pageSize,
         })
-
+        
         if (listResult?.err) throw listResult.err
 
         const schemaResult = ListSubCategoryArraySchema.safeParse(listResult.data)

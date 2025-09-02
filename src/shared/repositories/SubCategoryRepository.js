@@ -39,20 +39,72 @@ const add = async ({
     source,
     data,
 }) => {
-    const storageResult = await StorageService.add({
+    const addResult = await DatabaseService.onTransaction({
         source,
-        file: data.image,
-        path: storagePath({ name: data.image.name }),
+        transaction: async (tx) => {
+            try{
+                const storageResult = await StorageService.add({
+                    source,
+                    file: data.image,
+                    path: storagePath({ name: data.image.name }),
+                })
+                if (storageResult?.err) throw storageResult.err
+
+                const counterTx = await DatabaseService.getWithTransaction({
+                    source,
+                    tx,
+                    collectionName: 'counters',
+                    id: 'subCategories',
+                })
+
+                const count = counterTx?.data 
+                    ? counterTx.data.count + 1 
+                    : 1
+
+                const subCategoryTx = await DatabaseService.getWithTransaction({
+                    source,
+                    tx,
+                    collectionName: 'subCategories',
+                })
+
+                const subCategory = {
+                    ...data,
+                    image: storageResult.data,
+                    count,
+                }
+
+                Boolean(counterTx?.data)
+                    ? await DatabaseService.updateWithTransaction({
+                        source,
+                        tx,
+                        ref: counterTx.ref,
+                        data: { count },
+                    })
+                    : await DatabaseService.addWithTransaction({
+                        source,
+                        tx,
+                        ref: counterTx.ref,
+                        data: { count },
+                    })
+
+                await DatabaseService.addWithTransaction({
+                    source,
+                    tx,
+                    ref: subCategoryTx.ref,
+                    data: subCategory,
+                })
+                
+                return { 
+                    id: subCategoryTx.ref.id,
+                    ...subCategory, 
+                }
+            }catch(err){
+                return Promise.reject(err)
+            }
+        }
     })
 
-    if (storageResult?.err) return storageResult
-    data.image = storageResult.data
-
-    return DatabaseService.add({
-        source,
-        collectionName: 'subCategories',
-        data,
-    })
+    return addResult
 }
 
 const update = async({

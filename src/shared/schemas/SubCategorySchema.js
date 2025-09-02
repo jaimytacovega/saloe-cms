@@ -5,6 +5,7 @@ import { DateSchema } from '@/shared/schemas/utils/DateSchema'
 
 const SubCategorySchema = z.object({
     id: z.string().min(1, 'El id es obligatorio').trim(),
+    count: z.number(),
     name: z.string().min(1, 'El nombre es obligatorio').trim(),
     description: z.string().trim().optional(),
     image: FileSchema,
@@ -24,6 +25,7 @@ const AddSubCategorySchema = z.object({
     seoKeywords: z.string().trim().optional(),
     keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
     createdAt: z.date(),
+    updatedAt: z.date(),
 })
 
 const UpdateSubCategorySchema = z.object({
