@@ -62,7 +62,7 @@ main > container.WorkStation__container {
         flex-flow: column wrap;
         flex-grow: 1;  
         
-        &:has(~ .WorkStation__form){
+        &:has(~ .WorkStation__form > :not(table[empty])){
             display: none;
 
             @container workstation (min-inline-size: 1000px){
@@ -80,6 +80,14 @@ main > container.WorkStation__container {
         display: flex;
         flex-flow: column wrap;
         flex-grow: 1;
+
+        &:has(> table[empty]){
+            display: none;
+
+            @container workstation (min-inline-size: 1000px){
+                display: flex;
+            }
+        }
 
         @container workstation (min-inline-size: 1000px){
             border-inline-start: 1px solid var(--color-gray-3);

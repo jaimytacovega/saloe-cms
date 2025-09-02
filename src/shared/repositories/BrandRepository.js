@@ -99,7 +99,7 @@ const add = async ({
                     ...brand, 
                 }
             }catch(err){
-                Promise.reject(err)
+                return Promise.reject(err)
             }
         }
     })

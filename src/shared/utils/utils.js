@@ -16,7 +16,7 @@ const keywords = ({ keys }) => {
 }
 
 const formatCount = ({ count }) => {
-    return count.toString().padStart(4, '0')
+    return count.toString().padStart(3, '0')
 }
 
 const getCMSCode = ({ collectionName }) => {
@@ -24,7 +24,7 @@ const getCMSCode = ({ collectionName }) => {
 }
 
 const getCMSCorrelative = ({ collectionName, count }) => {
-    return `${getCMSCode({ collectionName })}${formatCount({ count })}`
+    return `${getCMSCode({ collectionName })}-${formatCount({ count })}`
 }
 
 
