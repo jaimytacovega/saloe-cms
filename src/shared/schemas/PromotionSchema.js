@@ -5,6 +5,7 @@ import { DateSchema } from '@/shared/schemas/utils/DateSchema'
 
 const PromotionSchema = z.object({
     id: z.string().min(1, 'El id es obligatorio').trim(),
+    count: z.number(),
     name: z.string().min(1, 'El nombre es obligatorio').trim(),
     description: z.string().trim().optional(),
     image: FileSchema,
@@ -23,6 +24,7 @@ const AddPromotionSchema = z.object({
     brandId: z.string().min(1, 'El id de la marca es obligatorio').trim(),
     keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
     createdAt: DateSchema,
+    updatedAt: DateSchema,
 })
 
 const UpdatePromotionSchema = z.object({

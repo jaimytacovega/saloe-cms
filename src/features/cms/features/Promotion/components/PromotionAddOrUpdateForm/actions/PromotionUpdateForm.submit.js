@@ -1,9 +1,9 @@
+import * as PromotionHook from '@/shared/hooks/PromotionHook'
+
 import { Source } from '@/shared/utils/constants'
 import * as Form from '@/shared/components/Form'
 import { keywords } from '@/shared/utils/utils'
-
-// import * as PromotionManager from '@/shared/managers/PromotionManager'
-import * as PromotionHook from '@/shared/hooks/PromotionHook'
+import { searchParamsToListArguments } from '@/shared/services/DatabaseService'
 
 
 const submit = ({
@@ -33,14 +33,14 @@ const submit = ({
     Form.submit({
         form,
         onProcess: async () => {
-            // const updateResult = await PromotionManager.update({
-            //     source: Source.FIREBASE,
-            //     data: promotion,
-            // })
+            const listArguments = searchParamsToListArguments({
+                searchParams: (new URL(location.href)).searchParams,
+            })
 
             const updateResult = await PromotionHook.useUpdate({
                 source: Source.FIREBASE,
                 data: promotion,
+                ...listArguments,
             })
 
             if (updateResult?.err) throw updateResult.err

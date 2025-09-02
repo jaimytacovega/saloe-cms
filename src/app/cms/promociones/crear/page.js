@@ -2,6 +2,7 @@ import { html, stream } from 'saloe/html'
 import { getScriptListener } from 'saloe/listener'
 
 import PromotionPage from '@/features/cms/features/Promotion/components/PromotionPage'
+import { redirectIfMissingSearchParams } from '@/features/cms/utils/utils'
 
 
 const page = async ({ 
@@ -9,6 +10,10 @@ const page = async ({
     env, 
     cookies,
 }) => {
+    const searchParams = new URL(request.url).searchParams
+    const { response: redirectResponse } = redirectIfMissingSearchParams({ request, searchParams })
+    if (redirectResponse) return { response: redirectResponse }
+
     return stream({
         head: () => html`
             <meta charset="UTF-8" />
@@ -30,6 +35,7 @@ const page = async ({
             ${
                 await PromotionPage({
                     promotionId: 'new',
+                    searchParams,
                 })
             }
         `,

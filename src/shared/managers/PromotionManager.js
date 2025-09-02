@@ -67,12 +67,12 @@ const add = async ({
         const schemaResult = AddPromotionSchema.safeParse(data)
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
 
-        const brandResult = await BrandManager.get({
-            source,
-            id: schemaResult.data.brandId,
-        })
+        // const brandResult = await BrandManager.get({
+        //     source,
+        //     id: schemaResult.data.brandId,
+        // })
 
-        if (brandResult?.err) throw brandResult.err
+        // if (brandResult?.err) throw brandResult.err
 
         const addResult = await PromotionRepository.add({
             source,

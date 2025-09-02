@@ -19,8 +19,8 @@ const AddBrandSchema = z.object({
     name: z.string().min(1, 'El nombre es obligatorio').trim(),
     image: z.instanceof(File, 'La imagen es obligatoria'),
     keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
-    createdAt: z.date(),
-    updatedAt: z.date(),
+    createdAt: DateSchema,
+    updatedAt: DateSchema,
 })  
 
 const UpdateBrandSchema = z.object({
@@ -29,7 +29,7 @@ const UpdateBrandSchema = z.object({
     image: z.union([z.instanceof(File), z.undefined()]),
     oldPath: z.string().min(1, 'La ruta es obligatoria').trim(),
     keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
-    updatedAt: z.date(),
+    updatedAt: DateSchema,
 }).transform((data) => {
     if (data.image === undefined) {
         const { image, ...rest } = data

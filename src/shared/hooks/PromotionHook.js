@@ -34,21 +34,73 @@ const useGet = ({
     })
 }
 
+const useAdd = async ({
+    source,
+    data,
+    filters,
+    sorters,
+    pageSize,
+}) => {
+    try{
+        const addResult = await PromotionManager.add({ source, data })
+        if (addResult?.err) return addResult
+
+        const [useGetRevalidate, useListRevalidate] = await Promise.allSettled([
+            useGet({ source, id: addResult.data.id, ttl: 0 }),
+            useList({ source, filters, sorters, pageSize, ttl: 0 }),
+        ])  
+
+        if (useGetRevalidate.status === 'rejected') throw useGetRevalidate.reason
+        if (useListRevalidate.status === 'rejected') throw useListRevalidate.reason
+        
+        const useGetResult = useGetRevalidate.value
+        const useListResult = useListRevalidate.value
+        
+        if (useGetResult?.err) throw useGetResult.err
+        if (useListResult?.err) throw useListResult.err
+
+        return addResult
+    }catch(err){
+        console.error(err)
+        return { err }
+    }
+}
+
 const useUpdate = async ({
     source,
     data,
+    filters,
+    sorters,
+    pageSize,
 }) => {
-    const updateResult = await PromotionManager.update({ source, data })
-    if (updateResult?.err) return updateResult
+    try{
+        const updateResult = await PromotionManager.update({ source, data })
+        if (updateResult?.err) return updateResult
 
-    const useGetResult = await useGet({ source, id: data.id, ttl: 0 })
-    if (useGetResult?.err) return useGetResult
-    
-    return updateResult
+        const [useGetRevalidate, useListRevalidate] = await Promise.allSettled([
+            useGet({ source, id: data.id, ttl: 0 }),
+            useList({ source, filters, sorters, pageSize, ttl: 0 }),
+        ])  
+
+        if (useGetRevalidate.status === 'rejected') throw useGetRevalidate.reason
+        if (useListRevalidate.status === 'rejected') throw useListRevalidate.reason
+        
+        const useGetResult = useGetRevalidate.value
+        const useListResult = useListRevalidate.value
+        
+        if (useGetResult?.err) throw useGetResult.err
+        if (useListResult?.err) throw useListResult.err
+        
+        return updateResult
+    }catch(err){
+        console.error(err)
+        return { err }
+    }
 }
 
 export {
     useList,
     useGet,
+    useAdd,
     useUpdate,
 }

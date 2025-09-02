@@ -39,20 +39,96 @@ const add = async ({
     source,
     data,
 }) => {
-    const storageResult = await StorageService.add({
+    const addResult = await DatabaseService.onTransaction({
         source,
-        file: data.image,
-        path: storagePath({ name: data.image.name }),
+        transaction: async (tx) => {
+            try{
+                const storageResult = await StorageService.add({
+                    source,
+                    file: data.image,
+                    path: storagePath({ name: data.image.name }),
+                })
+                if (storageResult?.err) throw storageResult.err
+
+                const counterTx = await DatabaseService.getWithTransaction({
+                    source,
+                    tx,
+                    collectionName: 'counters',
+                    id: 'promotions',
+                })
+
+                const count = counterTx?.data 
+                    ? counterTx.data.count + 1 
+                    : 1
+
+                const brandTx = await DatabaseService.getWithTransaction({
+                    source,
+                    tx,
+                    collectionName: 'brands',
+                    id: data.brandId,
+                })
+                
+                if (!Boolean(brandTx?.data)) throw 'brand not found'
+
+                const promotionTx = await DatabaseService.getWithTransaction({
+                    source,
+                    tx,
+                    collectionName: 'promotions',
+                })
+
+                const promotion = {
+                    ...data,
+                    image: storageResult.data,
+                    count,
+                }
+
+                Boolean(counterTx?.data)
+                    ? await DatabaseService.updateWithTransaction({
+                        source,
+                        tx,
+                        ref: counterTx.ref,
+                        data: { count },
+                    })
+                    : await DatabaseService.addWithTransaction({
+                        source,
+                        tx,
+                        ref: counterTx.ref,
+                        data: { count },
+                    })
+
+                await DatabaseService.addWithTransaction({
+                    source,
+                    tx,
+                    ref: promotionTx.ref,
+                    data: promotion,
+                })
+                
+                return { 
+                    id: promotionTx.ref.id,
+                    ...promotion, 
+                }
+            }catch(err){
+                return Promise.reject(err)
+            }
+        }
     })
 
-    if (storageResult?.err) return storageResult
-    data.image = storageResult.data
+    return addResult
 
-    return DatabaseService.add({
-        source,
-        collectionName: 'promotions',
-        data,
-    })
+    // const storageResult = await StorageService.add({
+    //     source,
+    //     file: data.image,
+    //     path: storagePath({ name: data.image.name }),
+    // })
+
+    // if (storageResult?.err) return storageResult
+    // data.image = storageResult.data
+
+    // return DatabaseService.add({
+    //     source,
+    //     collectionName: 'promotions',
+    //     data,
+    // })
 }
 
 const update = async({

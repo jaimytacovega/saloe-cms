@@ -1,6 +1,7 @@
 import { html, stream } from 'saloe/html'
 
 import PromotionPage from '@/features/cms/features/Promotion/components/PromotionPage'
+import { redirectIfMissingSearchParams } from '@/features/cms/utils/utils'
 
 
 const page = async ({ 
@@ -9,6 +10,8 @@ const page = async ({
     cookies,
 }) => {
     const searchParams = new URL(request.url).searchParams
+    const { response: redirectResponse } = redirectIfMissingSearchParams({ request, searchParams })
+    if (redirectResponse) return { response: redirectResponse }
 
     return stream({
         head: () => html`
