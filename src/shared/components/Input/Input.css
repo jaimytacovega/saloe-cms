@@ -86,6 +86,7 @@
 
 textarea{
     min-block-size: 10ch;
+    resize: none;
 }
 
 select {
@@ -104,6 +105,12 @@ select {
 
     &[multiple]{
         display: none;
+
+        & + select + inputgroup{
+            > button{
+                font-size: var(--font-size-xs);
+            }
+        }
 
         /* @media (pointer: fine) {
             display: none;
