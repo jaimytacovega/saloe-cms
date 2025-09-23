@@ -111,8 +111,8 @@ const remove = async ({
 
         const removeResult = await BrandRepository.remove({
             source,
-            id,
-            path,
+            id: schemaResult.data.id,
+            path: schemaResult.data.path,
         })
 
         if (removeResult?.err) throw removeResult.err
