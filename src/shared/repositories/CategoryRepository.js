@@ -1,8 +1,6 @@
 import * as DatabaseService from '@/shared/services/DatabaseService'
 import * as StorageService from '@/shared/services/StorageService'
 
-import * as _FileRepository from '@/shared/repositories/_FileRepository'
-
 
 const storagePath = ({
     id = null,
@@ -45,14 +43,14 @@ const add = async ({
         source,
         transaction: async (tx) => {
             try{
-                const imageStorageResult = await _FileRepository.add({
+                const imageStorageResult = await StorageService.add({
                     source,
                     file: data.image,
                     path: storagePath({ name: data.image.name }),
                 })
                 if (imageStorageResult?.err) throw imageStorageResult.err
                 
-                const catalogsStorageResults = await _FileRepository.addMultiple({
+                const catalogsStorageResults = await StorageService.addMultiple({
                     source,
                     files: data.catalogs,
                     paths: data.catalogs.map((catalog) => storagePath({ name: catalog.name })),
@@ -122,7 +120,7 @@ const update = async({
     data,
 }) => {
     if (Boolean(data.image)) {
-        const imageStorageResult = await _FileRepository.update({
+        const imageStorageResult = await StorageService.update({
             source,
             file: data.image,
             path: storagePath({ id: data.id, name: data.image.name }),
@@ -136,7 +134,7 @@ const update = async({
     delete data.oldPath
 
     if (Boolean(data.catalogsToRemove)) {
-        const catalogsStorageResults = await _FileRepository.removeMultiple({
+        const catalogsStorageResults = await StorageService.removeMultiple({
             source,
             paths: data.catalogsToRemove,
         })
@@ -146,7 +144,7 @@ const update = async({
 
     delete data.catalogsToRemove
 
-    const addCatalogsStorageResults = await _FileRepository.addMultiple({
+    const addCatalogsStorageResults = await StorageService.addMultiple({
         source,
         files: data.catalogs,
         paths: data.catalogs.map((catalog) => storagePath({ name: catalog.name })),
@@ -173,7 +171,7 @@ const remove = async ({
     path,
     catalogPaths,
 }) => {
-    const removeFilesResults = await _FileRepository.removeMultiple({
+    const removeFilesResults = await StorageService.removeMultiple({
         source,
         paths: [path, ...catalogPaths],
     })

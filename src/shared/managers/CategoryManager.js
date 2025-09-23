@@ -107,14 +107,14 @@ const remove = async ({
     catalogPaths,
 }) => {
     try{
-        const schemaResult = DeleteCategorySchema.safeParse({ id, path })
+        const schemaResult = DeleteCategorySchema.safeParse({ id, path, catalogPaths })
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
 
         const removeResult = await CategoryRepository.remove({
             source,
             id,
-            path,
-            catalogPaths,
+            path: schemaResult.data.path,
+            catalogPaths: schemaResult.data.catalogPaths,
         })
 
         if (removeResult?.err) throw removeResult.err
