@@ -57,7 +57,8 @@ const UpdateCategorySchema = z.object({
 
 const DeleteCategorySchema = z.object({
     id: z.string().min(1, 'El id es obligatorio').trim(),
-    path: z.string().min(1, 'La ruta es obligatoria').trim(),
+    path: z.string().min(1, 'La ruta es obligatoria').trim().optional(),
+    catalogPaths: z.array(z.string()).min(1, 'Las rutas de los catálogos son obligatorias').trim().optional(),
 })
 
 export {
