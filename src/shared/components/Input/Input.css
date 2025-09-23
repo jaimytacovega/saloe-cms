@@ -56,6 +56,18 @@
                 }
             }
 
+            & + inputgroup{
+                display: none;
+
+                &:has(> *){
+                    display: flex;
+
+                    > *{
+                        font-size: var(--font-size-xs);
+                    }
+                }
+            }
+
             > .InputFile__decorator__thumbnail{
                 padding-inline: 12px;
                 padding-block: 12px;
@@ -107,7 +119,7 @@ select {
         display: none;
 
         & + select + inputgroup{
-            > button{
+            > *{
                 font-size: var(--font-size-xs);
             }
         }

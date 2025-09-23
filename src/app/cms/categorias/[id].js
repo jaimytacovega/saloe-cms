@@ -2,7 +2,7 @@ import { html, stream } from 'saloe/html'
 import { getScriptListener } from 'saloe/listener'
 
 import CmsMeta from '@/features/cms/components/CmsMeta'
-import PromotionPage from '@/features/cms/features/Promotion/components/PromotionPage'
+import CategoryPage from '@/features/cms/features/Category/components/CategoryPage'
 import { redirectIfMissingSearchParams } from '@/features/cms/utils/utils'
 
 
@@ -14,12 +14,12 @@ const page = async ({
 }) => {
     const url = new URL(request?.url)
     const match = urlPattern?.exec(url?.href)
-    const promotionId = match?.pathname?.groups?.id
+    const categoryId = match?.pathname?.groups?.id
 
     const searchParams = new URL(request.url).searchParams
     const { response: redirectResponse } = redirectIfMissingSearchParams({ request, searchParams })
     if (redirectResponse) return { response: redirectResponse }
-
+    
     return stream({
         head: () => html`
             ${
@@ -28,8 +28,8 @@ const page = async ({
         `,
         body: async () => html`
             ${
-                await PromotionPage({
-                    promotionId,
+                await CategoryPage({
+                    categoryId,
                     searchParams,
                 })
             }

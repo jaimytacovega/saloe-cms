@@ -14,7 +14,7 @@ import * as CmsSubCategoriesByIdPage from '@/app/cms/subcategorias/[id]'
 
 import * as CmsCategoriesPage from '@/app/cms/categorias/page'
 import * as CmsCategoriesCreatePage from '@/app/cms/categorias/crear/page'
-// import * as CmsCategoriesByIdPage from '@/app/cms/categorias/[id]'
+import * as CmsCategoriesByIdPage from '@/app/cms/categorias/[id]'
 
 
 const setRouter = () => {
@@ -32,7 +32,7 @@ const setRouter = () => {
 
     addRoute({ pathname: '/cms/categorias', route: CmsCategoriesPage.default })
     addRoute({ pathname: '/cms/categorias/crear', route: CmsCategoriesCreatePage.default })
-    // addRoute({ pathname: '/cms/categorias/:id', route: CmsCategoriesByIdPage.default })
+    addRoute({ pathname: '/cms/categorias/:id', route: CmsCategoriesByIdPage.default })
 }
 
 export {

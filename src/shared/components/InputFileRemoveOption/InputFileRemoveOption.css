@@ -1,0 +1,14 @@
+.InputFileRemoveOption{
+    > span{
+        inline-size: 100%;
+    }
+
+    > :is(a, button){
+        color: var(--color-gray-1);
+        transition: all .3s ease;
+
+        &:hover{
+            color: var(--color-black);
+        }
+    }
+}

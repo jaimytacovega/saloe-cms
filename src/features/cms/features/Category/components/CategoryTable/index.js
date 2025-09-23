@@ -6,10 +6,10 @@ import { Source } from '@/shared/utils/constants'
 import { searchParamsToListArguments } from '@/shared/services/DatabaseService'
 import { getCMSCorrelative, lastUpdatedMessage } from '@/shared/utils/utils'
 
-import * as SubCategoryHook from '@/shared/hooks/SubCategoryHook'
+import * as CategoryHook from '@/shared/hooks/CategoryHook'
 
 
-const SubCategoryTableRow = ({
+const CategoryTableRow = ({
     id,
     name,
     correlative,
@@ -28,33 +28,33 @@ const SubCategoryTableRow = ({
     `
 }
 
-const SubCategoryTable = async ({
-    subCategoryId,
+const CategoryTable = async ({
+    categoryId,
     searchParams,
     createUrl,
     listUrl,
 }) => {
     const listArguments = searchParamsToListArguments({ searchParams })
-    const { data: subCategories, isCached } = await SubCategoryHook.useList({
+    const { data: categories, isCached } = await CategoryHook.useList({
         source: Source.FIREBASE,
         pageSize: 20,
         ...listArguments,
         ttl: 60_000,
     })
 
-    console.log('subCategories', subCategories)
+    console.log('categories', categories)
     console.log('isCached', isCached)
 
     return html`
         ${
             Table({
-                rows: subCategories.map((subCategory) => SubCategoryTableRow({
-                    id: subCategory.id,
-                    name: `${subCategory.name} ~ ${isCached ? 'cached' : 'not cached'}`,
-                    correlative: getCMSCorrelative({ collectionName: 'subCategories', count: subCategory.count }),
-                    createdAt: subCategory.createdAt,
-                    updatedAt: subCategory.updatedAt,
-                    toggled: subCategory.id === subCategoryId,
+                rows: categories.map((category) => CategoryTableRow({
+                    id: category.id,
+                    name: `${category.name} ~ ${isCached ? 'cached' : 'not cached'}`,
+                    correlative: getCMSCorrelative({ collectionName: 'categories', count: category.count }),
+                    createdAt: category.createdAt,
+                    updatedAt: category.updatedAt,
+                    toggled: category.id === categoryId,
                     searchParams,
                     listUrl,
                 })),
@@ -64,4 +64,4 @@ const SubCategoryTable = async ({
     `
 }
 
-export default SubCategoryTable
+export default CategoryTable
