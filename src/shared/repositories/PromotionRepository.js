@@ -114,21 +114,6 @@ const add = async ({
     })
 
     return addResult
-
-    // const storageResult = await StorageService.add({
-    //     source,
-    //     file: data.image,
-    //     path: storagePath({ name: data.image.name }),
-    // })
-
-    // if (storageResult?.err) return storageResult
-    // data.image = storageResult.data
-
-    // return DatabaseService.add({
-    //     source,
-    //     collectionName: 'promotions',
-    //     data,
-    // })
 }
 
 const update = async({
