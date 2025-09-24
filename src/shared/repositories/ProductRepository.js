@@ -119,30 +119,44 @@ const add = async ({
     return addResult
 }
 
-// const update = async({
-//     source,
-//     data,
-// }) => {
-//     if (Boolean(data.image)) {
-//         const imageStorageResult = await StorageService.update({
-//             source,
-//             file: data.image,
-//             path: storagePath({ id: data.id, name: data.image.name }),
-//             oldPath: data.oldPath,
-//         })
+const update = async({
+    source,
+    data,
+}) => {
+    if (Boolean(data.image)) {
+        const imageStorageResult = await StorageService.update({
+            source,
+            file: data.image,
+            path: storagePath({ id: data.id, name: data.image.name }),
+            oldPath: data.oldPath,
+        })
 
-//         if (imageStorageResult?.err) return imageStorageResult
-//         data.image = imageStorageResult.data
-//     }
+        if (imageStorageResult?.err) return imageStorageResult
+        data.image = imageStorageResult.data
+    }
 
-//     delete data.oldPath
+    delete data.oldPath
 
-//     return DatabaseService.update({
-//         source,
-//         collectionName: 'products',
-//         data,
-//     })
-// }
+    if (Boolean(data.technicalSheet)) {
+        const technicalSheetStorageResult = await StorageService.update({
+            source,
+            file: data.technicalSheet,
+            path: storagePath({ id: data.id, name: data.technicalSheet.name }),
+            oldPath: data.technicalSheetPath,
+        })
+
+        if (technicalSheetStorageResult?.err) return technicalSheetStorageResult
+        data.technicalSheet = technicalSheetStorageResult.data
+    }
+
+    delete data.technicalSheetPath
+
+    return DatabaseService.update({
+        source,
+        collectionName: 'products',
+        data,
+    })
+}
 
 // const remove = async ({
 //     source,
@@ -180,7 +194,7 @@ export {
     list,
     get,
     add,
-    // update,
+    update,
     // remove,
 
     // incrementCounter,

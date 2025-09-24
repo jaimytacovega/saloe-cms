@@ -143,6 +143,13 @@ const ProductAddOrUpdateForm = async ({
                             })
                         }
                         ${
+                            Input({
+                                id: 'technicalSheetPath',
+                                value: product?.technicalSheet?.path ?? '',
+                                type: 'hidden',
+                            })
+                        }
+                        ${
                             InputFile({
                                 id: 'technicalSheet',
                                 label: 'Ficha técnica (opcional)',

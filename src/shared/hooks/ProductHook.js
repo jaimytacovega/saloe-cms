@@ -66,41 +66,41 @@ const useAdd = async ({
     }
 }
 
-// const useUpdate = async ({
-//     source,
-//     data,
-//     filters,
-//     sorters,
-//     pageSize,
-// }) => {
-//     try{
-//         const updateResult = await ProductManager.update({ source, data })
-//         if (updateResult?.err) return updateResult
+const useUpdate = async ({
+    source,
+    data,
+    filters,
+    sorters,
+    pageSize,
+}) => {
+    try{
+        const updateResult = await ProductManager.update({ source, data })
+        if (updateResult?.err) return updateResult
 
-//         const [useGetRevalidate, useListRevalidate] = await Promise.allSettled([
-//             useGet({ source, id: data.id, ttl: 0 }),
-//             useList({ source, filters, sorters, pageSize, ttl: 0 }),
-//         ])  
+        const [useGetRevalidate, useListRevalidate] = await Promise.allSettled([
+            useGet({ source, id: data.id, ttl: 0 }),
+            useList({ source, filters, sorters, pageSize, ttl: 0 }),
+        ])  
 
-//         if (useGetRevalidate.status === 'rejected') throw useGetRevalidate.reason
-//         if (useListRevalidate.status === 'rejected') throw useListRevalidate.reason
+        if (useGetRevalidate.status === 'rejected') throw useGetRevalidate.reason
+        if (useListRevalidate.status === 'rejected') throw useListRevalidate.reason
         
-//         const useGetResult = useGetRevalidate.value
-//         const useListResult = useListRevalidate.value
+        const useGetResult = useGetRevalidate.value
+        const useListResult = useListRevalidate.value
         
-//         if (useGetResult?.err) throw useGetResult.err
-//         if (useListResult?.err) throw useListResult.err
+        if (useGetResult?.err) throw useGetResult.err
+        if (useListResult?.err) throw useListResult.err
         
-//         return updateResult
-//     }catch(err){
-//         console.error(err)
-//         return { err }
-//     }
-// }
+        return updateResult
+    }catch(err){
+        console.error(err)
+        return { err }
+    }
+}
 
 export {
     useList,
     useGet,
     useAdd,
-    // useUpdate,
+    useUpdate,
 }

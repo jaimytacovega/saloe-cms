@@ -79,26 +79,27 @@ const add = async ({
     }
 }
 
-// const update = async ({
-//     source,
-//     data,
-// }) => {
-//     try {
-//         const schemaResult = UpdateProductSchema.safeParse(data)
-//         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
+const update = async ({
+    source,
+    data,
+}) => {
+    try {
+        const schemaResult = UpdateProductSchema.safeParse(data)
+        console.log('schemaResult =', schemaResult)
+        if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
                 
-//         const updateResult = await ProductRepository.update({
-//             source,
-//             data: schemaResult.data,
-//         })
+        const updateResult = await ProductRepository.update({
+            source,
+            data: schemaResult.data,
+        })
 
-//         if (updateResult?.err) throw updateResult.err
-//         return updateResult
-//     } catch (err) {
-//         console.error(err)
-//         return { err }
-//     }
-// }
+        if (updateResult?.err) throw updateResult.err
+        return updateResult
+    } catch (err) {
+        console.error(err)
+        return { err }
+    }
+}
 
 // const remove = async ({
 //     source,
@@ -128,6 +129,6 @@ export {
     list,
     get,
     add,
-    // update,
+    update,
     // remove,
 }

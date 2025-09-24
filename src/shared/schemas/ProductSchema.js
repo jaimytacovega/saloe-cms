@@ -36,13 +36,15 @@ const UpdateProductSchema = z.object({
     name: z.string().min(1, 'El nombre es obligatorio').trim(),
     image: z.union([z.instanceof(File), z.undefined()]),
     oldPath: z.string().min(1, 'La ruta es obligatoria').trim(),
+    subCategoryIds: z.array(z.string()).optional(),
+    brandIds: z.array(z.string()).optional(),
+    technicalSheetPath: z.string().trim(),
+    technicalSheet: z.instanceof(File).optional(),
     keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
     updatedAt: DateSchema,
 }).transform((data) => {
-    if (data.image === undefined) {
-        const { image, ...rest } = data
-        return rest
-    }
+    if (data.image === undefined) delete data.image
+    if (data.technicalSheet === undefined) delete data.technicalSheet
     return data
 })
 
