@@ -3,10 +3,12 @@ import { html } from 'saloe/html'
 import Input from '@/shared/components/Input'
 import InputFile from '@/shared/components/InputFile'
 import Textarea from '@/shared/components/Textarea'
+import MultipleSelect from '@/shared/components/MultipleSelect'
 
 import NotFoundItem from '@/features/cms/components/NotFoundItem'
 
 import * as SubCategoryHook from '@/shared/hooks/SubCategoryHook'
+import * as CategoryHook from '@/shared/hooks/CategoryHook'
 import { Source } from '@/shared/utils/constants'
 import { lastUpdatedMessage, getCMSCorrelative } from '@/shared/utils/utils'
 
@@ -14,20 +16,32 @@ import { lastUpdatedMessage, getCMSCorrelative } from '@/shared/utils/utils'
 const SubCategoryAddOrUpdateForm = async ({
     subCategoryId,
 }) => {
-    // const { data: subCategory } = subCategoryId === 'new'
-    //     ? { data: {} }
-    //     : await SubCategoryManager.get({
-    //         source: Source.FIREBASE,
-    //         id: subCategoryId,
-    //     })
-
-    const { data: subCategory, isCached } = subCategoryId === 'new'
-        ? { data: {}, isCached: false }
-        : await SubCategoryHook.useGet({
+    const [
+        subCategoryGetResult,
+        categoryListResult,
+    ] = await Promise.allSettled([
+        subCategoryId === 'new'
+            ? { data: {}, isCached: false }
+            : await SubCategoryHook.useGet({
+                source: Source.FIREBASE,
+                id: subCategoryId,
+                ttl: 10_000,
+            })
+        ,
+        CategoryHook.useList({
             source: Source.FIREBASE,
-            id: subCategoryId,
             ttl: 10_000,
         })
+    ])
+
+    // TODO: Make error page
+    if (
+        subCategoryGetResult.status === 'rejected' || 
+        categoryListResult.status === 'rejected'
+    ) return html`error`
+
+    const { data: subCategory, isCached } = subCategoryGetResult.value
+    const { data: categories } = categoryListResult.value
 
     console.log('subCategory =', subCategory)
     console.log('isCached =', isCached)
@@ -37,11 +51,13 @@ const SubCategoryAddOrUpdateForm = async ({
             <form on-submit="SubCategory${subCategoryId === 'new' ? 'Add' : 'Update'}Form.submit">
                 <header>
                     <p>SUBCATEGORÍA</p>
+                    <h2>
                     ${
                         subCategoryId === 'new'
                             ? 'Nueva subcategoría'
                             : `${getCMSCorrelative({ collectionName: 'subCategories', count: subCategory.count })}`
-                    }
+                    }       
+                    </h2>
                 </header>
                 <div class="form__scroller">
                     <fieldset columns="1">
@@ -80,6 +96,20 @@ const SubCategoryAddOrUpdateForm = async ({
                                 id: 'image',
                                 label: 'Imagen',
                                 src: subCategory?.image?.downloadURL ?? '',
+                            })
+                        }
+                        ${
+                            MultipleSelect({
+                                id: 'categoryIds',
+                                label: 'Categorías',
+                                options: (categories ?? []).map((category) => ({
+                                    value: category.id,
+                                    label: `${getCMSCorrelative({ collectionName: 'categories', count: category.count })}: ${category.name}`,
+                                })),
+                                selectedOptions: (subCategory?.categoryIds ?? []).reduce((acc, categoryId) => {
+                                    acc[categoryId] = true
+                                    return acc
+                                }, {}),
                             })
                         }
                         ${

@@ -16,6 +16,7 @@ const submit = ({
     const description = form.querySelector('#description').value.trim()
     const oldPath = form.querySelector('#path').value.trim()
     const image = form.querySelector('#image').files[0]
+    const categoryIds = Array.from(form.querySelector('#categoryIds').selectedOptions).map((option) => option.value.trim())
     const seoKeywords = form.querySelector('#seoKeywords').value.trim()
 
     const subCategory = {
@@ -24,6 +25,7 @@ const submit = ({
         description,
         image,
         oldPath,
+        categoryIds,
         seoKeywords,
         keywords: keywords({ keys: [name, description, seoKeywords] }),
         updatedAt: new Date(),
@@ -41,7 +43,7 @@ const submit = ({
             return updateResult
         },
         onSuccess: () => {
-            location.reload()
+            // location.reload()
         },
     })
 }

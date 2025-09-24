@@ -1,5 +1,8 @@
 import * as DatabaseService from '@/shared/services/DatabaseService'
 import * as StorageService from '@/shared/services/StorageService'
+import { Operators } from '@/shared/services/DatabaseService'
+
+import * as Category_SubCategoryRepository from '@/shared/repositories/Category_SubCategoryRepository'
 
 
 const storagePath = ({
@@ -67,11 +70,33 @@ const add = async ({
                     collectionName: 'subCategories',
                 })
 
+                const { categoryIds, ...rest } = data
+
                 const subCategory = {
-                    ...data,
+                    ...rest,
                     image: storageResult.data,
                     count,
                 }
+
+                await Promise.all(
+                    categoryIds.map(async (categoryId) => {
+                        const categoryBySubCategoryTx = await DatabaseService.getWithTransaction({
+                            source,
+                            tx,
+                            collectionName: 'category_subCategories',
+                            id: `${categoryId}_${subCategoryTx.ref.id}`,
+                        })
+
+                        if (!categoryBySubCategoryTx?.data) {
+                            await DatabaseService.addWithTransaction({
+                                source,
+                                tx,
+                                ref: categoryBySubCategoryTx.ref,
+                                data: { categoryId, subCategoryId: subCategoryTx.ref.id },
+                            })
+                        }
+                    })
+                )
 
                 Boolean(counterTx?.data)
                     ? await DatabaseService.updateWithTransaction({
@@ -111,25 +136,97 @@ const update = async({
     source,
     data,
 }) => {
-    if (Boolean(data.image)) {
-        const storageResult = await StorageService.update({
-            source,
-            file: data.image,
-            path: storagePath({ id: data.id, name: data.image.name }),
-            oldPath: data.oldPath,
-        })
-    
-        if (storageResult?.err) return storageResult
-        data.image = storageResult.data
-    }
-    
-    delete data.oldPath
-
-    return DatabaseService.update({
+    const updateResult = await DatabaseService.onTransaction({
         source,
-        collectionName: 'subCategories',
-        data,
+        transaction: async (tx) => {
+            try{
+                if (Boolean(data.image)) {
+                    const storageResult = await StorageService.update({
+                        source,
+                        file: data.image,
+                        path: storagePath({ id: data.id, name: data.image.name }),
+                        oldPath: data.oldPath,
+                    })
+                
+                    if (storageResult?.err) throw storageResult
+                    data.image = storageResult.data
+                }
+                
+                delete data.oldPath
+
+                const subCategoryTx = await DatabaseService.getWithTransaction({
+                    source,
+                    tx,
+                    collectionName: 'subCategories',
+                    id: data.id,
+                })
+                
+                const { categoryIds, ...rest } = data
+
+                const subCategory = {
+                    ...rest,
+                }
+
+                const categoryBySubcategoriesResult = await Category_SubCategoryRepository.list({
+                    source,
+                    filters: [{
+                        field: 'subCategoryId',
+                        operator: Operators.EqualTo,
+                        value: data.id,
+                    }],
+                })
+
+                const categoryBySubcategories = categoryBySubcategoriesResult.data
+
+                const categoryBySubcategoriesToRemove = categoryBySubcategories.filter((categoryBySubcategory) => !categoryIds.includes(categoryBySubcategory.categoryId))                
+                const categoryBySubcategoriesToRemoveTxs = await Promise.all(
+                    categoryBySubcategoriesToRemove.map((categoryBySubcategoryToRemove) => {
+                        return DatabaseService.getWithTransaction({
+                            source,
+                            tx,
+                            collectionName: 'category_subCategories',
+                            id: categoryBySubcategoryToRemove.id,
+                        })
+                    })
+                )
+
+                const categoryIdsToAdd = categoryIds.filter((categoryId) => !categoryBySubcategories.some((categoryBySubcategory) => categoryBySubcategory.categoryId === categoryId))
+                
+                await Promise.all([
+                    ...categoryBySubcategoriesToRemoveTxs.map((categoryBySubcategoriesToRemoveTx) => {
+                        return tx.delete(categoryBySubcategoriesToRemoveTx.ref)
+                    }),
+                    ...categoryIdsToAdd.map(async (categoryIdToAdd) => {
+                        const categoryBySubCategoryToAddTx = await DatabaseService.getWithTransaction({
+                            source,
+                            tx,
+                            collectionName: 'category_subCategories',
+                            id: `${categoryIdToAdd}_${subCategoryTx.ref.id}`,
+                        })
+
+                        if (!categoryBySubCategoryToAddTx?.data) {      
+                            return DatabaseService.addWithTransaction({
+                                source,
+                                tx,
+                                ref: categoryBySubCategoryToAddTx.ref,
+                                collectionName: 'category_subCategories',
+                                data: { categoryId: categoryIdToAdd, subCategoryId: subCategoryTx.ref.id },
+                            })
+                        }
+                    })
+                ])
+
+                return { 
+                    id: subCategoryTx.ref.id,
+                    ...subCategory, 
+                }
+            }catch(err){
+                return Promise.reject(err)
+            }
+        }
     })
+
+    return updateResult
 }
 
 const remove = async ({
@@ -137,18 +234,59 @@ const remove = async ({
     id,
     path,
 }) => {
-    const storageResult = await StorageService.remove({
+    const removeResult = await DatabaseService.onTransaction({
         source,
-        path,
+        transaction: async (tx) => {
+            try{
+                const storageResult = await StorageService.remove({
+                    source,
+                    path,
+                })
+            
+                if (storageResult?.err) throw storageResult
+
+                const subCategoryTx = await DatabaseService.getWithTransaction({
+                    source,
+                    tx,
+                    collectionName: 'subCategories',
+                    id,
+                })
+                
+                const categoryBySubcategoriesResult = await Category_SubCategoryRepository.list({
+                    source,
+                    filters: [{
+                        field: 'subCategoryId',
+                        operator: Operators.EqualTo,
+                        value: id,
+                    }],
+                })
+
+                const categoryBySubcategoriesTxs = await Promise.all(
+                    categoryBySubcategoriesResult.data.map((categoryBySubcategory) => {
+                        return DatabaseService.getWithTransaction({
+                            source,
+                            tx,
+                            collectionName: 'category_subCategories',
+                            id: categoryBySubcategory.id,
+                        })
+                    })
+                )
+
+                return Promise.all(
+                    [
+                        subCategoryTx, 
+                        ...categoryBySubcategoriesTxs,
+                    ].map((txToRemove) => {
+                        return tx.delete(txToRemove.ref)
+                    })
+                )
+            }catch(err){
+                return Promise.reject(err)
+            }
+        }
     })
 
-    if (storageResult?.err) return storageResult
-
-    return DatabaseService.remove({
-        source,
-        collectionName: 'subCategories',
-        id,
-    })
+    return removeResult
 }
 
 export {

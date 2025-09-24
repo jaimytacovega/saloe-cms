@@ -15,6 +15,7 @@ const submit = ({
     const name = form.querySelector('#name').value.trim()
     const description = form.querySelector('#description').value.trim()
     const image = form.querySelector('#image').files[0]
+    const categoryIds = Array.from(form.querySelector('#categoryIds').selectedOptions).map((option) => option.value.trim())
     const seoKeywords = form.querySelector('#seoKeywords').value.trim()
     const now = new Date()
 
@@ -23,6 +24,7 @@ const submit = ({
         description,
         seoKeywords,
         image,
+        categoryIds,
         keywords: keywords({ keys: [name, description, seoKeywords] }),
         createdAt: now,
         updatedAt: now,

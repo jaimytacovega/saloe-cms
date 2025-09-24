@@ -76,7 +76,7 @@ const useUpdate = async ({
     try{
         const updateResult = await SubCategoryManager.update({ source, data })
         if (updateResult?.err) return updateResult
-
+        
         const [useGetRevalidate, useListRevalidate] = await Promise.allSettled([
             useGet({ source, id: data.id, ttl: 0 }),
             useList({ source, filters, sorters, pageSize, ttl: 0 }),

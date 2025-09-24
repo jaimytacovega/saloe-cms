@@ -1,4 +1,7 @@
 import * as SubCategoryRepository from '@/shared/repositories/SubCategoryRepository'
+import * as Category_SubCategoryRepository from '@/shared/repositories/Category_SubCategoryRepository'
+import { Operators } from '@/shared/services/DatabaseService'
+
 import { 
     ListSubCategoryArraySchema, 
     SubCategorySchema,
@@ -40,15 +43,43 @@ const get = async ({
     id,
 }) => {
     try{
-        const getResult = await SubCategoryRepository.get({
-            source,
-            collectionName: 'subCategories',
-            id,
-        })
+
+        const [
+            getResult,
+            categoryBySubCategoriesResult,
+        ] = await Promise.allSettled([
+            SubCategoryRepository.get({
+                source,
+                id,
+            }),
+            Category_SubCategoryRepository.list({
+                source,
+                filters: [{
+                    field: 'subCategoryId',
+                    operator: Operators.EqualTo,
+                    value: id,
+                }],
+            }),
+        ])
+
+        if (
+            getResult.status === 'rejected' ||
+            getResult.value?.err
+        ) throw getResult.reason ?? getResult.value.err
+
+        if (
+            categoryBySubCategoriesResult.status === 'rejected' ||
+            categoryBySubCategoriesResult.value?.err
+        ) throw categoryBySubCategoriesResult.reason ?? categoryBySubCategoriesResult.value.err
+        
     
-        if (getResult?.err) throw getResult.err
+        const categoryIds = categoryBySubCategoriesResult.value.data.map((categoryBySubCategory) => categoryBySubCategory.categoryId)
+        const data = {
+            ...getResult.value.data,
+            categoryIds,
+        }
     
-        const schemaResult = SubCategorySchema.safeParse(getResult.data)
+        const schemaResult = SubCategorySchema.safeParse(data)
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
     
         return { data: schemaResult.data }
