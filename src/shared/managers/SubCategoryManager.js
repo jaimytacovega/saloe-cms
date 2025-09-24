@@ -43,7 +43,6 @@ const get = async ({
     id,
 }) => {
     try{
-
         const [
             getResult,
             categoryBySubCategoriesResult,

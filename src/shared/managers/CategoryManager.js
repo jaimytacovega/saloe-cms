@@ -1,4 +1,7 @@
 import * as CategoryRepository from '@/shared/repositories/CategoryRepository'
+import * as Category_SubCategoryRepository from '@/shared/repositories/Category_SubCategoryRepository'
+import { Operators } from '@/shared/services/DatabaseService'
+
 import { 
     ListCategoryArraySchema, 
     CategorySchema,
@@ -40,15 +43,42 @@ const get = async ({
     id,
 }) => {
     try{
-        const getResult = await CategoryRepository.get({
-            source,
-            collectionName: 'categories',
-            id,
-        })
-    
-        if (getResult?.err) throw getResult.err
-    
-        const schemaResult = CategorySchema.safeParse(getResult.data)
+
+        const [
+            getResult,
+            categoryBySubCategoriesResult,
+        ] = await Promise.allSettled([
+            CategoryRepository.get({
+                source,
+                id,
+            }),
+            Category_SubCategoryRepository.list({
+                source,
+                filters: [{
+                    field: 'categoryId',
+                    operator: Operators.EqualTo,
+                    value: id,
+                }],
+            }),
+        ])
+
+        if (
+            getResult.status === 'rejected' ||
+            getResult.value?.err
+        ) throw getResult.reason ?? getResult.value.err
+
+        if (
+            categoryBySubCategoriesResult.status === 'rejected' ||
+            categoryBySubCategoriesResult.value?.err
+        ) throw categoryBySubCategoriesResult.reason ?? categoryBySubCategoriesResult.value.err
+
+        const subCategoryIds = categoryBySubCategoriesResult.value.data.map((categoryBySubCategory) => categoryBySubCategory.subCategoryId)
+        const data = {
+            ...getResult.value.data,
+            subCategoryIds,
+        }
+
+        const schemaResult = CategorySchema.safeParse(data)
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
     
         return { data: schemaResult.data }
