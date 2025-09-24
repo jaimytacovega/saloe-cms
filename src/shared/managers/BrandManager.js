@@ -42,7 +42,6 @@ const get = async ({
     try{
         const getResult = await BrandRepository.get({
             source,
-            collectionName: 'brands',
             id,
         })
     

@@ -23,15 +23,17 @@ import * as A11 from '@/features/cms/features/Category/components/CategoryAddOrU
 console.log(A11)
 import * as A12 from '@/features/cms/features/Category/components/CategoryDeleteDialog/actions/CategoryDeleteDialogForm.submit'
 console.log(A12)
-import * as A13 from '@/features/cms/features/Promotion/components/PromotionAddOrUpdateForm/actions/PromotionAddForm.submit'
+import * as A13 from '@/features/cms/features/Product/components/ProductAddOrUpdateForm/actions/ProductAddForm.submit'
 console.log(A13)
-import * as A14 from '@/features/cms/features/Promotion/components/PromotionAddOrUpdateForm/actions/PromotionUpdateForm.submit'
+import * as A14 from '@/features/cms/features/Promotion/components/PromotionAddOrUpdateForm/actions/PromotionAddForm.submit'
 console.log(A14)
-import * as A15 from '@/features/cms/features/Promotion/components/PromotionDeleteDialog/actions/PromotionDeleteDialogForm.submit'
+import * as A15 from '@/features/cms/features/Promotion/components/PromotionAddOrUpdateForm/actions/PromotionUpdateForm.submit'
 console.log(A15)
-import * as A16 from '@/features/cms/features/SubCategory/components/SubCategoryAddOrUpdateForm/actions/SubCategoryAddForm.submit'
+import * as A16 from '@/features/cms/features/Promotion/components/PromotionDeleteDialog/actions/PromotionDeleteDialogForm.submit'
 console.log(A16)
-import * as A17 from '@/features/cms/features/SubCategory/components/SubCategoryAddOrUpdateForm/actions/SubCategoryUpdateForm.submit'
+import * as A17 from '@/features/cms/features/SubCategory/components/SubCategoryAddOrUpdateForm/actions/SubCategoryAddForm.submit'
 console.log(A17)
-import * as A18 from '@/features/cms/features/SubCategory/components/SubCategoryDeleteDialog/actions/SubCategoryDeleteDialogForm.submit'
+import * as A18 from '@/features/cms/features/SubCategory/components/SubCategoryAddOrUpdateForm/actions/SubCategoryUpdateForm.submit'
 console.log(A18)
+import * as A19 from '@/features/cms/features/SubCategory/components/SubCategoryDeleteDialog/actions/SubCategoryDeleteDialogForm.submit'
+console.log(A19)

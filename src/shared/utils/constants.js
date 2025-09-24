@@ -22,6 +22,7 @@ const CMS_CODES = {
     subCategories: 'SUBCAT',
     categories: 'CAT',
     promotions: 'PROM',
+    products: 'PROD',
 }
 
 export {

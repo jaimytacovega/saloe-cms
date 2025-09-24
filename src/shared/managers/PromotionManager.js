@@ -43,7 +43,6 @@ const get = async ({
     try{
         const getResult = await PromotionRepository.get({
             source,
-            collectionName: 'promotions',
             id,
         })
     

@@ -15,19 +15,22 @@ const InputFile = ({
     multiple = false,
     type = 'image',
     files,
+    showUploadedFiles = false,
 }) => {
+    const showThumbnail = Boolean(src) && !Boolean(files)
+
     return html`
         <inputgroup>
             <label for="${id}">${label}</label>
             <input type="file" id="${id}" accept="${accept ?? 'image/*'}" on-change="InputFile.change" ${multiple ? 'multiple' : ''}/>
-            <div class="InputFile__decorator" loaded=${Boolean(src)}>
+            <div class="InputFile__decorator" loaded=${showThumbnail}>
                 <div class="InputFile__decorator__thumbnail">
                     <img 
                         loading="lazy" 
                         width="24" 
                         height="24" 
                         alt="${alt ?? type}"
-                        src="${Boolean(src) ? src : `/img/icon/${type}-black.svg`}" 
+                        src="${showThumbnail ? src : `/img/icon/${type}-black.svg`}" 
                     >
                 </div>
                 <div class="InputFile__decorator__label">
@@ -36,7 +39,7 @@ const InputFile = ({
                 </div>
             </div>
             ${
-                multiple
+                multiple || showUploadedFiles
                     ? html`
                         <inputgroup id="${id}__files">
                             ${

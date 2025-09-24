@@ -16,6 +16,10 @@ import * as CmsCategoriesPage from '@/app/cms/categorias/page'
 import * as CmsCategoriesCreatePage from '@/app/cms/categorias/crear/page'
 import * as CmsCategoriesByIdPage from '@/app/cms/categorias/[id]'
 
+import * as CmsProductsPage from '@/app/cms/productos/page'
+import * as CmsProductsCreatePage from '@/app/cms/productos/crear/page'
+import * as CmsProductsByIdPage from '@/app/cms/productos/[id]'
+
 
 const setRouter = () => {
     addRoute({ pathname: '/cms/marcas', route: CmsBrandsPage.default })
@@ -33,6 +37,10 @@ const setRouter = () => {
     addRoute({ pathname: '/cms/categorias', route: CmsCategoriesPage.default })
     addRoute({ pathname: '/cms/categorias/crear', route: CmsCategoriesCreatePage.default })
     addRoute({ pathname: '/cms/categorias/:id', route: CmsCategoriesByIdPage.default })
+
+    addRoute({ pathname: '/cms/productos', route: CmsProductsPage.default })
+    addRoute({ pathname: '/cms/productos/crear', route: CmsProductsCreatePage.default })
+    addRoute({ pathname: '/cms/productos/:id', route: CmsProductsByIdPage.default })
 }
 
 export {
