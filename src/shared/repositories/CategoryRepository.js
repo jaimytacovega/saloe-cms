@@ -71,12 +71,6 @@ const get = async ({
     } catch (err) {
         return { err }
     }
-
-    // return DatabaseService.get({
-    //     source,
-    //     collectionName: 'categories',
-    //     id,
-    // })
 }
 
 const add = async ({
@@ -118,12 +112,34 @@ const add = async ({
                     collectionName: 'categories',
                 })
 
+                const { subCategoryIds, ...rest } = data
+
                 const category = {
-                    ...data,
+                    ...rest,
                     image: imageStorageResult.data,
                     catalogs: catalogsStorageResults.data,
                     count,
                 }
+                
+                await Promise.all(
+                    subCategoryIds.map(async (subCategoryId) => {
+                        const categoryBySubCategoryTx = await DatabaseService.getWithTransaction({
+                            source,
+                            tx,
+                            collectionName: 'category_subCategories',
+                            id: `${categoryTx.ref.id}_${subCategoryId}`,
+                        })
+
+                        if (!categoryBySubCategoryTx?.data) {
+                            await DatabaseService.addWithTransaction({
+                                source,
+                                tx,
+                                ref: categoryBySubCategoryTx.ref,
+                                data: { categoryId: categoryTx.ref.id, subCategoryId },
+                            })
+                        }
+                    })
+                )
 
                 Boolean(counterTx?.data)
                     ? await DatabaseService.updateWithTransaction({
