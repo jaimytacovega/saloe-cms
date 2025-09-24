@@ -25,7 +25,7 @@ const submit = ({
             return removeResult
         },
         onSuccess: () => {
-            location.href = '/cms/subcategorias'
+            location.href = `/cms/subcategorias${location.search}`
         },
     })
 }

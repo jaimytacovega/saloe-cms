@@ -1,4 +1,4 @@
-import * as PromotionManager from '@/shared/managers/PromotionManager'
+import * as ProductManager from '@/shared/managers/ProductManager'
 import { Source } from '@/shared/utils/constants'
 import * as Form from '@/shared/components/Form'
 
@@ -11,21 +11,23 @@ const submit = ({
 
     const id = form.querySelector('#id').value
     const path = form.querySelector('#path').value
+    const technicalSheetPath = form.querySelector('#technicalSheetPath').value
 
     Form.submit({
         form,
         onProcess: async () => {
-            const removeResult = await PromotionManager.remove({
+            const removeResult = await ProductManager.remove({
                 source: Source.FIREBASE,
                 id,
                 path,
+                technicalSheetPath,
             })
 
             if (removeResult.err) throw removeResult.err
             return removeResult
         },
         onSuccess: () => {
-            location.href = `/cms/promociones${location.search}`
+            location.href = `/cms/productos${location.search}`
         },
     })
 }

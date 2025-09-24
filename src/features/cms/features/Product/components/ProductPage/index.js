@@ -5,7 +5,7 @@ import CmsToolbox from '@/features/cms/components/CmsToolbox'
 
 import ProductTable from '@/features/cms/features/Product/components/ProductTable'
 import ProductAddOrUpdateForm from '@/features/cms/features/Product/components/ProductAddOrUpdateForm'
-// import ProductDeleteDialog from '@/features/cms/features/Product/components/ProductDeleteDialog'
+import ProductDeleteDialog from '@/features/cms/features/Product/components/ProductDeleteDialog'
 import NotFoundItem from '@/features/cms/components/NotFoundItem'
 
 
@@ -52,9 +52,9 @@ const ProductPage = async ({
                 addOrUpdateForm: ({ id }) => {
                     return ProductAddOrUpdateForm({ productId: id })
                 },
-                // deleteDialog: ({ id }) => {
-                //     return ProductDeleteDialog({ productId: id })
-                // },
+                deleteDialog: ({ id }) => {
+                    return ProductDeleteDialog({ productId: id })
+                },
                 notFoundItem: NotFoundItem({
                     header: html`
                         <h5>Selecciona una marca para ver detalles</h5>

@@ -34,8 +34,6 @@ const submit = ({
         updatedAt: new Date(),
     }
 
-    console.log('product =', product)
-
     Form.submit({
         form,
         onProcess: async () => {
@@ -53,7 +51,7 @@ const submit = ({
             return updateResult
         },
         onSuccess: () => {
-            // location.reload()
+            location.reload()
         },
     })
 }

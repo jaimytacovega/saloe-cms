@@ -30,8 +30,6 @@ const submit = ({
         updatedAt: now,
     }
 
-    console.log('product =', product)
-
     Form.submit({
         form,
         onProcess: async () => {
@@ -49,7 +47,7 @@ const submit = ({
             return addResult
         },
         onSuccess: ({ result }) => {    
-            // location.href = `/cms/productos/${result.data.id}${location.search}`
+            location.href = `/cms/productos/${result.data.id}${location.search}`
         },
     })
 }

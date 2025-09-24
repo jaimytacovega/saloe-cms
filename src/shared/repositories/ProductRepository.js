@@ -82,9 +82,6 @@ const add = async ({
                     count,
                 }
 
-                console.log('technicalSheetStorageResult =', technicalSheetStorageResult)
-                console.log('product =', product)
-
                 Boolean(counterTx?.data)
                     ? await DatabaseService.updateWithTransaction({
                         source,
@@ -158,24 +155,32 @@ const update = async({
     })
 }
 
-// const remove = async ({
-//     source,
-//     id,
-//     path,
-// }) => {
-//     const imageStorageResult = await StorageService.remove({
-//         source,
-//         path,
-//     })
+const remove = async ({
+    source,
+    id,
+    path,
+    technicalSheetPath,
+}) => {
+    const imageStorageResult = await StorageService.remove({
+        source,
+        path,
+    })
 
-//     if (imageStorageResult?.err) return imageStorageResult
+    if (imageStorageResult?.err) return imageStorageResult
 
-//     return DatabaseService.remove({
-//         source,
-//         collectionName: 'products',
-//         id,
-//     })
-// }
+    const technicalSheetStorageResult = await StorageService.remove({
+        source,
+        path: technicalSheetPath,
+    })
+
+    if (technicalSheetStorageResult?.err) return technicalSheetStorageResult
+
+    return DatabaseService.remove({
+        source,
+        collectionName: 'products',
+        id,
+    })
+}
 
 // const incrementCounter = ({
 //     source,
@@ -195,7 +200,7 @@ export {
     get,
     add,
     update,
-    // remove,
+    remove,
 
     // incrementCounter,
 }

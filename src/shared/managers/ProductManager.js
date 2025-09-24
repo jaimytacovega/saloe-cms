@@ -26,7 +26,6 @@ const list = async ({
         if (listResult?.err) throw listResult.err
 
         const schemaResult = ListProductArraySchema.safeParse(listResult.data)
-        console.log('schemaResult =', schemaResult)
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
             
         return { data: schemaResult.data }
@@ -85,7 +84,6 @@ const update = async ({
 }) => {
     try {
         const schemaResult = UpdateProductSchema.safeParse(data)
-        console.log('schemaResult =', schemaResult)
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
                 
         const updateResult = await ProductRepository.update({
@@ -101,28 +99,30 @@ const update = async ({
     }
 }
 
-// const remove = async ({
-//     source,
-//     id,
-//     path,
-// }) => {
-//     try{
-//         const schemaResult = DeleteProductSchema.safeParse({ id, path })
-//         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
+const remove = async ({
+    source,
+    id,
+    path,
+    technicalSheetPath,
+}) => {
+    try{
+        const schemaResult = DeleteProductSchema.safeParse({ id, path, technicalSheetPath })
+        if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
 
-//         const removeResult = await ProductRepository.remove({
-//             source,
-//             id: schemaResult.data.id,
-//             path: schemaResult.data.path,
-//         })
+        const removeResult = await ProductRepository.remove({
+            source,
+            id: schemaResult.data.id,
+            path: schemaResult.data.path,
+            technicalSheetPath: schemaResult.data.technicalSheetPath,
+        })
 
-//         if (removeResult?.err) throw removeResult.err
-//         return removeResult
-//     } catch (err) {
-//         console.error(err)
-//         return { err }
-//     }
-// }
+        if (removeResult?.err) throw removeResult.err
+        return removeResult
+    } catch (err) {
+        console.error(err)
+        return { err }
+    }
+}
 
 
 export {
@@ -130,5 +130,5 @@ export {
     get,
     add,
     update,
-    // remove,
+    remove,
 }
