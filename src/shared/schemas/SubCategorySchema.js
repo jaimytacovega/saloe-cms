@@ -49,7 +49,7 @@ const UpdateSubCategorySchema = z.object({
 
 const DeleteSubCategorySchema = z.object({
     id: z.string().min(1, 'El id es obligatorio').trim(),
-    path: z.string().min(1, 'La ruta es obligatoria').trim(),
+    imagePath: z.string().min(1, 'La ruta es obligatoria').trim(),
 })
 
 export {

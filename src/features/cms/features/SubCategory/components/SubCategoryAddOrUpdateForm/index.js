@@ -86,7 +86,7 @@ const SubCategoryAddOrUpdateForm = async ({
                         }
                         ${
                             Input({
-                                id: 'path',
+                                id: 'imagePath',
                                 value: subCategory?.image?.path ?? '',
                                 type: 'hidden',
                             })

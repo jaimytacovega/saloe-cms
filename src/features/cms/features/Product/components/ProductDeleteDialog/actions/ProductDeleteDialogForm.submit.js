@@ -10,7 +10,7 @@ const submit = ({
     e.preventDefault()
 
     const id = form.querySelector('#id').value
-    const path = form.querySelector('#path').value
+    const imagePath = form.querySelector('#imagePath').value
     const technicalSheetPath = form.querySelector('#technicalSheetPath').value
 
     Form.submit({
@@ -19,7 +19,7 @@ const submit = ({
             const removeResult = await ProductManager.remove({
                 source: Source.FIREBASE,
                 id,
-                path,
+                imagePath,
                 technicalSheetPath,
             })
 

@@ -35,7 +35,7 @@ const PromotionDeleteDialog = async ({
                 }
                 ${
                     Input({
-                        id: 'path',
+                        id: 'imagePath',
                         value: promotion?.image?.path ?? '',
                         type: 'hidden',
                     })

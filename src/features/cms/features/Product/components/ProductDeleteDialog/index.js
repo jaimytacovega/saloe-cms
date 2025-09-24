@@ -35,7 +35,7 @@ const ProductDeleteDialog = async ({
                 }
                 ${
                     Input({
-                        id: 'path',
+                        id: 'imagePath',
                         value: product?.image?.path ?? '',
                         type: 'hidden',
                     })

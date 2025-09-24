@@ -35,7 +35,7 @@ const BrandDeleteDialog = async ({
                 }
                 ${
                     Input({
-                        id: 'path',
+                        id: 'imagePath',
                         value: brand?.image?.path ?? '',
                         type: 'hidden',
                     })

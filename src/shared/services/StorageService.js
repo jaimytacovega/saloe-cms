@@ -6,13 +6,13 @@ import { FIREBASE_CREDENTIALS, Source } from '@/shared/utils/constants'
 const add = ({
     source,
     file,
-    path,
+    filePath,
 }) => {
     if (source === Source.FIREBASE) {
         StorageAdapter.init({ credentials: FIREBASE_CREDENTIALS })
         return StorageAdapter.add({
             file,
-            path,
+            filePath,
         })
     }
 }
@@ -20,27 +20,27 @@ const add = ({
 const update = ({
     source,
     file,
-    path,
-    imagePath,
+    currentFilePath,
+    newFilePath,
 }) => {
     if (source === Source.FIREBASE) {
         StorageAdapter.init({ credentials: FIREBASE_CREDENTIALS })
         return StorageAdapter.update({
             file,
-            path,
-            imagePath,
+            currentFilePath,
+            newFilePath,
         })
     }
 }
 
 const remove = ({
     source,
-    path,
+    filePath,
 }) => {
     if (source === Source.FIREBASE) {
         StorageAdapter.init({ credentials: FIREBASE_CREDENTIALS })
         return StorageAdapter.remove({
-            path,
+            filePath,
         })
     }
 }
@@ -74,12 +74,12 @@ const addMultiple = async ({
 
 const removeMultiple = async ({
     source,
-    paths,
+    filePaths,
 }) => {
     try{
         const removeResults = await Promise.allSettled(
-            paths.map((path) => {
-                return remove({ source, path })
+            filePaths.map((filePath) => {
+                return remove({ source, filePath })
             })
         )
             

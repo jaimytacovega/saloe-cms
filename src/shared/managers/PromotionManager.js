@@ -110,16 +110,16 @@ const update = async ({
 const remove = async ({
     source,
     id,
-    path,
+    imagePath,
 }) => {
     try{
-        const schemaResult = DeletePromotionSchema.safeParse({ id, path })
+        const schemaResult = DeletePromotionSchema.safeParse({ id, imagePath })
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
 
         const removeResult = await PromotionRepository.remove({
             source,
             id: schemaResult.data.id,
-            path: schemaResult.data.path,
+            imagePath: schemaResult.data.imagePath,
         })
 
         if (removeResult?.err) throw removeResult.err

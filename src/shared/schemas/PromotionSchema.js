@@ -46,7 +46,7 @@ const UpdatePromotionSchema = z.object({
 
 const DeletePromotionSchema = z.object({
     id: z.string().min(1, 'El id es obligatorio').trim(),
-    path: z.string().min(1, 'La ruta es obligatoria').trim(),
+    imagePath: z.string().min(1, 'La ruta es obligatoria').trim(),
 })
 
 export {

@@ -81,12 +81,12 @@ const add = async ({
         source,
         transaction: async (tx) => {
             try{
-                const storageResult = await StorageService.add({
+                const imageStorageResult = await StorageService.add({
                     source,
                     file: data.image,
-                    path: storagePath({ name: data.image.name }),
+                    filePath: storagePath({ name: data.image.name }),
                 })
-                if (storageResult?.err) throw storageResult.err
+                if (imageStorageResult?.err) throw imageStorageResult.err
 
                 const counterTx = await DatabaseService.getWithTransaction({
                     source,
@@ -109,7 +109,7 @@ const add = async ({
 
                 const subCategory = {
                     ...rest,
-                    image: storageResult.data,
+                    image: imageStorageResult.data,
                     count,
                 }
 
@@ -176,15 +176,15 @@ const update = async({
         transaction: async (tx) => {
             try{
                 if (Boolean(data.image)) {
-                    const storageResult = await StorageService.update({
+                    const imageStorageResult = await StorageService.update({
                         source,
                         file: data.image,
-                        path: storagePath({ id: data.id, name: data.image.name }),
-                        imagePath: data.imagePath,
+                        newFilePath: storagePath({ id: data.id, name: data.image.name }),
+                        currentFilePath: data.imagePath,
                     })
                 
-                    if (storageResult?.err) throw storageResult.err
-                    data.image = storageResult.data
+                    if (imageStorageResult?.err) throw imageStorageResult.err
+                    data.image = imageStorageResult.data
                 }
                 
                 delete data.imagePath
@@ -269,18 +269,18 @@ const update = async({
 const remove = async ({
     source,
     id,
-    path,
+    imagePath,
 }) => {
     const removeResult = await DatabaseService.onTransaction({
         source,
         transaction: async (tx) => {
             try{
-                const storageResult = await StorageService.remove({
+                const imageStorageResult = await StorageService.remove({
                     source,
-                    path,
+                    filePath: imagePath,
                 })
             
-                if (storageResult?.err) throw storageResult.err
+                if (imageStorageResult?.err) throw imageStorageResult.err
 
                 const subCategoryTx = await DatabaseService.getWithTransaction({
                     source,

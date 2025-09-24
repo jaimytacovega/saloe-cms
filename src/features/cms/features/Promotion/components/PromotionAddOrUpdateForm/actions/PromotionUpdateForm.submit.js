@@ -16,7 +16,7 @@ const submit = ({
     const name = form.querySelector('#name').value.trim()
     const description = form.querySelector('#description').value.trim()
     const brandId = form.querySelector('#brandId').selectedOptions[0].value.trim()
-    const imagePath = form.querySelector('#path').value.trim()
+    const imagePath = form.querySelector('#imagePath').value.trim()
     const image = form.querySelector('#image').files[0]
 
     const promotion = {

@@ -84,6 +84,7 @@ const update = async ({
 }) => {
     try {
         const schemaResult = UpdateCategorySchema.safeParse(data)
+        console.log('schemaResult =', schemaResult)
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
                 
         const updateResult = await CategoryRepository.update({
@@ -102,17 +103,17 @@ const update = async ({
 const remove = async ({
     source,
     id,
-    path,
+    imagePath,
     catalogPaths,
 }) => {
     try{
-        const schemaResult = DeleteCategorySchema.safeParse({ id, path, catalogPaths })
+        const schemaResult = DeleteCategorySchema.safeParse({ id, imagePath, catalogPaths })
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
 
         const removeResult = await CategoryRepository.remove({
             source,
             id,
-            path: schemaResult.data.path,
+            imagePath: schemaResult.data.imagePath,
             catalogPaths: schemaResult.data.catalogPaths,
         })
 

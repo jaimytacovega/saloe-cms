@@ -84,7 +84,7 @@ const add = async ({
                 const imageStorageResult = await StorageService.add({
                     source,
                     file: data.image,
-                    path: storagePath({ name: data.image.name }),
+                    filePath: storagePath({ name: data.image.name }),
                 })
                 if (imageStorageResult?.err) throw imageStorageResult.err
                 
@@ -187,8 +187,8 @@ const update = async({
                     const imageStorageResult = await StorageService.update({
                         source,
                         file: data.image,
-                        path: storagePath({ id: data.id, name: data.image.name }),
-                        imagePath: data.imagePath,
+                        newFilePath: storagePath({ id: data.id, name: data.image.name }),
+                        currentFilePath: data.imagePath,
                     })
                 
                     if (imageStorageResult?.err) throw imageStorageResult.err
@@ -200,7 +200,7 @@ const update = async({
                 if (Boolean(data.catalogsToRemove)) {
                     const catalogsStorageResults = await StorageService.removeMultiple({
                         source,
-                        paths: data.catalogsToRemove,
+                        filePaths: data.catalogsToRemove,
                     })
             
                     if (catalogsStorageResults?.err) throw catalogsStorageResults.err
@@ -230,6 +230,7 @@ const update = async({
                 })
 
                 const { subCategoryIds, ...category } = data
+                console.log('category =', category)
 
                 const categoryBySubcategoriesResult = await Category_SubCategoryRepository.list({
                     source,
@@ -301,7 +302,7 @@ const update = async({
 const remove = async ({
     source,
     id,
-    path,
+    imagePath,
     catalogPaths,
 }) => {
     const removeResult = await DatabaseService.onTransaction({
@@ -310,7 +311,7 @@ const remove = async ({
             try{
                 const removeFilesResults = await StorageService.removeMultiple({
                     source,
-                    paths: [path, ...catalogPaths],
+                    filePaths: [imagePath, ...catalogPaths],
                 })
             
                 if (removeFilesResults?.err) throw removeFilesResults.err

@@ -46,7 +46,7 @@ const add = async ({
                 const imageStorageResult = await StorageService.add({
                     source,
                     file: data.image,
-                    path: storagePath({ name: data.image.name }),
+                    filePath: storagePath({ name: data.image.name }),
                 })
                 if (imageStorageResult?.err) throw imageStorageResult.err
 
@@ -54,7 +54,7 @@ const add = async ({
                     ? await StorageService.add({
                         source,
                         file: data.technicalSheet,
-                        path: storagePath({ name: data.technicalSheet.name }),
+                        filePath: storagePath({ name: data.technicalSheet.name }),
                     }) : { data: {} }
                 if (technicalSheetStorageResult?.err) throw technicalSheetStorageResult.err
 
@@ -120,12 +120,13 @@ const update = async({
     source,
     data,
 }) => {
+    console.log('data =', data)
     if (Boolean(data.image)) {
         const imageStorageResult = await StorageService.update({
             source,
             file: data.image,
-            path: storagePath({ id: data.id, name: data.image.name }),
-            imagePath: data.imagePath,
+            newFilePath: storagePath({ id: data.id, name: data.image.name }),
+            currentFilePath: data.imagePath,
         })
 
         if (imageStorageResult?.err) return imageStorageResult
@@ -138,8 +139,8 @@ const update = async({
         const technicalSheetStorageResult = await StorageService.update({
             source,
             file: data.technicalSheet,
-            path: storagePath({ id: data.id, name: data.technicalSheet.name }),
-            imagePath: data.technicalSheetPath,
+            newFilePath: storagePath({ id: data.id, name: data.technicalSheet.name }),
+            currentFilePath: data.technicalSheetPath,
         })
 
         if (technicalSheetStorageResult?.err) return technicalSheetStorageResult
@@ -158,19 +159,19 @@ const update = async({
 const remove = async ({
     source,
     id,
-    path,
+    imagePath,
     technicalSheetPath,
 }) => {
     const imageStorageResult = await StorageService.remove({
         source,
-        path,
+        filePath: imagePath,
     })
 
     if (imageStorageResult?.err) return imageStorageResult
 
     const technicalSheetStorageResult = await StorageService.remove({
         source,
-        path: technicalSheetPath,
+        filePath: technicalSheetPath,
     })
 
     if (technicalSheetStorageResult?.err) return technicalSheetStorageResult

@@ -14,7 +14,7 @@ const submit = ({
 
     const id = form.querySelector('#id').value.trim()
     const name = form.querySelector('#name').value.trim()
-    const imagePath = form.querySelector('#path').value.trim()
+    const imagePath = form.querySelector('#imagePath').value.trim()
     const image = form.querySelector('#image').files[0]
     const subCategoryIds = Array.from(form.querySelector('#subCategoryIds').selectedOptions).map((option) => option.value.trim())
     const brandIds = Array.from(form.querySelector('#brandIds').selectedOptions).map((option) => option.value.trim())

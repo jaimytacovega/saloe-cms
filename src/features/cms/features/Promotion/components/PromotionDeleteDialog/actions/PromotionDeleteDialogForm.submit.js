@@ -10,7 +10,7 @@ const submit = ({
     e.preventDefault()
 
     const id = form.querySelector('#id').value
-    const path = form.querySelector('#path').value
+    const imagePath = form.querySelector('#imagePath').value
 
     Form.submit({
         form,
@@ -18,7 +18,7 @@ const submit = ({
             const removeResult = await PromotionManager.remove({
                 source: Source.FIREBASE,
                 id,
-                path,
+                imagePath,
             })
 
             if (removeResult.err) throw removeResult.err

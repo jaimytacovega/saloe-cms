@@ -21,10 +21,10 @@ const init = ({
 
 const add = async ({
     file,
-    path,
+    filePath,
 }) => {
     try {
-        const storageRef = ref(storage, path)
+        const storageRef = ref(storage, filePath)
         await uploadBytes(storageRef, file)
         const downloadURL = await getDownloadURL(storageRef)
 
@@ -41,27 +41,29 @@ const add = async ({
 
 const update = async ({
     file,
-    path,
-    imagePath,
+    currentFilePath, //path
+    newFilePath, //imagePath
 }) => {
+    console.log('currentFilePath =', currentFilePath)
+    console.log('newFilePath =', newFilePath)
     try{
-        await remove({ path: imagePath })
-        return add({ file, path })
+        await remove({ filePath: currentFilePath })
+        return add({ file, filePath: newFilePath })
     }catch (err) {
         return { err }
     }
 }
 
 const remove = async ({
-    path,
+    filePath,
 }) => {
     try{
-        const storageRef = ref(storage, path)
+        const storageRef = ref(storage, filePath)
         await deleteObject(storageRef)
 
         return {
             data: {
-                path,
+                filePath,
             }
         }
     }catch (err) {

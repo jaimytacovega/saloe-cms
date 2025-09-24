@@ -35,7 +35,7 @@ const CategoryDeleteDialog = async ({
                 }
                 ${
                     Input({
-                        id: 'path',
+                        id: 'imagePath',
                         value: category?.image?.path ?? '',
                         type: 'hidden',
                     })
