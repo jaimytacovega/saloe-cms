@@ -280,7 +280,7 @@ const remove = async ({
                     path,
                 })
             
-                if (storageResult?.err) throw storageResult
+                if (storageResult?.err) throw storageResult.err
 
                 const subCategoryTx = await DatabaseService.getWithTransaction({
                     source,

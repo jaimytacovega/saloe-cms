@@ -304,18 +304,59 @@ const remove = async ({
     path,
     catalogPaths,
 }) => {
-    const removeFilesResults = await StorageService.removeMultiple({
+    const removeResult = await DatabaseService.onTransaction({
         source,
-        paths: [path, ...catalogPaths],
+        transaction: async (tx) => {
+            try{
+                const removeFilesResults = await StorageService.removeMultiple({
+                    source,
+                    paths: [path, ...catalogPaths],
+                })
+            
+                if (removeFilesResults?.err) throw removeFilesResults.err
+
+                const categoryTx = await DatabaseService.getWithTransaction({
+                    source,
+                    tx,
+                    collectionName: 'categories',
+                    id,
+                })
+                
+                const categoryBySubcategoriesResult = await Category_SubCategoryRepository.list({
+                    source,
+                    filters: [{
+                        field: 'categoryId',
+                        operator: Operators.EqualTo,
+                        value: id,
+                    }],
+                })
+
+                const categoryBySubcategoriesTxs = await Promise.all(
+                    categoryBySubcategoriesResult.data.map((categoryBySubcategory) => {
+                        return DatabaseService.getWithTransaction({
+                            source,
+                            tx,
+                            collectionName: 'category_subCategories',
+                            id: categoryBySubcategory.id,
+                        })
+                    })
+                )
+
+                return Promise.all(
+                    [
+                        categoryTx,
+                        ...categoryBySubcategoriesTxs,
+                    ].map((txToRemove) => {
+                        return tx.delete(txToRemove.ref)
+                    })
+                )
+            }catch(err){
+                return Promise.reject(err)
+            }
+        }
     })
 
-    if (removeFilesResults?.err) return removeFilesResults
-
-    return DatabaseService.remove({
-        source,
-        collectionName: 'categories',
-        id,
-    })
+    return removeResult
 }
 
 const incrementCounter = ({
