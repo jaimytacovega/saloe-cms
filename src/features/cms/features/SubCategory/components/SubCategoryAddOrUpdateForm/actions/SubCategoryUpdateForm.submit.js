@@ -43,7 +43,7 @@ const submit = ({
             return updateResult
         },
         onSuccess: () => {
-            // location.reload()
+            location.reload()
         },
     })
 }
