@@ -179,50 +179,123 @@ const update = async({
     source,
     data,
 }) => {
-    if (Boolean(data.image)) {
-        const imageStorageResult = await StorageService.update({
-            source,
-            file: data.image,
-            path: storagePath({ id: data.id, name: data.image.name }),
-            oldPath: data.oldPath,
-        })
-    
-        if (imageStorageResult?.err) return imageStorageResult
-        data.image = imageStorageResult.data
-    }
-    
-    delete data.oldPath
-
-    if (Boolean(data.catalogsToRemove)) {
-        const catalogsStorageResults = await StorageService.removeMultiple({
-            source,
-            paths: data.catalogsToRemove,
-        })
-
-        if (catalogsStorageResults?.err) return catalogsStorageResults
-    }
-
-    delete data.catalogsToRemove
-
-    const addCatalogsStorageResults = await StorageService.addMultiple({
+    const updateResult = await DatabaseService.onTransaction({
         source,
-        files: data.catalogs,
-        paths: data.catalogs.map((catalog) => storagePath({ name: catalog.name })),
+        transaction: async (tx) => {
+            try{
+                if (Boolean(data.image)) {
+                    const imageStorageResult = await StorageService.update({
+                        source,
+                        file: data.image,
+                        path: storagePath({ id: data.id, name: data.image.name }),
+                        oldPath: data.oldPath,
+                    })
+                
+                    if (imageStorageResult?.err) throw imageStorageResult.err
+                    data.image = imageStorageResult.data
+                }
+                
+                delete data.oldPath
+
+                if (Boolean(data.catalogsToRemove)) {
+                    const catalogsStorageResults = await StorageService.removeMultiple({
+                        source,
+                        paths: data.catalogsToRemove,
+                    })
+            
+                    if (catalogsStorageResults?.err) throw catalogsStorageResults.err
+                }
+            
+                delete data.catalogsToRemove
+
+                const addCatalogsStorageResults = await StorageService.addMultiple({
+                    source,
+                    files: data.catalogs,
+                    paths: data.catalogs.map((catalog) => storagePath({ name: catalog.name })),
+                })
+                if (addCatalogsStorageResults?.err) throw addCatalogsStorageResults.err
+
+                data.catalogs = [
+                    ...data.catalogsToKeep,
+                    ...addCatalogsStorageResults.data,
+                ]
+            
+                delete data.catalogsToKeep
+
+                const categoryTx = await DatabaseService.getWithTransaction({
+                    source,
+                    tx,
+                    collectionName: 'categories',
+                    id: data.id,
+                })
+
+                const { subCategoryIds, ...category } = data
+
+                const categoryBySubcategoriesResult = await Category_SubCategoryRepository.list({
+                    source,
+                    filters: [{
+                        field: 'categoryId',
+                        operator: Operators.EqualTo,
+                        value: data.id,
+                    }],
+                })
+
+                const categoryBySubcategories = categoryBySubcategoriesResult.data
+
+                const categoryBySubcategoriesToRemove = categoryBySubcategories.filter((categoryBySubcategory) => !subCategoryIds.includes(categoryBySubcategory.subCategoryId))
+                const categoryBySubcategoriesToRemoveTxs = await Promise.all(
+                    categoryBySubcategoriesToRemove.map((categoryBySubcategoryToRemove) => {
+                        return DatabaseService.getWithTransaction({
+                            source,
+                            tx,
+                            collectionName: 'category_subCategories',
+                            id: categoryBySubcategoryToRemove.id,
+                        })
+                    })
+                )
+
+                const subCategoryIdsToAdd = subCategoryIds.filter((subCategoryId) => !categoryBySubcategories.some((categoryBySubcategory) => categoryBySubcategory.subCategoryId === subCategoryId))
+
+                await Promise.all([
+                    ...categoryBySubcategoriesToRemoveTxs.map((categoryBySubcategoriesToRemoveTx) => {
+                        return tx.delete(categoryBySubcategoriesToRemoveTx.ref)
+                    }),
+                    ...subCategoryIdsToAdd.map(async (subCategoryIdToAdd) => {
+                        const categoryBySubCategoryToAddTx = await DatabaseService.getWithTransaction({
+                            source,
+                            tx,
+                            collectionName: 'category_subCategories',
+                            id: `${categoryTx.ref.id}_${subCategoryIdToAdd}`,
+                        })
+
+                        if (!categoryBySubCategoryToAddTx?.data) {
+                            await DatabaseService.addWithTransaction({
+                                source,
+                                tx,
+                                ref: categoryBySubCategoryToAddTx.ref,
+                                data: { categoryId: categoryTx.ref.id, subCategoryId: subCategoryIdToAdd },
+                            })
+                        }
+                    }),
+                    DatabaseService.updateWithTransaction({
+                        source,
+                        tx,
+                        ref: categoryTx.ref,
+                        data: category,
+                    }),
+                ])
+
+                return { 
+                    id: categoryTx.ref.id,
+                    ...category, 
+                }
+            }catch(err){
+                return Promise.reject(err)
+            }
+        }
     })
-    if (addCatalogsStorageResults?.err) return addCatalogsStorageResults
 
-    data.catalogs = [
-        ...data.catalogsToKeep,
-        ...addCatalogsStorageResults.data,
-    ]
-
-    delete data.catalogsToKeep
-
-    return DatabaseService.update({
-        source,
-        collectionName: 'categories',
-        data,
-    })
+    return updateResult
 }
 
 const remove = async ({

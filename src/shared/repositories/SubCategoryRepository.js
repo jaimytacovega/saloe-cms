@@ -183,7 +183,7 @@ const update = async({
                         oldPath: data.oldPath,
                     })
                 
-                    if (storageResult?.err) throw storageResult
+                    if (storageResult?.err) throw storageResult.err
                     data.image = storageResult.data
                 }
                 
@@ -196,11 +196,7 @@ const update = async({
                     id: data.id,
                 })
                 
-                const { categoryIds, ...rest } = data
-
-                const subCategory = {
-                    ...rest,
-                }
+                const { categoryIds, ...subCategory } = data
 
                 const categoryBySubcategoriesResult = await Category_SubCategoryRepository.list({
                     source,
@@ -248,7 +244,13 @@ const update = async({
                                 data: { categoryId: categoryIdToAdd, subCategoryId: subCategoryTx.ref.id },
                             })
                         }
-                    })
+                    }),
+                    DatabaseService.updateWithTransaction({
+                        source,
+                        tx,
+                        ref: subCategoryTx.ref,
+                        data: subCategory,
+                    }),
                 ])
 
                 return { 
