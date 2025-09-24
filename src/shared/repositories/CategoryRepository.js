@@ -359,25 +359,10 @@ const remove = async ({
     return removeResult
 }
 
-const incrementCounter = ({
-    source,
-    id,
-    count,
-}) => {
-    return DatabaseService.incrementCounter({
-        source,
-        collectionName: 'categories',
-        id,
-        count,
-    })
-}
-
 export {
     list,
     get,
     add,
     update,
     remove,
-
-    incrementCounter,
 }

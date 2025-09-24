@@ -182,25 +182,10 @@ const remove = async ({
     })
 }
 
-// const incrementCounter = ({
-//     source,
-//     id,
-//     count,
-// }) => {
-//     return DatabaseService.incrementCounter({
-//         source,
-//         collectionName: 'products',
-//         id,
-//         count,
-//     })
-// }
-
 export {
     list,
     get,
     add,
     update,
     remove,
-
-    // incrementCounter,
 }
