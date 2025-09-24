@@ -27,15 +27,50 @@ const list = ({
     })
 }
 
-const get = ({
+const get = async ({
     source,
     id,
 }) => {
-    return DatabaseService.get({
-        source,
-        collectionName: 'subCategories',
-        id,
-    })
+    try{
+        const [
+            getResult,
+            categoryBySubCategoriesResult,
+        ] = await Promise.allSettled([
+            DatabaseService.get({
+                source,
+                collectionName: 'subCategories',
+                id,
+            }),
+            Category_SubCategoryRepository.list({
+                source,
+                filters: [{
+                    field: 'subCategoryId',
+                    operator: Operators.EqualTo,
+                    value: id,
+                }],
+            }),
+        ])
+    
+        if (
+            getResult.status === 'rejected' ||
+            getResult.value?.err
+        ) throw getResult.reason ?? getResult.value.err
+    
+        if (
+            categoryBySubCategoriesResult.status === 'rejected' ||
+            categoryBySubCategoriesResult.value?.err
+        ) throw categoryBySubCategoriesResult.reason ?? categoryBySubCategoriesResult.value.err
+        
+        const categoryIds = categoryBySubCategoriesResult.value.data.map((categoryBySubCategory) => categoryBySubCategory.categoryId)
+        const data = {
+            ...getResult.value.data,
+            categoryIds,
+        }
+
+        return { data }
+    } catch (err) {
+        return { err }
+    }
 }
 
 const add = async ({
