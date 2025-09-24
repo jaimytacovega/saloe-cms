@@ -188,14 +188,14 @@ const update = async({
                         source,
                         file: data.image,
                         path: storagePath({ id: data.id, name: data.image.name }),
-                        oldPath: data.oldPath,
+                        imagePath: data.imagePath,
                     })
                 
                     if (imageStorageResult?.err) throw imageStorageResult.err
                     data.image = imageStorageResult.data
                 }
                 
-                delete data.oldPath
+                delete data.imagePath
 
                 if (Boolean(data.catalogsToRemove)) {
                     const catalogsStorageResults = await StorageService.removeMultiple({

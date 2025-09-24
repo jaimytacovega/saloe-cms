@@ -27,7 +27,7 @@ const UpdateBrandSchema = z.object({
     id: z.string().min(1, 'El id es obligatorio').trim(),
     name: z.string().min(1, 'El nombre es obligatorio').trim(),
     image: z.union([z.instanceof(File), z.undefined()]),
-    oldPath: z.string().min(1, 'La ruta es obligatoria').trim(),
+    imagePath: z.string().min(1, 'La ruta es obligatoria').trim(),
     keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
     updatedAt: DateSchema,
 }).transform((data) => {

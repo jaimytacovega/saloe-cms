@@ -21,14 +21,14 @@ const update = ({
     source,
     file,
     path,
-    oldPath,
+    imagePath,
 }) => {
     if (source === Source.FIREBASE) {
         StorageAdapter.init({ credentials: FIREBASE_CREDENTIALS })
         return StorageAdapter.update({
             file,
             path,
-            oldPath,
+            imagePath,
         })
     }
 }

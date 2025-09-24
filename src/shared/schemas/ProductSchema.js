@@ -35,7 +35,7 @@ const UpdateProductSchema = z.object({
     id: z.string().min(1, 'El id es obligatorio').trim(),
     name: z.string().min(1, 'El nombre es obligatorio').trim(),
     image: z.union([z.instanceof(File), z.undefined()]),
-    oldPath: z.string().min(1, 'La ruta es obligatoria').trim(),
+    imagePath: z.string().min(1, 'La ruta es obligatoria').trim(),
     subCategoryIds: z.array(z.string()).optional(),
     brandIds: z.array(z.string()).optional(),
     technicalSheetPath: z.string().trim(),

@@ -125,21 +125,21 @@ const update = async({
             source,
             file: data.image,
             path: storagePath({ id: data.id, name: data.image.name }),
-            oldPath: data.oldPath,
+            imagePath: data.imagePath,
         })
 
         if (imageStorageResult?.err) return imageStorageResult
         data.image = imageStorageResult.data
     }
 
-    delete data.oldPath
+    delete data.imagePath
 
     if (Boolean(data.technicalSheet)) {
         const technicalSheetStorageResult = await StorageService.update({
             source,
             file: data.technicalSheet,
             path: storagePath({ id: data.id, name: data.technicalSheet.name }),
-            oldPath: data.technicalSheetPath,
+            imagePath: data.technicalSheetPath,
         })
 
         if (technicalSheetStorageResult?.err) return technicalSheetStorageResult

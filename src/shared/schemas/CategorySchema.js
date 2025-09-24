@@ -38,7 +38,7 @@ const UpdateCategorySchema = z.object({
     name: z.string().min(1, 'El nombre es obligatorio').trim(),
     description: z.string().trim().optional(),
     image: z.union([z.instanceof(File), z.undefined()]),
-    oldPath: z.string().min(1, 'La ruta es obligatoria').trim(),
+    imagePath: z.string().min(1, 'La ruta es obligatoria').trim(),
     subCategoryIds: z.array(z.string()).optional(),
     brandIds: z.array(z.string()).optional(),
     promotionIds: z.array(z.string()).optional(),

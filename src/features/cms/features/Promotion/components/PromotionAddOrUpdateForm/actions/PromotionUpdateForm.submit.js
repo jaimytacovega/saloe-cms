@@ -16,7 +16,7 @@ const submit = ({
     const name = form.querySelector('#name').value.trim()
     const description = form.querySelector('#description').value.trim()
     const brandId = form.querySelector('#brandId').selectedOptions[0].value.trim()
-    const oldPath = form.querySelector('#path').value.trim()
+    const imagePath = form.querySelector('#path').value.trim()
     const image = form.querySelector('#image').files[0]
 
     const promotion = {
@@ -25,7 +25,7 @@ const submit = ({
         description,
         brandId,
         image,
-        oldPath,
+        imagePath,
         keywords: keywords({ keys: [name] }),
         updatedAt: new Date(),
     }

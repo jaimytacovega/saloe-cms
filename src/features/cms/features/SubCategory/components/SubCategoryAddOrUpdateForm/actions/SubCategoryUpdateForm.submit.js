@@ -14,7 +14,7 @@ const submit = ({
     const id = form.querySelector('#id').value.trim()
     const name = form.querySelector('#name').value.trim()
     const description = form.querySelector('#description').value.trim()
-    const oldPath = form.querySelector('#path').value.trim()
+    const imagePath = form.querySelector('#path').value.trim()
     const image = form.querySelector('#image').files[0]
     const categoryIds = Array.from(form.querySelector('#categoryIds').selectedOptions).map((option) => option.value.trim())
     const seoKeywords = form.querySelector('#seoKeywords').value.trim()
@@ -24,7 +24,7 @@ const submit = ({
         name,
         description,
         image,
-        oldPath,
+        imagePath,
         categoryIds,
         seoKeywords,
         keywords: keywords({ keys: [name, description, seoKeywords] }),

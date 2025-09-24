@@ -34,7 +34,7 @@ const UpdateSubCategorySchema = z.object({
     name: z.string().min(1, 'El nombre es obligatorio').trim(),
     description: z.string().trim().optional(),
     image: z.union([z.instanceof(File), z.undefined()]),
-    oldPath: z.string().min(1, 'La ruta es obligatoria').trim(),
+    imagePath: z.string().min(1, 'La ruta es obligatoria').trim(),
     categoryIds: z.array(z.string()).optional(),
     seoKeywords: z.string().trim().optional(),
     keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),

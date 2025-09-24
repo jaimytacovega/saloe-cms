@@ -125,14 +125,14 @@ const update = async({
             source,
             file: data.image,
             path: storagePath({ id: data.id, name: data.image.name }),
-            oldPath: data.oldPath,
+            imagePath: data.imagePath,
         })
     
         if (storageResult?.err) return storageResult
         data.image = storageResult.data
     }
     
-    delete data.oldPath
+    delete data.imagePath
 
     return DatabaseService.update({
         source,

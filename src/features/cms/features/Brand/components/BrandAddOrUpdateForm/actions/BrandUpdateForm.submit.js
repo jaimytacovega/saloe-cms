@@ -14,14 +14,14 @@ const submit = ({
 
     const id = form.querySelector('#id').value.trim()
     const name = form.querySelector('#name').value.trim()
-    const oldPath = form.querySelector('#path').value.trim()
+    const imagePath = form.querySelector('#path').value.trim()
     const image = form.querySelector('#image').files[0]
 
     const brand = {
         id,
         name,
         image,
-        oldPath,
+        imagePath,
         keywords: keywords({ keys: [name] }),
         updatedAt: new Date(),
     }

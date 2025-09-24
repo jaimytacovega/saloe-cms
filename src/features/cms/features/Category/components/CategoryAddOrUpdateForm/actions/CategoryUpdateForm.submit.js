@@ -15,7 +15,7 @@ const submit = ({
     const id = form.querySelector('#id').value.trim()
     const description = form.querySelector('#description').value.trim()
     const name = form.querySelector('#name').value.trim()
-    const oldPath = form.querySelector('#path').value.trim()
+    const imagePath = form.querySelector('#path').value.trim()
     const image = form.querySelector('#image').files[0]
     const subCategoryIds = Array.from(form.querySelector('#subCategoryIds').selectedOptions).map((option) => option.value.trim())
     const brandIds = Array.from(form.querySelector('#brandIds').selectedOptions).map((option) => option.value.trim())
@@ -42,7 +42,7 @@ const submit = ({
         brandIds,
         promotionIds,
         image,
-        oldPath,
+        imagePath,
         catalogs,
         catalogsToKeep,
         catalogsToRemove,

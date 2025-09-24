@@ -42,10 +42,10 @@ const add = async ({
 const update = async ({
     file,
     path,
-    oldPath,
+    imagePath,
 }) => {
     try{
-        await remove({ path: oldPath })
+        await remove({ path: imagePath })
         return add({ file, path })
     }catch (err) {
         return { err }
