@@ -41,11 +41,9 @@ const add = async ({
 
 const update = async ({
     file,
-    currentFilePath, //path
-    newFilePath, //imagePath
+    currentFilePath,
+    newFilePath,
 }) => {
-    console.log('currentFilePath =', currentFilePath)
-    console.log('newFilePath =', newFilePath)
     try{
         await remove({ filePath: currentFilePath })
         return add({ file, filePath: newFilePath })

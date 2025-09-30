@@ -1,6 +1,7 @@
 .InputFileRemoveOption{
     > span{
         inline-size: 100%;
+        word-break: break-all;
     }
 
     > :is(a, button){

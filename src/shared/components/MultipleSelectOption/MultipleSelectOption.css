@@ -1,4 +1,8 @@
 .MultipleSelectOption{
+    > span{
+        word-break: break-all;
+    }
+
     > :is(a, button){
         color: var(--color-gray-1);
         transition: all .3s ease;

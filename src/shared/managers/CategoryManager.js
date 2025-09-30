@@ -82,9 +82,8 @@ const update = async ({
     source,
     data,
 }) => {
-    try {
+    try {        
         const schemaResult = UpdateCategorySchema.safeParse(data)
-        console.log('schemaResult =', schemaResult)
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
                 
         const updateResult = await CategoryRepository.update({

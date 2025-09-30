@@ -56,7 +56,7 @@ const addMultiple = async ({
                 return add({
                     source,
                     file,
-                    path: paths[index],
+                    filePath: paths[index],
                 })
             })
         )

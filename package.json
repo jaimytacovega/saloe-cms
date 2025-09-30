@@ -26,6 +26,6 @@
     "firebase": "^12.1.0",
     "saloe": "^0.0.89",
     "vite-jsconfig-paths": "^2.0.1",
-    "zod": "^4.0.17"
+    "zod": "^4.1.11"
   }
 }

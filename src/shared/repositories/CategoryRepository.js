@@ -211,7 +211,7 @@ const update = async({
                 const addCatalogsStorageResults = await StorageService.addMultiple({
                     source,
                     files: data.catalogs,
-                    paths: data.catalogs.map((catalog) => storagePath({ name: catalog.name })),
+                    paths: data.catalogs.map((catalog) => storagePath({ id: data.id, name: catalog.name })),
                 })
                 if (addCatalogsStorageResults?.err) throw addCatalogsStorageResults.err
 
@@ -230,7 +230,6 @@ const update = async({
                 })
 
                 const { subCategoryIds, ...category } = data
-                console.log('category =', category)
 
                 const categoryBySubcategoriesResult = await Category_SubCategoryRepository.list({
                     source,

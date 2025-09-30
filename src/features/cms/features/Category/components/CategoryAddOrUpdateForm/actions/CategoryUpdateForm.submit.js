@@ -50,8 +50,6 @@ const submit = ({
         updatedAt: new Date(),
     }
 
-    console.log('category =', category)
-
     Form.submit({
         form,
         onProcess: async () => {

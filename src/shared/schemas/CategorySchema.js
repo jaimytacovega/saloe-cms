@@ -49,8 +49,7 @@ const UpdateCategorySchema = z.object({
     updatedAt: DateSchema,
 }).transform((data) => {
     if (data.image === undefined) {
-        const { image, ...rest } = data
-        return rest
+        delete data.image
     }
     return data
 })
