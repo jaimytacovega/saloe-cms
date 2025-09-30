@@ -50,7 +50,7 @@ const CategoryTable = async ({
             Table({
                 rows: categories.map((category) => CategoryTableRow({
                     id: category.id,
-                    name: `${category.name} ~ ${isCached ? 'cached' : 'not cached'}`,
+                    name: `${category.name}`,
                     correlative: getCMSCorrelative({ collectionName: 'categories', count: category.count }),
                     createdAt: category.createdAt,
                     updatedAt: category.updatedAt,

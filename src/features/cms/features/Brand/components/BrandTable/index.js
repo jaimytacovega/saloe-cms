@@ -50,7 +50,7 @@ const BrandTable = async ({
             Table({
                 rows: brands.map((brand) => BrandTableRow({
                     id: brand.id,
-                    name: `${brand.name} ~ ${isCached ? 'cached' : 'not cached'}`,
+                    name: `${brand.name}`,
                     correlative: getCMSCorrelative({ collectionName: 'brands', count: brand.count }),
                     createdAt: brand.createdAt,
                     updatedAt: brand.updatedAt,

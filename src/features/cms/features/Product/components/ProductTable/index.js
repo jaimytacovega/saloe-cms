@@ -50,7 +50,7 @@ const ProductTable = async ({
             Table({
                 rows: products.map((product) => ProductTableRow({
                     id: product.id,
-                    name: `${product.name} ~ ${isCached ? 'cached' : 'not cached'}`,
+                    name: `${product.name}`,
                     correlative: getCMSCorrelative({ collectionName: 'products', count: product.count }),
                     createdAt: product.createdAt,
                     updatedAt: product.updatedAt,

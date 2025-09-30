@@ -50,7 +50,7 @@ const SubCategoryTable = async ({
             Table({
                 rows: subCategories.map((subCategory) => SubCategoryTableRow({
                     id: subCategory.id,
-                    name: `${subCategory.name} ~ ${isCached ? 'cached' : 'not cached'}`,
+                    name: `${subCategory.name}`,
                     correlative: getCMSCorrelative({ collectionName: 'subCategories', count: subCategory.count }),
                     createdAt: subCategory.createdAt,
                     updatedAt: subCategory.updatedAt,

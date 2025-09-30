@@ -58,7 +58,7 @@ const PromotionTable = async ({
             Table({
                 rows: promotions.map((promotion) => PromotionTableRow({
                     id: promotion.id,
-                    name: `${promotion.name} ~ ${isCached ? 'cached' : 'not cached'}`,
+                    name: `${promotion.name}`,
                     correlative: getCMSCorrelative({ collectionName: 'promotions', count: promotion.count }),
                     createdAt: promotion.createdAt,
                     updatedAt: promotion.updatedAt,
