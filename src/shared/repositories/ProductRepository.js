@@ -120,7 +120,6 @@ const update = async({
     source,
     data,
 }) => {
-    console.log('data =', data)
     if (Boolean(data.image)) {
         const imageStorageResult = await StorageService.update({
             source,
