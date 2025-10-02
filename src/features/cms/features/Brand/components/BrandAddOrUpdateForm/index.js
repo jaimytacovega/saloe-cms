@@ -12,6 +12,8 @@ import { lastUpdatedMessage, getCMSCorrelative } from '@/shared/utils/utils'
 
 const BrandAddOrUpdateForm = async ({
     brandId,
+    listUrl,
+    searchParams,
 }) => {
     const { data: brand, isCached } = brandId === 'new'
         ? { data: {}, isCached: false }
@@ -74,7 +76,7 @@ const BrandAddOrUpdateForm = async ({
                     ${
                         brandId === 'new'
                             ? html`
-                                <a href="/cms/marcas" class="Button PrimaryButton PrimaryGray">
+                                <a href="${listUrl}?${searchParams?.toString()}" class="Button PrimaryButton PrimaryGray">
                                     <img src="/img/icon/corner-up-left-black.svg" width="18" height="18" alt="go back">
                                 </a>
                             `

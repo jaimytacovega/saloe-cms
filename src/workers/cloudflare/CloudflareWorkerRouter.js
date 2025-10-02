@@ -20,6 +20,10 @@ import * as CmsProductsPage from '@/app/cms/productos/page'
 import * as CmsProductsCreatePage from '@/app/cms/productos/crear/page'
 import * as CmsProductsByIdPage from '@/app/cms/productos/[id]'
 
+import * as CmsOrdersPage from '@/app/cms/cotizaciones/page'
+import * as CmsOrdersCreatePage from '@/app/cms/cotizaciones/crear/page'
+// import * as CmsOrdersByIdPage from '@/app/cms/cotizaciones/[id]'
+
 
 const setRouter = () => {
     addRoute({ pathname: '/cms/marcas', route: CmsBrandsPage.default })
@@ -41,6 +45,10 @@ const setRouter = () => {
     addRoute({ pathname: '/cms/productos', route: CmsProductsPage.default })
     addRoute({ pathname: '/cms/productos/crear', route: CmsProductsCreatePage.default })
     addRoute({ pathname: '/cms/productos/:id', route: CmsProductsByIdPage.default })
+
+    addRoute({ pathname: '/cms/cotizaciones', route: CmsOrdersPage.default })
+    addRoute({ pathname: '/cms/cotizaciones/crear', route: CmsOrdersCreatePage.default })
+    // addRoute({ pathname: '/cms/cotizaciones/:id', route: CmsOrdersByIdPage.default })
 }
 
 export {

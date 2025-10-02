@@ -50,7 +50,11 @@ const BrandPage = async ({
                     }
                 `,
                 addOrUpdateForm: ({ id }) => {
-                    return BrandAddOrUpdateForm({ brandId: id })
+                    return BrandAddOrUpdateForm({ 
+                        brandId: id,
+                        listUrl,
+                        searchParams,
+                    })
                 },
                 deleteDialog: ({ id }) => {
                     return BrandDeleteDialog({ brandId: id })

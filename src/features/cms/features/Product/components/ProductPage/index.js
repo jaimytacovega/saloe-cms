@@ -50,7 +50,11 @@ const ProductPage = async ({
                     }
                 `,
                 addOrUpdateForm: ({ id }) => {
-                    return ProductAddOrUpdateForm({ productId: id })
+                    return ProductAddOrUpdateForm({ 
+                        productId: id,
+                        listUrl,
+                        searchParams,
+                    })
                 },
                 deleteDialog: ({ id }) => {
                     return ProductDeleteDialog({ productId: id })

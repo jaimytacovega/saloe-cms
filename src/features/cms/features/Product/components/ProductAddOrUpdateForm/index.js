@@ -16,15 +16,9 @@ import { lastUpdatedMessage, getCMSCorrelative } from '@/shared/utils/utils'
 
 const ProductAddOrUpdateForm = async ({
     productId,
+    listUrl,
+    searchParams,
 }) => {
-    // const { data: product, isCached } = productId === 'new'
-    //     ? { data: {}, isCached: false }
-    //     : await ProductHook.useGet({
-    //         source: Source.FIREBASE,
-    //         id: productId,
-    //         ttl: 10_000,
-    //     })
-
     const [
         productGetResult,
         subCategoryListResult,
@@ -172,7 +166,7 @@ const ProductAddOrUpdateForm = async ({
                     ${
                         productId === 'new'
                             ? html`
-                                <a href="/cms/productos" class="Button PrimaryButton PrimaryGray">
+                                <a href="${listUrl}?${searchParams?.toString()}" class="Button PrimaryButton PrimaryGray">
                                     <img src="/img/icon/corner-up-left-black.svg" width="18" height="18" alt="go back">
                                 </a>
                             `

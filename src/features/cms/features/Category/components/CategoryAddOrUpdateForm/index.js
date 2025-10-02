@@ -17,6 +17,7 @@ import { lastUpdatedMessage, getCMSCorrelative } from '@/shared/utils/utils'
 
 const CategoryAddOrUpdateForm = async ({
     categoryId,
+    listUrl,
 }) => {
     const [
         categoryGetResult, 
@@ -179,7 +180,7 @@ const CategoryAddOrUpdateForm = async ({
                     ${
                         categoryId === 'new'
                             ? html`
-                                <a href="/cms/categorías" class="Button PrimaryButton PrimaryGray">
+                                <a href="${listUrl}?${searchParams?.toString()}" class="Button PrimaryButton PrimaryGray">
                                     <img src="/img/icon/corner-up-left-black.svg" width="18" height="18" alt="go back">
                                 </a>
                             `

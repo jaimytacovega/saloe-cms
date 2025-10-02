@@ -50,7 +50,11 @@ const CategoryPage = async ({
                     }
                 `,
                 addOrUpdateForm: ({ id }) => {
-                    return CategoryAddOrUpdateForm({ categoryId: id })
+                    return CategoryAddOrUpdateForm({ 
+                        categoryId: id,
+                        listUrl,
+                        searchParams,
+                    })
                 },
                 deleteDialog: ({ id }) => {
                     return CategoryDeleteDialog({ categoryId: id })

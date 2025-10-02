@@ -50,7 +50,11 @@ const PromotionPage = async ({
                     }
                 `,
                 addOrUpdateForm: ({ id }) => {
-                    return PromotionAddOrUpdateForm({ promotionId: id })
+                    return PromotionAddOrUpdateForm({ 
+                        promotionId: id,
+                        listUrl,
+                        searchParams,
+                    })
                 },
                 deleteDialog: ({ id }) => {
                     return PromotionDeleteDialog({ promotionId: id })

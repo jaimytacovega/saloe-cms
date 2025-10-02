@@ -50,7 +50,11 @@ const SubCategoryPage = async ({
                     }
                 `,
                 addOrUpdateForm: ({ id }) => {
-                    return SubCategoryAddOrUpdateForm({ subCategoryId: id })
+                    return SubCategoryAddOrUpdateForm({ 
+                        subCategoryId: id,
+                        listUrl,
+                        searchParams,
+                    })
                 },
                 deleteDialog: ({ id }) => {
                     return SubCategoryDeleteDialog({ subCategoryId: id })

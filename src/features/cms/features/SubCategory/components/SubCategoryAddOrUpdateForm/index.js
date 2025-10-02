@@ -15,6 +15,7 @@ import { lastUpdatedMessage, getCMSCorrelative } from '@/shared/utils/utils'
 
 const SubCategoryAddOrUpdateForm = async ({
     subCategoryId,
+    listUrl,
 }) => {
     const [
         subCategoryGetResult,
@@ -126,7 +127,7 @@ const SubCategoryAddOrUpdateForm = async ({
                     ${
                         subCategoryId === 'new'
                             ? html`
-                                <a href="/cms/subcategorías" class="Button PrimaryButton PrimaryGray">
+                                <a href="${listUrl}?${searchParams?.toString()}" class="Button PrimaryButton PrimaryGray">
                                     <img src="/img/icon/corner-up-left-black.svg" width="18" height="18" alt="go back">
                                 </a>
                             `
