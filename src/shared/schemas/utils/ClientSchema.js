@@ -1,0 +1,13 @@
+import { z } from 'zod'
+
+
+const ClientSchema = z.object({
+    name: z.string().min(1, 'El nombre es obligatorio').trim(),
+    code: z.string().regex(/^\d{11}$/, 'El código debe ser un RUC peruano válido').trim(),
+    email: z.email('El correo electrónico debe tener un formato válido').trim(),
+    phone: z.string().regex(/^(\+?51)?9\d{8}$/, 'El celular debe estar en un formato válido').trim(),
+})
+
+export {
+    ClientSchema,
+}

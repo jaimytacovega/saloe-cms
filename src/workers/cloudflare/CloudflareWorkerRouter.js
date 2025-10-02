@@ -22,7 +22,7 @@ import * as CmsProductsByIdPage from '@/app/cms/productos/[id]'
 
 import * as CmsOrdersPage from '@/app/cms/cotizaciones/page'
 import * as CmsOrdersCreatePage from '@/app/cms/cotizaciones/crear/page'
-// import * as CmsOrdersByIdPage from '@/app/cms/cotizaciones/[id]'
+import * as CmsOrdersByIdPage from '@/app/cms/cotizaciones/[id]'
 
 
 const setRouter = () => {
@@ -48,7 +48,7 @@ const setRouter = () => {
 
     addRoute({ pathname: '/cms/cotizaciones', route: CmsOrdersPage.default })
     addRoute({ pathname: '/cms/cotizaciones/crear', route: CmsOrdersCreatePage.default })
-    // addRoute({ pathname: '/cms/cotizaciones/:id', route: CmsOrdersByIdPage.default })
+    addRoute({ pathname: '/cms/cotizaciones/:id', route: CmsOrdersByIdPage.default })
 }
 
 export {

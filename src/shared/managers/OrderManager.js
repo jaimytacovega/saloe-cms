@@ -22,7 +22,6 @@ const list = async ({
             sorters,
             pageSize,
         })
-
         if (listResult?.err) throw listResult.err
 
         const schemaResult = ListOrderArraySchema.safeParse(listResult.data)
@@ -102,16 +101,16 @@ const update = async ({
 const remove = async ({
     source,
     id,
-    imagePath,
+    attachmentPaths,
 }) => {
     try{
-        const schemaResult = DeleteOrderSchema.safeParse({ id, imagePath })
+        const schemaResult = DeleteOrderSchema.safeParse({ id, attachmentPaths })
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
 
         const removeResult = await OrderRepository.remove({
             source,
             id: schemaResult.data.id,
-            imagePath: schemaResult.data.imagePath,
+            attachmentPaths: schemaResult.data.attachmentPaths,
         })
 
         if (removeResult?.err) throw removeResult.err

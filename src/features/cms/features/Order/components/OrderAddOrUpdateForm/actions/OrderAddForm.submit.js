@@ -38,8 +38,6 @@ const submit = ({
         updatedAt: now,
     }
 
-    console.log('order =', order)
-
     Form.submit({
         form,
         onProcess: async () => {
@@ -57,7 +55,7 @@ const submit = ({
             return addResult
         },
         onSuccess: ({ result }) => {    
-            // location.href = `/cms/cotizaciones/${result.data.id}${location.search}`
+            location.href = `/cms/cotizaciones/${result.data.id}${location.search}`
         },
     })
 }

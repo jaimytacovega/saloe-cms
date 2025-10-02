@@ -50,7 +50,7 @@ const OrderTable = async ({
             Table({
                 rows: orders.map((order) => OrderTableRow({
                     id: order.id,
-                    name: `${order.name}`,
+                    name: `RUC: ${order.client.code} - ${order.client.name}`,
                     correlative: getCMSCorrelative({ collectionName: 'orders', count: order.count }),
                     createdAt: order.createdAt,
                     updatedAt: order.updatedAt,

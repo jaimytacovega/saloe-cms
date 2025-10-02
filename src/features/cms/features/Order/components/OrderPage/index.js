@@ -5,7 +5,7 @@ import CmsToolbox from '@/features/cms/components/CmsToolbox'
 
 import OrderTable from '@/features/cms/features/Order/components/OrderTable'
 import OrderAddOrUpdateForm from '@/features/cms/features/Order/components/OrderAddOrUpdateForm'
-// import OrderDeleteDialog from '@/features/cms/features/Order/components/OrderDeleteDialog'
+import OrderDeleteDialog from '@/features/cms/features/Order/components/OrderDeleteDialog'
 import NotFoundItem from '@/features/cms/components/NotFoundItem'
 
 
@@ -56,9 +56,9 @@ const OrderPage = async ({
                         searchParams, 
                     })
                 },
-                // deleteDialog: ({ id }) => {
-                //     return OrderDeleteDialog({ orderId: id })
-                // },
+                deleteDialog: ({ id }) => {
+                    return OrderDeleteDialog({ orderId: id })
+                },
                 notFoundItem: NotFoundItem({
                     header: html`
                         <h5>Selecciona una marca para ver detalles</h5>

@@ -103,44 +103,97 @@ const update = async({
     source,
     data,
 }) => {
-    if (Boolean(data.image)) {
-        const imageStorageResult = await StorageService.update({
-            source,
-            file: data.image,
-            newFilePath: storagePath({ id: data.id, name: data.image.name }),
-            currentFilePath: data.imagePath,
-        })
-    
-        if (imageStorageResult?.err) return imageStorageResult
-        data.image = imageStorageResult.data
-    }
-    
-    delete data.imagePath
-
-    return DatabaseService.update({
+    const updateResult = await DatabaseService.onTransaction({
         source,
-        collectionName: 'orders',
-        data,
+        transaction: async (tx) => {
+            try{
+                if (Boolean(data.attachmentsToRemove)) {
+                    const attachmentsStorageResults = await StorageService.removeMultiple({
+                        source,
+                        filePaths: data.attachmentsToRemove,
+                    })
+            
+                    if (attachmentsStorageResults?.err) throw attachmentsStorageResults.err
+                }
+            
+                delete data.attachmentsToRemove
+
+                const addAttachmentsStorageResults = await StorageService.addMultiple({
+                    source,
+                    files: data.attachments,
+                    paths: data.attachments.map((attachment) => storagePath({ id: data.id, name: attachment.name })),
+                })
+                if (addAttachmentsStorageResults?.err) throw addAttachmentsStorageResults.err
+
+                data.attachments = [
+                    ...data.attachmentsToKeep,
+                    ...addAttachmentsStorageResults.data,
+                ]
+            
+                delete data.attachmentsToKeep
+
+                const orderTx = await DatabaseService.getWithTransaction({
+                    source,
+                    tx,
+                    collectionName: 'orders',
+                    id: data.id,
+                })
+
+                await DatabaseService.updateWithTransaction({
+                    source,
+                    tx,
+                    ref: orderTx.ref,
+                    data,
+                })
+
+                return {
+                    id: orderTx.ref.id,
+                    ...data,
+                }
+            }catch(err){
+                return Promise.reject(err)
+            }
+        }
     })
+
+    return updateResult
 }
 
 const remove = async ({
     source,
     id,
-    imagePath,
+    attachmentPaths,
 }) => {
-    const imageStorageResult = await StorageService.remove({
+    const removeResult = await DatabaseService.onTransaction({
         source,
-        filePath: imagePath,
+        transaction: async (tx) => {
+            try{
+                const removeFilesResults = await StorageService.removeMultiple({
+                    source,
+                    filePaths: [...attachmentPaths],
+                })
+
+                if (removeFilesResults?.err) throw removeFilesResults.err
+
+                const orderTx = await DatabaseService.getWithTransaction({
+                    source,
+                    tx,
+                    collectionName: 'orders',
+                    id,
+                })
+
+                await tx.delete(orderTx.ref)
+
+                return {
+                    data: { id },
+                }
+            }catch(err){
+                return Promise.reject(err)
+            }
+        },
     })
 
-    if (imageStorageResult?.err) return imageStorageResult
-
-    return DatabaseService.remove({
-        source,
-        collectionName: 'orders',
-        id,
-    })
+    return removeResult
 }
 
 const ORDER_TYPES = {

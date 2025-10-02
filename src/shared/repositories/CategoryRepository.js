@@ -342,7 +342,7 @@ const remove = async ({
                     })
                 )
 
-                return Promise.all(
+                await Promise.all(
                     [
                         categoryTx,
                         ...categoryBySubcategoriesTxs,
@@ -350,6 +350,10 @@ const remove = async ({
                         return tx.delete(txToRemove.ref)
                     })
                 )
+
+                return {
+                    data: { id },
+                }
             }catch(err){
                 return Promise.reject(err)
             }
