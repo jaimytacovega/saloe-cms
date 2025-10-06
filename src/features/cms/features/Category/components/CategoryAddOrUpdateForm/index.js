@@ -18,6 +18,7 @@ import { lastUpdatedMessage, getCMSCorrelative } from '@/shared/utils/utils'
 const CategoryAddOrUpdateForm = async ({
     categoryId,
     listUrl,
+    searchParams,
 }) => {
     const [
         categoryGetResult, 

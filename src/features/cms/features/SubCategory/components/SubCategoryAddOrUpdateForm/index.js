@@ -16,6 +16,7 @@ import { lastUpdatedMessage, getCMSCorrelative } from '@/shared/utils/utils'
 const SubCategoryAddOrUpdateForm = async ({
     subCategoryId,
     listUrl,
+    searchParams,
 }) => {
     const [
         subCategoryGetResult,
