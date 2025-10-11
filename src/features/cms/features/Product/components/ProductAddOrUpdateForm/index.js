@@ -87,6 +87,14 @@ const ProductAddOrUpdateForm = async ({
                             })
                         }
                         ${
+                            Input({
+                                id: 'sku',
+                                label: 'SKU (código de producto)',
+                                value: product?.sku ?? '',
+                                placeholder: 'Ingresa el SKU del producto',
+                            })
+                        }
+                        ${
                             Textarea({
                                 id: 'description',
                                 label: 'Descripción (opcional)',
