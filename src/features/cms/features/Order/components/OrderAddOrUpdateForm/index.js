@@ -140,6 +140,14 @@ const OrderAddOrUpdateForm = async ({
                             })
                         }
                         ${
+                            Input({
+                                id: 'deliveryLocation',
+                                label: 'Lugar de entrega',
+                                value: order?.deliveryLocation ?? '',
+                                placeholder: 'Ingresa el lugar de entrega',
+                            })
+                        }
+                        ${
                             MultipleSelect({
                                 id: 'promotionIds',
                                 label: 'Promociones',

@@ -21,6 +21,7 @@ const submit = ({
 
     const attachments = Array.from(form.querySelector('#attachments').files)
     const request = form.querySelector('#request').value.trim()
+    const deliveryLocation = form.querySelector('#deliveryLocation').value.trim()
     const attachmentsToRemoveJson = JSON.parse(
         decodeURIComponent(
             form.querySelector('#attachments__filesToRemove').value
@@ -50,6 +51,7 @@ const submit = ({
         attachmentsToKeep,
         attachmentsToRemove,
         request,
+        deliveryLocation,
         promotionIds,
         type,
         status,
