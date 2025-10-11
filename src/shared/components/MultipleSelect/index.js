@@ -48,7 +48,7 @@ const MultipleSelect = ({
                         `
                     }).join('')
                 }
-        </inputgroup>
+            </inputgroup>
         </inputgroup>
     `
 }
