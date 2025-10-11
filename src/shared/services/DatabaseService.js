@@ -11,6 +11,7 @@ const Operators = {
     NotEqualTo: '!=',
     In: 'in',
     Contains: 'array-contains',
+    ContainsAny: 'array-contains-any',
 }
 
 const list = ({
@@ -185,7 +186,12 @@ const listArgumentsToSearchParams = ({
 
     if (filters) {
         filters.forEach(filter => {
-            searchParams.set(filter.field === 'keywords' ? 'search' : filter.field, filter.value)
+            searchParams.set(
+                filter.field === 'keywords' 
+                    ? 'search' 
+                    : 'filter'
+                , `${filter.field}:${filter.value}`
+            )
         })
     }
 
@@ -209,6 +215,76 @@ const listArgumentsToSearchParams = ({
     return searchParams
 }
 
+const queryBySearchParams = ({
+    query,
+    searchParams,
+}) => {
+    const listArgumentsArray = searchParamsToListArgumentsArray({ searchParams })
+    return removeDuplicatesFromDataArrays({
+        dataArraysPromises: listArgumentsArray.map((listArguments) => {
+            return query({ listArguments })
+        }),
+    })
+}
+
+const removeDuplicatesFromDataArrays = async ({
+    dataArraysPromises,
+}) => {
+    const dataArrays = await Promise.all(dataArraysPromises)
+    const uniqueDataMap = new Map()
+    const errors = []
+    const areCached = []
+
+    dataArrays.forEach(({ data: dataArray, isCached, err }) => {
+        if (err){
+            errors.push(err)
+            return
+        }
+
+        if (!Array.isArray(dataArray)) return
+
+        areCached.push(isCached)
+        
+        dataArray.forEach((data) => {
+            uniqueDataMap.set(data.id, data)
+        })
+
+    })
+
+    return {
+        data: Array.from(uniqueDataMap.values()), 
+        isCached: areCached,
+        ...(errors.length > 0 && { err: errors }),
+    }
+}
+
+const searchParamsToListArgumentsArray = ({
+    searchParams,
+}) => {
+    const listArguments = searchParamsToListArguments({ searchParams })
+
+    const {
+        containsAnyFilters,
+        restOfFilters,
+    } = listArguments.filters.reduce((acc, filter) => {
+        if (filter.operator === Operators.ContainsAny) acc.containsAnyFilters.push(filter)
+        else acc.restOfFilters.push(filter)
+        return acc
+    }, { containsAnyFilters: [], restOfFilters: [] })
+
+    if (containsAnyFilters.length === 0) return [listArguments]
+
+    return containsAnyFilters.map((containsAnyFilter) => ({
+        filters: [
+            ...restOfFilters,
+            containsAnyFilter,
+        ],
+        sorters: listArguments.sorters,
+        pageSize: listArguments.pageSize,
+        page: listArguments.page,
+    }))
+}
+
 const searchParamsToListArguments = ({
     searchParams,
 }) => {
@@ -227,7 +303,7 @@ const searchParamsToListArguments = ({
                 })
                 break
             case 'sort':
-                value.split(',').forEach(sorter => {
+                value.split(',').forEach((sorter) => {
                     const [field, direction] = sorter.split(':')
                     sorters.push({
                         field: field,
@@ -241,12 +317,27 @@ const searchParamsToListArguments = ({
             case 'page':
                 page = value
                 break
-            default:
-                filters.push({
-                    field: key,
-                    operator: Operators.EqualTo,
-                    value: value,
+            case 'filter':
+                value.split(',').forEach((filter) => {
+                    const [field, rawValue] = filter.split(':')
+                    const isValueArray = rawValue.startsWith('[') && rawValue.endsWith(']')
+
+                    const operator = isValueArray 
+                        ? Operators.ContainsAny 
+                        : Operators.EqualTo
+
+                    const value = isValueArray 
+                        ? rawValue.slice(1, -1).split(';') 
+                        : rawValue
+
+                    filters.push({
+                        field: field,
+                        operator,
+                        value,
+                    })
                 })
+                break
+            default:
                 break
         }
     })
@@ -278,4 +369,8 @@ export {
 
     listArgumentsToQueryString,
     searchParamsToListArguments,
+
+    searchParamsToListArgumentsArray,
+    removeDuplicatesFromDataArrays,
+    queryBySearchParams,
 }
