@@ -51,7 +51,7 @@ const ProductTable = async ({
                 rows: products.map((product) => ProductTableRow({
                     id: product.id,
                     name: `${product.name}`,
-                    correlative: getCMSCorrelative({ collectionName: 'products', count: product.count }),
+                    correlative: `${getCMSCorrelative({ collectionName: 'products', count: product.count })}&nbsp;&nbsp;-&nbsp;&nbsp;SKU: ${product.sku}`,
                     createdAt: product.createdAt,
                     updatedAt: product.updatedAt,
                     toggled: product.id === productId,
