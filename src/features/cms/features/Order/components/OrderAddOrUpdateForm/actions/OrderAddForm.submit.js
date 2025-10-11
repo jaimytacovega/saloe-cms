@@ -13,9 +13,10 @@ const submit = ({
     e.preventDefault()
 
     const name = form.querySelector('#clientName').value.trim()
-    const code = form.querySelector('#clientCode').value.trim()
+    const code = form.querySelector('#clientCode').value.trim() 
     const email = form.querySelector('#clientEmail').value.trim()
     const phone = form.querySelector('#clientPhone').value.trim()
+    const clientType = form.querySelector('#clientType').value.trim()
     const attachments = Array.from(form.querySelector('#attachments').files)
     const request = form.querySelector('#request').value.trim()
     const promotionIds = Array.from(form.querySelector('#promotionIds').selectedOptions).map((option) => option.value.trim())
@@ -29,6 +30,7 @@ const submit = ({
             code,
             email,
             phone,
+            type: clientType,
         },
         attachments,
         request,

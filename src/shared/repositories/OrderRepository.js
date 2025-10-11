@@ -220,6 +220,22 @@ const ORDER_STATUS_LABELS = {
     [ORDER_STATUSES.CANCELLED]: 'Cancelado',
 }
 
+const CLIENT_TYPES = {
+    HARDWARE_STORE: 'hardware-store',
+    CONSTRUCTION_COMPANY: 'construction-company',
+    SELF_CONSTRUCTION: 'self-construction',
+    PROJECT: 'project',
+    OTHER: 'other',
+}
+
+const CLIENT_TYPE_LABELS = {
+    [CLIENT_TYPES.HARDWARE_STORE]: 'Ferretero',
+    [CLIENT_TYPES.CONSTRUCTION_COMPANY]: 'Constructora',
+    [CLIENT_TYPES.SELF_CONSTRUCTION]: 'Construcción propia',
+    [CLIENT_TYPES.PROJECT]: 'Obra',
+    [CLIENT_TYPES.OTHER]: 'Otro',
+}
+
 
 export {
     list,
@@ -232,4 +248,7 @@ export {
     ORDER_TYPE_LABELS,
     ORDER_STATUSES,
     ORDER_STATUS_LABELS,
+
+    CLIENT_TYPES,
+    CLIENT_TYPE_LABELS,
 }

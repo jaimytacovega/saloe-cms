@@ -12,7 +12,7 @@ import * as OrderHook from '@/shared/hooks/OrderHook'
 import * as PromotionHook from '@/shared/hooks/PromotionHook'
 import { Source } from '@/shared/utils/constants'
 import { lastUpdatedMessage, getCMSCorrelative } from '@/shared/utils/utils'
-import { ORDER_TYPES, ORDER_TYPE_LABELS, ORDER_STATUSES, ORDER_STATUS_LABELS } from '@/shared/repositories/OrderRepository'
+import { ORDER_TYPES, ORDER_TYPE_LABELS, ORDER_STATUSES, ORDER_STATUS_LABELS, CLIENT_TYPES, CLIENT_TYPE_LABELS } from '@/shared/repositories/OrderRepository'
 
 
 const OrderAddOrUpdateForm = async ({
@@ -101,6 +101,17 @@ const OrderAddOrUpdateForm = async ({
                                 label: 'Celular (con Whatsapp)',
                                 value: order?.client?.phone ?? '',
                                 placeholder: 'Ingresa el celular',
+                            })
+                        }
+                        ${
+                            Select({
+                                id: 'clientType',
+                                label: 'Tipo de cliente',
+                                options: Object.values(CLIENT_TYPES).map((type) => ({
+                                    value: type,
+                                    label: CLIENT_TYPE_LABELS[type],
+                                })),
+                                value: order?.client?.type,
                             })
                         }
                         ${

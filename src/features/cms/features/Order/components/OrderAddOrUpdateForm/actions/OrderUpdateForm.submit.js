@@ -17,6 +17,7 @@ const submit = ({
     const clientCode = form.querySelector('#clientCode').value.trim()
     const clientEmail = form.querySelector('#clientEmail').value.trim()
     const clientPhone = form.querySelector('#clientPhone').value.trim()
+    const clientType = form.querySelector('#clientType').value.trim()
 
     const attachments = Array.from(form.querySelector('#attachments').files)
     const request = form.querySelector('#request').value.trim()
@@ -43,6 +44,7 @@ const submit = ({
             code: clientCode,
             email: clientEmail,
             phone: clientPhone,
+            type: clientType,
         },
         attachments,
         attachmentsToKeep,

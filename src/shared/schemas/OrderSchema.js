@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { FileSchema } from '@/shared/schemas/utils/FileSchema'
 import { DateSchema } from '@/shared/schemas/utils/DateSchema'
 import { ClientSchema } from '@/shared/schemas/utils/ClientSchema'
-import { ORDER_TYPES, ORDER_STATUSES } from '@/shared/repositories/OrderRepository'
+import { ORDER_TYPES, ORDER_STATUSES, CLIENT_TYPES } from '@/shared/repositories/OrderRepository'
 
 
 const OrderSchema = z.object({
@@ -12,7 +12,7 @@ const OrderSchema = z.object({
     attachments: z.array(FileSchema).optional(),
     request: z.string().trim().optional(),
     promotionIds: z.array(z.string()).optional(),
-    type: z.enum(Object.values(ORDER_TYPES), 'El tipo debe ser uno de los valores permitidos'),
+    type: z.enum(Object.values(ORDER_TYPES), 'El tipo de cotización debe ser uno de los valores permitidos'),
     status: z.enum(Object.values(ORDER_STATUSES), 'El estado debe ser uno de los valores permitidos'),
     keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
     createdAt: DateSchema,
@@ -26,7 +26,7 @@ const AddOrderSchema = z.object({
     attachments: z.array(z.instanceof(File)).optional(),
     request: z.string().trim().optional(),
     promotionIds: z.array(z.string()).optional(),
-    type: z.enum(Object.values(ORDER_TYPES), 'El tipo debe ser uno de los valores permitidos'),
+    type: z.enum(Object.values(ORDER_TYPES), 'El tipo de cotización debe ser uno de los valores permitidos'),
     status: z.enum(Object.values(ORDER_STATUSES), 'El estado debe ser uno de los valores permitidos'),
     keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
     createdAt: DateSchema,
@@ -41,7 +41,7 @@ const UpdateOrderSchema = z.object({
     attachmentsToKeep: z.array(FileSchema).optional(),
     attachmentsToRemove: z.array(z.string()).optional(),
     promotionIds: z.array(z.string()).optional(),
-    type: z.enum(Object.values(ORDER_TYPES), 'El tipo debe ser uno de los valores permitidos'),
+    type: z.enum(Object.values(ORDER_TYPES), 'El tipo de cotización debe ser uno de los valores permitidos'),
     status: z.enum(Object.values(ORDER_STATUSES), 'El estado debe ser uno de los valores permitidos'),
     keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
     updatedAt: DateSchema,
