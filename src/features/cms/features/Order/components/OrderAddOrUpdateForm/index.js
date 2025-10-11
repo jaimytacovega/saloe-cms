@@ -4,6 +4,7 @@ import Input from '@/shared/components/Input'
 import InputFile from '@/shared/components/InputFile'
 import MultipleSelect from '@/shared/components/MultipleSelect'
 import Select from '@/shared/components/Select'
+import Textarea from '@/shared/components/Textarea'
 
 import NotFoundItem from '@/features/cms/components/NotFoundItem'
 
@@ -117,6 +118,14 @@ const OrderAddOrUpdateForm = async ({
                                         name,
                                     }
                                 }),
+                            })
+                        }
+                        ${
+                            Textarea({
+                                id: 'request',
+                                label: 'Solicitud de cotización (opcional)',
+                                value: order?.request ?? '',
+                                placeholder: 'Ingresa la solicitud de cotización',
                             })
                         }
                         ${

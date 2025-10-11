@@ -10,6 +10,7 @@ const OrderSchema = z.object({
     count: z.number(),
     client: ClientSchema,
     attachments: z.array(FileSchema).optional(),
+    request: z.string().trim().optional(),
     promotionIds: z.array(z.string()).optional(),
     type: z.enum(Object.values(ORDER_TYPES), 'El tipo debe ser uno de los valores permitidos'),
     status: z.enum(Object.values(ORDER_STATUSES), 'El estado debe ser uno de los valores permitidos'),
@@ -23,6 +24,7 @@ const ListOrderArraySchema = z.array(OrderSchema)
 const AddOrderSchema = z.object({
     client: ClientSchema,
     attachments: z.array(z.instanceof(File)).optional(),
+    request: z.string().trim().optional(),
     promotionIds: z.array(z.string()).optional(),
     type: z.enum(Object.values(ORDER_TYPES), 'El tipo debe ser uno de los valores permitidos'),
     status: z.enum(Object.values(ORDER_STATUSES), 'El estado debe ser uno de los valores permitidos'),
@@ -35,6 +37,7 @@ const UpdateOrderSchema = z.object({
     id: z.string().min(1, 'El id es obligatorio').trim(),
     client: ClientSchema,
     attachments: z.array(z.instanceof(File)).optional(),
+    request: z.string().trim().optional(),
     attachmentsToKeep: z.array(FileSchema).optional(),
     attachmentsToRemove: z.array(z.string()).optional(),
     promotionIds: z.array(z.string()).optional(),
