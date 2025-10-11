@@ -8,12 +8,13 @@ const MultipleSelect = ({
     label,
     options = [],
     selectedOptions = {},
+    placeholder = 'Selecciona una o más opciones',
 }) => {
     return html`
         <inputgroup>
             <label for="${id}__selector">${label}</label>
             <select id="${id}" multiple on-change="MultipleSelect.change">
-                <optgroup label="Selecciona una o más opciones">
+                <optgroup label="${placeholder}">
                     ${
                         options.map((option) => html`
                             <option 
@@ -25,7 +26,7 @@ const MultipleSelect = ({
                 </optgroup>
             </select>
             <select id="${id}__selector" on-change="MultipleSelectSelector.change">
-                <option disabled selected>Selecciona una o más opciones</option>
+                <option disabled selected>${placeholder}</option>
                 ${
                     options.map((option) => html`
                         <option value="${option.value}">${option.label}</option>
@@ -36,20 +37,6 @@ const MultipleSelect = ({
                 ${
                     options.map((option) => {
                         if (!selectedOptions[option.value]) return ''
-                        // return html`
-                        //     <div class="Button PrimaryButton PrimaryGray">
-                        //         <span>${option.label}</span>
-                        //         <button 
-                        //             id="${id}-option-${option.value}" 
-                        //             value="${option.value}" 
-                        //             type="button" 
-                                    
-                        //             on-click="MultipleSelectOptionButton.click"
-                        //         >
-                        //             <img loading="lazy" src="/img/icon/close-gray-1.svg" width="16" height="16" alt="remove">
-                        //         </button>
-                        //     </div>
-                        // `
                         return html`
                             ${
                                 MultipleSelectOption({

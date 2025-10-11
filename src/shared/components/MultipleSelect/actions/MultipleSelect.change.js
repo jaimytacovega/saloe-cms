@@ -17,23 +17,6 @@ const change = ({
 
         if (optionButton) return
 
-        // const optionButtonHtml = html`
-        //   <div 
-        //     class="Button PrimaryButton PrimaryGray"  
-        // >
-        //     <span>${textContent}</span>
-        //     <button
-        //         id="${optionId}" 
-        //         value="${value}"
-        //         type="button"
-
-        //         on-click="MultipleSelectOptionButton.click"
-        //     >
-        //       <img loading="lazy" src="/img/icon/close-gray-1.svg" width="16" height="16" alt="remove">
-        //     </button>
-        //   </div>
-        // `
-
         const optionButtonHtml = html`
             ${
                 MultipleSelectOption({
