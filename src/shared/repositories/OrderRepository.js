@@ -208,16 +208,16 @@ const ORDER_TYPE_LABELS = {
 
 const ORDER_STATUSES = {
     PENDING: 'pending',
-    ATTENDED: 'attended',
-    COMPLETED: 'completed',
-    CANCELLED: 'cancelled',
+    QUOTED: 'quoted',
+    SOLD: 'sold',
+    NOT_SOLD: 'not-sold',
 }
 
 const ORDER_STATUS_LABELS = {
     [ORDER_STATUSES.PENDING]: 'Pendiente',
-    [ORDER_STATUSES.ATTENDED]: 'Atendido',
-    [ORDER_STATUSES.COMPLETED]: 'Completado',
-    [ORDER_STATUSES.CANCELLED]: 'Cancelado',
+    [ORDER_STATUSES.QUOTED]: 'Cotizado',
+    [ORDER_STATUSES.SOLD]: 'Vendido',
+    [ORDER_STATUSES.NOT_SOLD]: 'No vendido',
 }
 
 const CLIENT_TYPES = {
