@@ -196,7 +196,7 @@ const listArgumentsToSearchParams = ({
     }
 
     if (sorters) {
-        const sortersString = sorters.reduce((acc, sorter) => {
+        const sortersString = (sorters ?? []).reduce((acc, sorter) => {
             acc += `${sorter.field}:${sorter.direction},`
             return acc
         }, '')
@@ -266,7 +266,7 @@ const searchParamsToListArgumentsArray = ({
     const {
         containsAnyFilters,
         restOfFilters,
-    } = listArguments.filters.reduce((acc, filter) => {
+    } = (listArguments.filters ?? []).reduce((acc, filter) => {
         if (filter.operator === Operators.ContainsAny) acc.containsAnyFilters.push(filter)
         else acc.restOfFilters.push(filter)
         return acc
@@ -305,6 +305,8 @@ const searchParamsToListArguments = ({
             case 'sort':
                 value.split(',').forEach((sorter) => {
                     const [field, direction] = sorter.split(':')
+                    console.log('field', field)
+                    console.log('direction', direction)
                     sorters.push({
                         field: field,
                         direction: direction,

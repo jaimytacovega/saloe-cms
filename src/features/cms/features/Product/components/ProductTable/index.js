@@ -34,7 +34,7 @@ const ProductTable = async ({
     createUrl,
     listUrl,
 }) => {
-    const { data: products, isCached } = await queryBySearchParams({
+    const { data: products } = await queryBySearchParams({
         query: ({ listArguments }) => {
             return ProductHook.useList({
                 source: Source.FIREBASE,
@@ -45,9 +45,6 @@ const ProductTable = async ({
         },
         searchParams,
     })
-
-    console.log('products', products)
-    console.log('isCached', isCached)
 
     return html`
         ${
