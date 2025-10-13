@@ -12,13 +12,6 @@ import Dropdown from '@/shared/components/Dropdown'
 const ProductFilterDropdown = async ({
     searchParams,
 }) => {
-    // const filterParams = searchParams?.get('filter')?.split(',') ?? []
-    // const brandIdsParam = filterParams.at(0)
-    // const subCategoryIdsParam = filterParams.at(1)
-    // console.log('filterParams =', filterParams)
-    // console.log('brandIdsParam =', brandIdsParam)
-    // console.log('subCategoryIdsParam =', subCategoryIdsParam)
-
     const listArguments = searchParamsToListArguments({ searchParams })
     const brandIdsMap = (listArguments.filters?.find((filter) => filter.field === 'brandIds')?.value ?? []).reduce((acc, brandId) => {
         acc.set(brandId, true)
