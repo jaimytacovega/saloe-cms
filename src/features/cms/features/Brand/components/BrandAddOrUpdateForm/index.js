@@ -26,6 +26,8 @@ const BrandAddOrUpdateForm = async ({
     console.log('brand =', brand)
     console.log('isCached =', isCached)
 
+    const correlative = getCMSCorrelative({ collectionName: 'brands', count: brand?.count ?? '' })
+
     return Boolean(brand)
         ? html`
             <form on-submit="Brand${brandId === 'new' ? 'Add' : 'Update'}Form.submit">
@@ -41,12 +43,23 @@ const BrandAddOrUpdateForm = async ({
                 </header>
                 <div class="form__scroller">
                     <fieldset columns="1">
+                    ${
+                            brandId === 'new'
+                                ? ''
+                                : Input({
+                                    id: 'id',
+                                    value: brandId,
+                                    type: 'hidden',
+                                })
+                        }
                         ${
-                            Input({
-                                id: 'id',
-                                value: brandId,
-                                type: 'hidden',
-                            })
+                            brandId === 'new'
+                                ? ''
+                                : Input({
+                                    id: 'correlative',
+                                    value: correlative,
+                                    type: 'hidden',
+                                })
                         }
                         ${
                             Input({

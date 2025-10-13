@@ -23,9 +23,6 @@ const ProductFilterDropdown = async ({
         return acc
     }, new Map())
 
-    console.log('brandIdsMap =', brandIdsMap)
-    console.log('subCategoryIdsMap =', subCategoryIdsMap)
-
     const { data: brands } = await BrandHook.useList({
         source: Source.FIREBASE,
         ttl: 10_000,

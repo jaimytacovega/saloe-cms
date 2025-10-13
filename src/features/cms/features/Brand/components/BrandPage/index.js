@@ -7,6 +7,7 @@ import BrandTable from '@/features/cms/features/Brand/components/BrandTable'
 import BrandAddOrUpdateForm from '@/features/cms/features/Brand/components/BrandAddOrUpdateForm'
 import BrandDeleteDialog from '@/features/cms/features/Brand/components/BrandDeleteDialog'
 import NotFoundItem from '@/features/cms/components/NotFoundItem'
+import BrandToolboxActions from '@/features/cms/features/Brand/components/BrandToolboxActions'
 
 
 const BrandPage = async ({
@@ -36,6 +37,10 @@ const BrandPage = async ({
                             createUrl,
                             listUrl,
                             title,
+                            actions: await BrandToolboxActions({
+                                searchParams,
+                                createUrl,
+                            })
                         })
                     }
                 `,

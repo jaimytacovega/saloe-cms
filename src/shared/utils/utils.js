@@ -7,8 +7,8 @@ const lastUpdatedMessage = ({ date }) => {
     const today = new Date()
     const isToday = date.toDateString() === today.toDateString()
     
-    if (isToday) return `Modificado a las ${date.toLocaleTimeString('es-ES', { hour12: false, hour: '2-digit', minute: '2-digit' })}`
-    else return `Modificado el ${date.toLocaleDateString()}`
+    if (isToday) return `Modif. a las ${date.toLocaleTimeString('es-ES', { hour12: false, hour: '2-digit', minute: '2-digit' })}`
+    else return `Modif. el ${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}`
 }
 
 const keywords = ({ keys }) => {

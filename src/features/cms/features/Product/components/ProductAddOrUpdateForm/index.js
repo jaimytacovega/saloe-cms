@@ -181,17 +181,13 @@ const ProductAddOrUpdateForm = async ({
                     </fieldset>
                 </div>
                 <inputgroup>
+                    <a href="${listUrl}?${searchParams?.toString()}" class="Button PrimaryButton PrimaryGray">
+                        <img src="/img/icon/corner-up-left-black.svg" width="18" height="18" alt="go back">
+                    </a>
                     ${
                         productId === 'new'
-                            ? html`
-                                <a href="${listUrl}?${searchParams?.toString()}" class="Button PrimaryButton PrimaryGray">
-                                    <img src="/img/icon/corner-up-left-black.svg" width="18" height="18" alt="go back">
-                                </a>
-                            `
+                            ? ''
                             : html`
-                                <a href="${listUrl}?${searchParams?.toString()}" class="Button PrimaryButton PrimaryGray">
-                                    <img src="/img/icon/corner-up-left-black.svg" width="18" height="18" alt="go back">
-                                </a>
                                 <button popovertarget="DeleteProductDialog-${productId}" type="button" class="Button PrimaryButton PrimaryGray">
                                     <img src="/img/icon/trash-black.svg" width="18" height="18" alt="trash">
                                 </button>
