@@ -1,4 +1,4 @@
-import * as OrderHook from '@/shared/hooks/OrderHook'
+import * as QuotationHook from '@/shared/hooks/QuotationHook'
 
 import * as Form from '@/shared/components/Form'
 import { Source } from '@/shared/utils/constants'
@@ -51,7 +51,7 @@ const submit = ({
                 searchParams: (new URL(location.href)).searchParams,
             })
 
-            const addResult = await OrderHook.useAdd({
+            const addResult = await QuotationHook.useAdd({
                 source: Source.FIREBASE,
                 data: order,
                 ...listArguments,

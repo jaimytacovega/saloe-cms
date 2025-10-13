@@ -1,7 +1,7 @@
 import { useQuery } from '@/shared/lib/@saloe-hook'
 
-import * as OrderManager from '@/shared/managers/OrderManager'
-import { ListOrderArraySchema, OrderSchema } from '@/shared/schemas/OrderSchema'
+import * as OrderManager from '@/shared/managers/QuotationManager'
+import { ListOrderArraySchema, OrderSchema } from '@/shared/schemas/QuotationSchema'
 import { listArgumentsToQueryString } from '@/shared/services/DatabaseService'
 
 

@@ -1,4 +1,4 @@
-import * as OrderManager from '@/shared/managers/OrderManager'
+import * as QuotationManager from '@/shared/managers/QuotationManager'
 import { Source } from '@/shared/utils/constants'
 import * as Form from '@/shared/components/Form'
 
@@ -15,7 +15,7 @@ const submit = ({
     Form.submit({
         form,
         onProcess: async () => {
-            const removeResult = await OrderManager.remove({
+            const removeResult = await QuotationManager.remove({
                 source: Source.FIREBASE,
                 id,
                 attachmentPaths,

@@ -27,27 +27,27 @@ import * as A13 from '@/features/cms/features/Category/components/CategoryAddOrU
 console.log(A13)
 import * as A14 from '@/features/cms/features/Category/components/CategoryDeleteDialog/actions/CategoryDeleteDialogForm.submit'
 console.log(A14)
-import * as A15 from '@/features/cms/features/Order/components/OrderAddOrUpdateForm/actions/OrderAddForm.submit'
+import * as A15 from '@/features/cms/features/Product/components/ProductAddOrUpdateForm/actions/ProductAddForm.submit'
 console.log(A15)
-import * as A16 from '@/features/cms/features/Order/components/OrderAddOrUpdateForm/actions/OrderUpdateForm.submit'
+import * as A16 from '@/features/cms/features/Product/components/ProductAddOrUpdateForm/actions/ProductUpdateForm.submit'
 console.log(A16)
-import * as A17 from '@/features/cms/features/Order/components/OrderDeleteDialog/actions/OrderDeleteDialogForm.submit'
+import * as A17 from '@/features/cms/features/Product/components/ProductDeleteDialog/actions/ProductDeleteDialogForm.submit'
 console.log(A17)
-import * as A18 from '@/features/cms/features/Product/components/ProductAddOrUpdateForm/actions/ProductAddForm.submit'
+import * as A18 from '@/features/cms/features/Product/components/ProductFilterDropdown/actions/ProductFilterDropdownForm.submit'
 console.log(A18)
-import * as A19 from '@/features/cms/features/Product/components/ProductAddOrUpdateForm/actions/ProductUpdateForm.submit'
+import * as A19 from '@/features/cms/features/Promotion/components/PromotionAddOrUpdateForm/actions/PromotionAddForm.submit'
 console.log(A19)
-import * as A20 from '@/features/cms/features/Product/components/ProductDeleteDialog/actions/ProductDeleteDialogForm.submit'
+import * as A20 from '@/features/cms/features/Promotion/components/PromotionAddOrUpdateForm/actions/PromotionUpdateForm.submit'
 console.log(A20)
-import * as A21 from '@/features/cms/features/Product/components/ProductFilterDropdown/actions/ProductFilterDropdownForm.submit'
+import * as A21 from '@/features/cms/features/Promotion/components/PromotionDeleteDialog/actions/PromotionDeleteDialogForm.submit'
 console.log(A21)
-import * as A22 from '@/features/cms/features/Promotion/components/PromotionAddOrUpdateForm/actions/PromotionAddForm.submit'
+import * as A22 from '@/features/cms/features/Promotion/components/PromotionFilterDropdown/actions/PromotionFilterDropdownForm.submit'
 console.log(A22)
-import * as A23 from '@/features/cms/features/Promotion/components/PromotionAddOrUpdateForm/actions/PromotionUpdateForm.submit'
+import * as A23 from '@/features/cms/features/Quotation/components/QuotationAddOrUpdateForm/actions/QuotationAddForm.submit'
 console.log(A23)
-import * as A24 from '@/features/cms/features/Promotion/components/PromotionDeleteDialog/actions/PromotionDeleteDialogForm.submit'
+import * as A24 from '@/features/cms/features/Quotation/components/QuotationAddOrUpdateForm/actions/QuotationUpdateForm.submit'
 console.log(A24)
-import * as A25 from '@/features/cms/features/Promotion/components/PromotionFilterDropdown/actions/PromotionFilterDropdownForm.submit'
+import * as A25 from '@/features/cms/features/Quotation/components/QuotationDeleteDialog/actions/QuotationDeleteDialogForm.submit'
 console.log(A25)
 import * as A26 from '@/features/cms/features/SubCategory/components/SubCategoryAddOrUpdateForm/actions/SubCategoryAddForm.submit'
 console.log(A26)

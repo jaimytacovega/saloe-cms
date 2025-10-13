@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { CLIENT_TYPES } from '@/shared/repositories/OrderRepository'
+import { CLIENT_TYPES } from '@/shared/repositories/QuotationRepository'
 
 
 const ClientSchema = z.object({

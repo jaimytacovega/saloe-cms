@@ -3,13 +3,13 @@ import { html } from 'saloe/html'
 import CmsPage from '@/features/cms/components/CmsPage'
 import CmsToolbox from '@/features/cms/components/CmsToolbox'
 
-import OrderTable from '@/features/cms/features/Order/components/OrderTable'
-import OrderAddOrUpdateForm from '@/features/cms/features/Order/components/OrderAddOrUpdateForm'
-import OrderDeleteDialog from '@/features/cms/features/Order/components/OrderDeleteDialog'
+import QuotationTable from '@/features/cms/features/Quotation/components/QuotationTable'
+import QuotationAddOrUpdateForm from '@/features/cms/features/Quotation/components/QuotationAddOrUpdateForm'
+import QuotationDeleteDialog from '@/features/cms/features/Quotation/components/QuotationDeleteDialog'
 import NotFoundItem from '@/features/cms/components/NotFoundItem'
 
 
-const OrderPage = async ({
+const QuotationPage = async ({
     orderId,
     searchParams,
 } = { 
@@ -41,7 +41,7 @@ const OrderPage = async ({
                 `,
                 table: html`
                     ${
-                        await OrderTable({
+                        await QuotationTable({
                             orderId,
                             searchParams,
                             createUrl,
@@ -50,14 +50,14 @@ const OrderPage = async ({
                     }
                 `,
                 addOrUpdateForm: ({ id }) => {
-                    return OrderAddOrUpdateForm({ 
+                    return QuotationAddOrUpdateForm({ 
                         orderId: id, 
                         listUrl,
                         searchParams, 
                     })
                 },
                 deleteDialog: ({ id }) => {
-                    return OrderDeleteDialog({ orderId: id })
+                    return QuotationDeleteDialog({ orderId: id })
                 },
                 notFoundItem: NotFoundItem({
                     header: html`
@@ -69,4 +69,4 @@ const OrderPage = async ({
     `
 }
 
-export default OrderPage
+export default QuotationPage

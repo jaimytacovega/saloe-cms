@@ -6,10 +6,10 @@ import { Source } from '@/shared/utils/constants'
 import { searchParamsToListArguments } from '@/shared/services/DatabaseService'
 import { getCMSCorrelative, lastUpdatedMessage } from '@/shared/utils/utils'
 
-import * as OrderHook from '@/shared/hooks/OrderHook'
+import * as QuotationHook from '@/shared/hooks/QuotationHook'
 
 
-const OrderTableRow = ({
+const QuotationTableRow = ({
     id,
     name,
     correlative,
@@ -28,14 +28,14 @@ const OrderTableRow = ({
     `
 }
 
-const OrderTable = async ({
+const QuotationTable = async ({
     orderId,
     searchParams,
     createUrl,
     listUrl,
 }) => {
     const listArguments = searchParamsToListArguments({ searchParams })
-    const { data: orders, isCached } = await OrderHook.useList({
+    const { data: orders, isCached } = await QuotationHook.useList({
         source: Source.FIREBASE,
         pageSize: 20,
         ...listArguments,
@@ -48,7 +48,7 @@ const OrderTable = async ({
     return html`
         ${
             Table({
-                rows: orders.map((order) => OrderTableRow({
+                rows: orders.map((order) => QuotationTableRow({
                     id: order.id,
                     name: `RUC: ${order.client.code} - ${order.client.name}`,
                     correlative: getCMSCorrelative({ collectionName: 'orders', count: order.count }),
@@ -64,4 +64,4 @@ const OrderTable = async ({
     `
 }
 
-export default OrderTable
+export default QuotationTable

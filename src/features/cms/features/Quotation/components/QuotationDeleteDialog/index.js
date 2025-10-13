@@ -3,26 +3,26 @@ import { html } from 'saloe/html'
 import Dialog from '@/shared/components/Dialog'
 import Input from '@/shared/components/Input'
 
-import * as OrderRepository from '@/shared/repositories/OrderRepository'
+import * as QuotationRepository from '@/shared/repositories/QuotationRepository'
 import { Source } from '@/shared/utils/constants'
 
 
-const OrderDeleteDialog = async ({
+const QuotationDeleteDialog = async ({
     orderId,
 }) => {
     const { data: order } = orderId === 'new'
         ? { data: {} }
-        : await OrderRepository.get({
+        : await QuotationRepository.get({
             source: Source.FIREBASE,
             id: orderId,
         })
 
-    const dialogId = `DeleteOrderDialog-${orderId}`
+    const dialogId = `DeleteQuotationDialog-${orderId}`
 
     return Dialog({
         id: dialogId,
         children: html`
-            <form on-submit="OrderDeleteDialogForm.submit">
+            <form on-submit="QuotationDeleteDialogForm.submit">
                 <header>
                     <h2>Eliminar cotización</h2>
                 </header>
@@ -54,4 +54,4 @@ const OrderDeleteDialog = async ({
     })
 }
 
-export default OrderDeleteDialog
+export default QuotationDeleteDialog

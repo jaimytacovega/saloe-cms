@@ -8,14 +8,14 @@ import Textarea from '@/shared/components/Textarea'
 
 import NotFoundItem from '@/features/cms/components/NotFoundItem'
 
-import * as OrderHook from '@/shared/hooks/OrderHook'
+import * as QuotationHook from '@/shared/hooks/QuotationHook'
 import * as PromotionHook from '@/shared/hooks/PromotionHook'
 import { Source } from '@/shared/utils/constants'
 import { lastUpdatedMessage, getCMSCorrelative } from '@/shared/utils/utils'
-import { ORDER_TYPES, ORDER_TYPE_LABELS, ORDER_STATUSES, ORDER_STATUS_LABELS, CLIENT_TYPES, CLIENT_TYPE_LABELS } from '@/shared/repositories/OrderRepository'
+import { QUOTATION_TYPES, QUOTATION_TYPE_LABELS, QUOTATION_STATUSES, QUOTATION_STATUS_LABELS, CLIENT_TYPES, CLIENT_TYPE_LABELS } from '@/shared/repositories/QuotationRepository'
 
 
-const OrderAddOrUpdateForm = async ({
+const QuotationAddOrUpdateForm = async ({
     orderId,
     listUrl,
     searchParams,
@@ -26,7 +26,7 @@ const OrderAddOrUpdateForm = async ({
     ] = await Promise.allSettled([
         orderId === 'new'
             ? { data: {}, isCached: false }
-            : await OrderHook.useGet({
+            : await QuotationHook.useGet({
                 source: Source.FIREBASE,
                 id: orderId,
                 ttl: 10_000,
@@ -51,7 +51,7 @@ const OrderAddOrUpdateForm = async ({
 
     return Boolean(order)
         ? html`
-            <form on-submit="Order${orderId === 'new' ? 'Add' : 'Update'}Form.submit">
+            <form on-submit="Quotation${orderId === 'new' ? 'Add' : 'Update'}Form.submit">
                 <header>
                     <p>COTIZACIÓN</p>
                     <h2>
@@ -165,9 +165,9 @@ const OrderAddOrUpdateForm = async ({
                             Select({
                                 id: 'type',
                                 label: 'Tipo de cotización',
-                                options: Object.values(ORDER_TYPES).map((type) => ({
+                                options: Object.values(QUOTATION_TYPES).map((type) => ({
                                     value: type,
-                                    label: ORDER_TYPE_LABELS[type],
+                                    label: QUOTATION_TYPE_LABELS[type],
                                 })),
                                 value: order?.type,
                             })
@@ -176,9 +176,9 @@ const OrderAddOrUpdateForm = async ({
                             Select({
                                 id: 'status',
                                 label: 'Estado',
-                                options: Object.values(ORDER_STATUSES).map((status) => ({
+                                options: Object.values(QUOTATION_STATUSES).map((status) => ({
                                     value: status,
-                                    label: ORDER_STATUS_LABELS[status],
+                                    label: QUOTATION_STATUS_LABELS[status],
                                 })),
                                 value: order?.status,
                             })
@@ -194,7 +194,7 @@ const OrderAddOrUpdateForm = async ({
                                 </a>
                             `
                             : html`
-                                <button popovertarget="DeleteOrderDialog-${orderId}" type="button" class="Button PrimaryButton PrimaryGray">
+                                <button popovertarget="DeleteQuotationDialog-${orderId}" type="button" class="Button PrimaryButton PrimaryGray">
                                     <img src="/img/icon/trash-black.svg" width="18" height="18" alt="trash">
                                 </button>
                             `
@@ -220,4 +220,4 @@ const OrderAddOrUpdateForm = async ({
         })
 }
 
-export default OrderAddOrUpdateForm
+export default QuotationAddOrUpdateForm

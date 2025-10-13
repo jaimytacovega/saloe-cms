@@ -1,11 +1,11 @@
-import * as OrderRepository from '@/shared/repositories/OrderRepository'
+import * as OrderRepository from '@/shared/repositories/QuotationRepository'
 import { 
     ListOrderArraySchema, 
     OrderSchema,
     AddOrderSchema, 
     UpdateOrderSchema, 
     DeleteOrderSchema, 
-} from '@/shared/schemas/OrderSchema'
+} from '@/shared/schemas/QuotationSchema'
 import { prettifyError } from '@/shared/schemas/utils/utils'
 
 

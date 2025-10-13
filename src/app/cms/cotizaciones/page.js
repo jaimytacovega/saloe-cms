@@ -2,7 +2,7 @@ import { html, stream } from 'saloe/html'
 import { getScriptListener } from 'saloe/listener'
 
 import CmsMeta from '@/features/cms/components/CmsMeta'
-import OrderPage from '@/features/cms/features/Order/components/OrderPage'
+import QuotationPage from '@/features/cms/features/Quotation/components/QuotationPage'
 import { redirectIfMissingSearchParams } from '@/features/cms/utils/utils'
 
 
@@ -23,7 +23,7 @@ const page = async ({
         `,
         body: async () => html`
             ${
-                await OrderPage({
+                await QuotationPage({
                     searchParams,
                 })
             }

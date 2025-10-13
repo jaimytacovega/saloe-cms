@@ -196,28 +196,28 @@ const remove = async ({
     return removeResult
 }
 
-const ORDER_TYPES = {
+const QUOTATION_TYPES = {
     ONLINE: 'online',
     ON_SITE: 'on-site',
 }
 
-const ORDER_TYPE_LABELS = {
-    [ORDER_TYPES.ONLINE]: 'Online',
-    [ORDER_TYPES.ON_SITE]: 'En local',
+const QUOTATION_TYPE_LABELS = {
+    [QUOTATION_TYPES.ONLINE]: 'Online',
+    [QUOTATION_TYPES.ON_SITE]: 'En local',
 }
 
-const ORDER_STATUSES = {
+const QUOTATION_STATUSES = {
     PENDING: 'pending',
     QUOTED: 'quoted',
     SOLD: 'sold',
     NOT_SOLD: 'not-sold',
 }
 
-const ORDER_STATUS_LABELS = {
-    [ORDER_STATUSES.PENDING]: 'Pendiente',
-    [ORDER_STATUSES.QUOTED]: 'Cotizado',
-    [ORDER_STATUSES.SOLD]: 'Vendido',
-    [ORDER_STATUSES.NOT_SOLD]: 'No vendido',
+const QUOTATION_STATUS_LABELS = {
+    [QUOTATION_STATUSES.PENDING]: 'Pendiente',
+    [QUOTATION_STATUSES.QUOTED]: 'Cotizado',
+    [QUOTATION_STATUSES.SOLD]: 'Vendido',
+    [QUOTATION_STATUSES.NOT_SOLD]: 'No vendido',
 }
 
 const CLIENT_TYPES = {
@@ -244,10 +244,10 @@ export {
     update,
     remove,
 
-    ORDER_TYPES,
-    ORDER_TYPE_LABELS,
-    ORDER_STATUSES,
-    ORDER_STATUS_LABELS,
+    QUOTATION_TYPES,
+    QUOTATION_TYPE_LABELS,
+    QUOTATION_STATUSES,
+    QUOTATION_STATUS_LABELS,
 
     CLIENT_TYPES,
     CLIENT_TYPE_LABELS,
