@@ -37,13 +37,13 @@ const BrandAddOrUpdateForm = async ({
                         ${
                             brandId === 'new'
                                 ? 'Nueva marca'
-                                : `${getCMSCorrelative({ collectionName: 'brands', count: brand.count })}`
+                                : correlative
                         }
                     </h2>
                 </header>
                 <div class="form__scroller">
                     <fieldset columns="1">
-                    ${
+                        ${
                             brandId === 'new'
                                 ? ''
                                 : Input({

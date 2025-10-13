@@ -14,7 +14,7 @@ const Select = ({
                 <option disabled value="" ${Boolean(value) ? '' : 'selected'}>Selecciona una opción</option>
                 ${
                     options.map((option) => html`
-                        <option value="${option.value}">${option.label}</option>
+                        <option value="${option.value}"${option.value === value ? ' selected' : ''}>${option.label}</option>
                     `).join('')
                 }
             </select>

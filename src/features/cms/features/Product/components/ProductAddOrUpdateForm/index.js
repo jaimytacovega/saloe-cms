@@ -64,7 +64,7 @@ const ProductAddOrUpdateForm = async ({
                         ${
                             productId === 'new'
                                 ? 'Nuevo producto'
-                                : `${correlative}`
+                                : correlative
                         }
                     </h2>
                 </header>

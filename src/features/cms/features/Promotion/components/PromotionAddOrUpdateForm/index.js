@@ -40,8 +40,10 @@ const PromotionAddOrUpdateForm = async ({
         brandListResult.status === 'rejected'
     ) return html`error`
 
-    const { data: promotion, isCached } = promotionGetResult.value
+    const { data: promotion } = promotionGetResult.value
     const { data: brands } = brandListResult.value
+
+    const correlative = getCMSCorrelative({ collectionName: 'promotions', count: promotion?.count ?? '' })
 
     return Boolean(promotion)
         ? html`
@@ -52,18 +54,29 @@ const PromotionAddOrUpdateForm = async ({
                         ${
                             promotionId === 'new'
                                 ? 'Nueva promoción'
-                                : `${getCMSCorrelative({ collectionName: 'promotions', count: promotion.count })}`
+                                : correlative
                         }
                     </h2>
                 </header>
                 <div class="form__scroller">
                     <fieldset columns="1">
                         ${
-                            Input({
-                                id: 'id',
-                                value: promotionId,
-                                type: 'hidden',
-                            })
+                            promotionId === 'new'
+                                ? ''
+                                : Input({
+                                    id: 'id',
+                                    value: promotionId,
+                                    type: 'hidden',
+                                })
+                        }
+                        ${
+                            promotionId === 'new'
+                                ? ''
+                                : Input({
+                                    id: 'correlative',
+                                    value: correlative,
+                                    type: 'hidden',
+                                })
                         }
                         ${
                             Input({
@@ -110,13 +123,12 @@ const PromotionAddOrUpdateForm = async ({
                     </fieldset>
                 </div>
                 <inputgroup>
+                    <a href="${listUrl}?${searchParams?.toString()}" class="Button PrimaryButton PrimaryGray">
+                        <img src="/img/icon/corner-up-left-black.svg" width="18" height="18" alt="go back">
+                    </a>
                     ${
                         promotionId === 'new'
-                            ? html`
-                                <a href="${listUrl}?${searchParams?.toString()}" class="Button PrimaryButton PrimaryGray">
-                                    <img src="/img/icon/corner-up-left-black.svg" width="18" height="18" alt="go back">
-                                </a>
-                            `
+                            ? ''
                             : html`
                                 <button popovertarget="DeletePromotionDialog-${promotionId}" type="button" class="Button PrimaryButton PrimaryGray">
                                     <img src="/img/icon/trash-black.svg" width="18" height="18" alt="trash">

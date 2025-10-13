@@ -7,6 +7,7 @@ import PromotionTable from '@/features/cms/features/Promotion/components/Promoti
 import PromotionAddOrUpdateForm from '@/features/cms/features/Promotion/components/PromotionAddOrUpdateForm'
 import PromotionDeleteDialog from '@/features/cms/features/Promotion/components/PromotionDeleteDialog'
 import NotFoundItem from '@/features/cms/components/NotFoundItem'
+import PromotionToolboxActions from '@/features/cms/features/Promotion/components/PromotionToolboxActions'
 
 
 const PromotionPage = async ({
@@ -36,6 +37,10 @@ const PromotionPage = async ({
                             createUrl,
                             listUrl,
                             title,
+                            actions: await PromotionToolboxActions({
+                                searchParams,
+                                createUrl,
+                            })
                         })
                     }
                 `,

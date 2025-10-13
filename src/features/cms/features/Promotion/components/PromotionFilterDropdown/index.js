@@ -1,7 +1,6 @@
 import { html } from 'saloe/html'
 
 import * as BrandHook from '@/shared/hooks/BrandHook'
-import * as SubCategoryHook from '@/shared/hooks/SubCategoryHook'
 import { Source } from '@/shared/utils/constants'
 import { searchParamsToListArguments } from '@/shared/services/DatabaseService'
 
@@ -9,7 +8,7 @@ import Input from '@/shared/components/Input'
 import Dropdown from '@/shared/components/Dropdown'
 
 
-const ProductFilterDropdown = async ({
+const PromotionFilterDropdown = async ({
     searchParams,
 }) => {
     const listArguments = searchParamsToListArguments({ searchParams })
@@ -18,20 +17,10 @@ const ProductFilterDropdown = async ({
         return acc
     }, new Map())
 
-    const subCategoryIdsMap = (listArguments.filters?.find((filter) => filter.field === 'subCategoryIds')?.value ?? []).reduce((acc, subCategoryId) => {
-        acc.set(subCategoryId, true)
-        return acc
-    }, new Map())
-
     const [
         listBrandsResult,
-        listSubCategoriesResult,
     ] = await Promise.allSettled([
         BrandHook.useList({
-            source: Source.FIREBASE,
-            ttl: 10_000,
-        }),
-        SubCategoryHook.useList({
             source: Source.FIREBASE,
             ttl: 10_000,
         }),
@@ -39,12 +28,10 @@ const ProductFilterDropdown = async ({
 
     // TODO: Make error page
     if (
-        listBrandsResult.status === 'rejected' ||
-        listSubCategoriesResult.status === 'rejected'
+        listBrandsResult.status === 'rejected'
     ) return html`error`
 
     const { data: brands } = listBrandsResult.value
-    const { data: subCategories } = listSubCategoriesResult.value
 
     const id = 'filter'
 
@@ -54,7 +41,7 @@ const ProductFilterDropdown = async ({
             <button class="Button PrimaryButton PrimaryGray" type="button" popovertarget="${id}">Filtrar</button>
         `,
         content: html`
-            <form on-submit="ProductFilterDropdownForm.submit">
+            <form on-submit="PromotionFilterDropdownForm.submit">
                 <inputgroup>
                     <h6>Marcas</h6>
                 </inputgroup>
@@ -77,29 +64,6 @@ const ProductFilterDropdown = async ({
                 }
                 <inputgroup></inputgroup>
                 <inputgroup>
-                    <h6>Subcategorías</h6>
-                </inputgroup>
-                <inputgroup>
-                    ${
-                        subCategories.map((subCategory) => {
-                            return html`
-                                ${
-                                    Input({
-                                        id: `subCategoryIds-${subCategory.id}`,
-                                        label: subCategory.name,
-                                        type: 'checkbox',
-                                        name: 'subCategoryIds',
-                                        value: subCategory.id,
-                                        reverse: true,
-                                        checked: Boolean(subCategoryIdsMap.get(subCategory.id)),
-                                    })
-                                }
-                            `
-                        }).join('')
-                    }
-                </inputgroup>
-                <inputgroup></inputgroup>
-                <inputgroup>
                     <button 
                         class="Button PrimaryButton PrimaryGray" 
                         type="button"
@@ -118,4 +82,4 @@ const ProductFilterDropdown = async ({
     })
 }
 
-export default ProductFilterDropdown
+export default PromotionFilterDropdown
