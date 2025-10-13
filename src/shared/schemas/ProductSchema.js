@@ -30,7 +30,6 @@ const AddProductSchema = z.object({
     subCategoryIds: z.array(z.string()).optional(),
     brandIds: z.array(z.string()).optional(),
     technicalSheet: z.instanceof(File).optional(),
-    keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
     createdAt: DateSchema,
     updatedAt: DateSchema,
 })  
@@ -45,7 +44,6 @@ const UpdateProductSchema = z.object({
     brandIds: z.array(z.string()).optional(),
     technicalSheetPath: z.string().trim(),
     technicalSheet: z.instanceof(File).optional(),
-    keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
     updatedAt: DateSchema,
 }).transform((data) => {
     if (data.image === undefined) delete data.image

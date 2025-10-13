@@ -1,6 +1,8 @@
 import * as DatabaseService from '@/shared/services/DatabaseService'
 import * as StorageService from '@/shared/services/StorageService'
 
+import { keywords, getCMSCorrelative } from '@/shared/utils/utils'
+
 
 const storagePath = ({
     id = null,
@@ -75,11 +77,20 @@ const add = async ({
                     collectionName: 'products',
                 })
 
+                const correlative = getCMSCorrelative({ collectionName: 'products', count })
+
                 const product = {
                     ...data,
                     image: imageStorageResult.data,
                     technicalSheet: technicalSheetStorageResult.data,
                     count,
+                    keywords: keywords({ 
+                        keys: [
+                            correlative,
+                            data.name,
+                            data.sku,
+                        ] 
+                    }),
                 }
 
                 Boolean(counterTx?.data)

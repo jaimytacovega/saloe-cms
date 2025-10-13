@@ -1,4 +1,4 @@
-import { getUrlBySearchForm } from '@/shared/services/DatabaseService'
+import { getUrlBySortForm } from '@/shared/services/DatabaseService'
 
 
 const submit = ({
@@ -7,9 +7,9 @@ const submit = ({
 }) => {
     e.preventDefault()
 
-    location.href = getUrlBySearchForm({
+    location.href = getUrlBySortForm({
         form,
-        searchKey: 'search',
+        sortKey: 'sort',
         url: new URL(location.href),
     })
 }

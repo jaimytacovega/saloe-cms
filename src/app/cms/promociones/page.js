@@ -1,4 +1,5 @@
 import { html, stream } from 'saloe/html'
+import { getScriptListener } from 'saloe/listener'
 
 import CmsMeta from '@/features/cms/components/CmsMeta'
 import PromotionPage from '@/features/cms/features/Promotion/components/PromotionPage'
@@ -27,7 +28,13 @@ const page = async ({
                 })
             }
         `,
-        scripts: () => html``,
+        scripts: () => html`
+            ${
+                getScriptListener({
+                    listenAfterMs: 500,
+                })
+            }
+        `,
         env,
     })
 }

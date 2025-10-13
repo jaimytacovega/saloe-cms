@@ -2,7 +2,6 @@ import * as ProductHook from '@/shared/hooks/ProductHook'
 
 import * as Form from '@/shared/components/Form'
 import { Source } from '@/shared/utils/constants'
-import { keywords } from '@/shared/utils/utils'
 import { searchParamsToListArguments } from '@/shared/services/DatabaseService'
 
 
@@ -27,7 +26,6 @@ const submit = ({
         subCategoryIds,
         brandIds,
         technicalSheet,
-        keywords: keywords({ keys: [name] }),
         createdAt: now,
         updatedAt: now,
     }

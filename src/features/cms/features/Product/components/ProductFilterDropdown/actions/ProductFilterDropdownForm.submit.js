@@ -1,4 +1,4 @@
-import { getUrlBySearchForm } from '@/shared/services/DatabaseService'
+import { getUrlByFilterForm } from '@/shared/services/DatabaseService'
 
 
 const submit = ({
@@ -7,9 +7,9 @@ const submit = ({
 }) => {
     e.preventDefault()
 
-    location.href = getUrlBySearchForm({
+    location.href = getUrlByFilterForm({
         form,
-        searchKey: 'search',
+        filterKeys: ['brandIds', 'subCategoryIds'],
         url: new URL(location.href),
     })
 }

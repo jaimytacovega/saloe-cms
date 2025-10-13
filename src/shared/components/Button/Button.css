@@ -20,5 +20,22 @@
             background: var(--color-blue);
             color: var(--color-white);
         }
+
+        &.PrimaryBlack{
+            background: var(--color-black);
+            color: var(--color-white);
+        }
+    }
+
+    &[full-width]{
+        inline-size: 100%;
+    }
+
+    &[fill-space]{
+        flex-grow: 1;
+    }
+
+    &[content-center]{
+        justify-content: center;
     }
 }

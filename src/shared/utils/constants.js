@@ -15,7 +15,7 @@ const Source = {
 
 const DEFAULT_PAGE_SIZE = 20
 const DEFAULT_PAGE = 1
-const DEFAULT_SORTERS = 'updatedAt:desc,createdAt:desc'
+const DEFAULT_SORTERS = 'updatedAt:desc'
 
 const CMS_CODES = {
     brands: 'MAR',

@@ -49,12 +49,11 @@ const ProductAddOrUpdateForm = async ({
         brandListResult.status === 'rejected'
     ) return html`error`
 
-    const { data: product, isCached } = productGetResult.value
+    const { data: product } = productGetResult.value
     const { data: subCategories } = subCategoryListResult.value
     const { data: brands } = brandListResult.value
 
-    console.log('product =', product)
-    console.log('isCached =', isCached)
+    const correlative = getCMSCorrelative({ collectionName: 'products', count: product?.count ?? '' })
 
     return Boolean(product)
         ? html`
@@ -65,18 +64,29 @@ const ProductAddOrUpdateForm = async ({
                         ${
                             productId === 'new'
                                 ? 'Nuevo producto'
-                                : `${getCMSCorrelative({ collectionName: 'products', count: product.count })}`
+                                : `${correlative}`
                         }
                     </h2>
                 </header>
                 <div class="form__scroller">
                     <fieldset columns="1">
                         ${
-                            Input({
-                                id: 'id',
-                                value: productId,
-                                type: 'hidden',
-                            })
+                            productId === 'new'
+                                ? ''
+                                : Input({
+                                    id: 'id',
+                                    value: productId,
+                                    type: 'hidden',
+                                })
+                        }
+                        ${
+                            productId === 'new'
+                                ? ''
+                                : Input({
+                                    id: 'correlative',
+                                    value: correlative,
+                                    type: 'hidden',
+                                })
                         }
                         ${
                             Input({
@@ -179,6 +189,9 @@ const ProductAddOrUpdateForm = async ({
                                 </a>
                             `
                             : html`
+                                <a href="${listUrl}?${searchParams?.toString()}" class="Button PrimaryButton PrimaryGray">
+                                    <img src="/img/icon/corner-up-left-black.svg" width="18" height="18" alt="go back">
+                                </a>
                                 <button popovertarget="DeleteProductDialog-${productId}" type="button" class="Button PrimaryButton PrimaryGray">
                                     <img src="/img/icon/trash-black.svg" width="18" height="18" alt="trash">
                                 </button>

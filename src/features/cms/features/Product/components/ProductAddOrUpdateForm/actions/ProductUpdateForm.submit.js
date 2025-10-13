@@ -13,6 +13,7 @@ const submit = ({
     e.preventDefault()
 
     const id = form.querySelector('#id').value.trim()
+    const correlative = form.querySelector('#correlative').value.trim()
     const sku = form.querySelector('#sku').value.trim()
     const name = form.querySelector('#name').value.trim()
     const imagePath = form.querySelector('#imagePath').value.trim()
@@ -32,7 +33,13 @@ const submit = ({
         brandIds,
         technicalSheetPath,
         technicalSheet,
-        keywords: keywords({ keys: [name] }),
+        keywords: keywords({ 
+            keys: [
+                correlative,
+                name,
+                sku,
+            ] 
+        }),
         updatedAt: new Date(),
     }
 

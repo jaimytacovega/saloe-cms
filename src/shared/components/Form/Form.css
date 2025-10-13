@@ -1,5 +1,4 @@
 form {
-    padding-block: 8px;
     overflow-y: hidden;
     display: flex;
     flex-flow: column wrap;
@@ -102,6 +101,11 @@ inputgroup {
     >label {
         font: var(--font-size-xs)/1.2 var(--font-family-semibold);
         inline-size: 100%;
+        color: var(--color-gray-1);
+
+        &:has(~ input:is([type="checkbox"], [type="radio"])){
+            inline-size: auto;
+        }
     }
 
     > p{

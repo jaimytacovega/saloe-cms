@@ -220,6 +220,8 @@ const queryBySearchParams = ({
     searchParams,
 }) => {
     const listArgumentsArray = searchParamsToListArgumentsArray({ searchParams })
+    console.log('listArgumentsArray =', listArgumentsArray)
+
     return removeDuplicatesFromDataArrays({
         dataArraysPromises: listArgumentsArray.map((listArguments) => {
             return query({ listArguments })
@@ -262,6 +264,7 @@ const searchParamsToListArgumentsArray = ({
     searchParams,
 }) => {
     const listArguments = searchParamsToListArguments({ searchParams })
+    console.log('listArguments =', listArguments)
 
     const {
         containsAnyFilters,
@@ -298,15 +301,13 @@ const searchParamsToListArguments = ({
             case 'search':
                 filters.push({
                     field: 'keywords',
-                    operator: Operators.Contains,
-                    value: value,
+                    operator: Operators.ContainsAny,
+                    value: value.toLowerCase().split(' '),
                 })
                 break
             case 'sort':
                 value.split(',').forEach((sorter) => {
                     const [field, direction] = sorter.split(':')
-                    console.log('field', field)
-                    console.log('direction', direction)
                     sorters.push({
                         field: field,
                         direction: direction,
@@ -352,6 +353,50 @@ const searchParamsToListArguments = ({
     }
 }
 
+const getUrlByFilterForm = ({
+    form,
+    filterKeys = [],
+    url,
+}) => {
+    const filterParam = filterKeys.map((filterKey) => {
+        const filterValue = [...form.querySelectorAll(`input[name="${filterKey}"]:checked`)].map((input) => input.value)
+        const filterValueParam = filterValue.length > 0 
+            ? `${filterKey}:[${filterValue.join(';')}]` 
+            : ''
+        return filterValueParam
+    }).filter((param) => param !== '').join(',')
+
+    filterParam === ''
+        ? url.searchParams.delete('filter')
+        : url.searchParams.set('filter', filterParam)
+
+    return url
+}
+
+const getUrlBySortForm = ({
+    form,
+    sortKey,
+    url,
+}) => {
+    const sortParam = form.querySelector(`[name="${sortKey}"]:checked`).value
+    url.searchParams.set('sort', sortParam)
+
+    return url
+}
+
+const getUrlBySearchForm = ({
+    form,
+    searchKey,
+    url,
+}) => {
+    const search = form.querySelector(`[name="${searchKey}"`).value
+    
+    search === ''
+        ? url.searchParams.delete('search')
+        : url.searchParams.set('search', search)
+
+    return url
+}
 
 export {
     Operators,
@@ -375,4 +420,7 @@ export {
     searchParamsToListArgumentsArray,
     removeDuplicatesFromDataArrays,
     queryBySearchParams,
+    getUrlByFilterForm,
+    getUrlBySortForm,
+    getUrlBySearchForm,
 }

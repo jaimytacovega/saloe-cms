@@ -7,6 +7,7 @@ import ProductTable from '@/features/cms/features/Product/components/ProductTabl
 import ProductAddOrUpdateForm from '@/features/cms/features/Product/components/ProductAddOrUpdateForm'
 import ProductDeleteDialog from '@/features/cms/features/Product/components/ProductDeleteDialog'
 import NotFoundItem from '@/features/cms/components/NotFoundItem'
+import ProductToolboxActions from '@/features/cms/features/Product/components/ProductToolboxActions'
 
 
 const ProductPage = async ({
@@ -36,6 +37,10 @@ const ProductPage = async ({
                             createUrl,
                             listUrl,
                             title,
+                            actions: await ProductToolboxActions({
+                                searchParams,
+                                createUrl,
+                            })
                         })
                     }
                 `,
