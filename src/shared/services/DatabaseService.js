@@ -220,7 +220,6 @@ const queryBySearchParams = ({
     searchParams,
 }) => {
     const listArgumentsArray = searchParamsToListArgumentsArray({ searchParams })
-    console.log('listArgumentsArray =', listArgumentsArray)
 
     return removeDuplicatesFromDataArrays({
         dataArraysPromises: listArgumentsArray.map((listArguments) => {

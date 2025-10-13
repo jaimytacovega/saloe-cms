@@ -41,7 +41,6 @@ main > container.WorkStation__container {
 
     > .WorkStation__toolbox{
         padding-inline: 16px;
-        /* padding-block: 0 2px; */
         padding-block: 0 10px;
         display: flex;
         flex-flow: column wrap;
