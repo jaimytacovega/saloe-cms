@@ -1,10 +1,10 @@
-import * as OrderRepository from '@/shared/repositories/QuotationRepository'
+import * as QuotationRepository from '@/shared/repositories/QuotationRepository'
 import { 
-    ListOrderArraySchema, 
-    OrderSchema,
-    AddOrderSchema, 
-    UpdateOrderSchema, 
-    DeleteOrderSchema, 
+    ListQuotationArraySchema, 
+    QuotationSchema,
+    AddQuotationSchema, 
+    UpdateQuotationSchema, 
+    DeleteQuotationSchema, 
 } from '@/shared/schemas/QuotationSchema'
 import { prettifyError } from '@/shared/schemas/utils/utils'
 
@@ -16,7 +16,7 @@ const list = async ({
     pageSize,
 }) => {
     try{
-        const listResult = await OrderRepository.list({
+        const listResult = await QuotationRepository.list({
             source,
             filters,
             sorters,
@@ -24,7 +24,7 @@ const list = async ({
         })
         if (listResult?.err) throw listResult.err
 
-        const schemaResult = ListOrderArraySchema.safeParse(listResult.data)
+        const schemaResult = ListQuotationArraySchema.safeParse(listResult.data)
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
             
         return { data: schemaResult.data }
@@ -39,14 +39,14 @@ const get = async ({
     id,
 }) => {
     try{
-        const getResult = await OrderRepository.get({
+        const getResult = await QuotationRepository.get({
             source,
             id,
         })
     
         if (getResult?.err) throw getResult.err
     
-        const schemaResult = OrderSchema.safeParse(getResult.data)
+        const schemaResult = QuotationSchema.safeParse(getResult.data)
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
     
         return { data: schemaResult.data }
@@ -61,10 +61,10 @@ const add = async ({
     data,
 }) => {
     try {
-        const schemaResult = AddOrderSchema.safeParse(data)
+        const schemaResult = AddQuotationSchema.safeParse(data)
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
 
-        const addResult = await OrderRepository.add({
+        const addResult = await QuotationRepository.add({
             source,
             data: schemaResult.data,
         })
@@ -82,10 +82,10 @@ const update = async ({
     data,
 }) => {
     try {
-        const schemaResult = UpdateOrderSchema.safeParse(data)
+        const schemaResult = UpdateQuotationSchema.safeParse(data)
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
                 
-        const updateResult = await OrderRepository.update({
+        const updateResult = await QuotationRepository.update({
             source,
             data: schemaResult.data,
         })
@@ -104,10 +104,10 @@ const remove = async ({
     attachmentPaths,
 }) => {
     try{
-        const schemaResult = DeleteOrderSchema.safeParse({ id, attachmentPaths })
+        const schemaResult = DeleteQuotationSchema.safeParse({ id, attachmentPaths })
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
 
-        const removeResult = await OrderRepository.remove({
+        const removeResult = await QuotationRepository.remove({
             source,
             id: schemaResult.data.id,
             attachmentPaths: schemaResult.data.attachmentPaths,

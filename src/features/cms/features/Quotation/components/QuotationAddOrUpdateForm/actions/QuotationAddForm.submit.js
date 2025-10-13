@@ -25,7 +25,7 @@ const submit = ({
     const status = form.querySelector('#status').value.trim()
     const now = new Date()
 
-    const order = {
+    const quotation = {
         client: {
             name,
             code,
@@ -39,7 +39,6 @@ const submit = ({
         promotionIds,
         type,
         status,
-        keywords: keywords({ keys: [name, code, email, phone, type, status] }),
         createdAt: now,
         updatedAt: now,
     }
@@ -53,7 +52,7 @@ const submit = ({
 
             const addResult = await QuotationHook.useAdd({
                 source: Source.FIREBASE,
-                data: order,
+                data: quotation,
                 ...listArguments,
             })
 

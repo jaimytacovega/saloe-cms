@@ -16,19 +16,19 @@ import { QUOTATION_TYPES, QUOTATION_TYPE_LABELS, QUOTATION_STATUSES, QUOTATION_S
 
 
 const QuotationAddOrUpdateForm = async ({
-    orderId,
+    quotationId,
     listUrl,
     searchParams,
 }) => {
     const [
-        orderGetResult, 
+        quotationGetResult, 
         promotionListResult,
     ] = await Promise.allSettled([
-        orderId === 'new'
+        quotationId === 'new'
             ? { data: {}, isCached: false }
             : await QuotationHook.useGet({
                 source: Source.FIREBASE,
-                id: orderId,
+                id: quotationId,
                 ttl: 10_000,
             })
         ,
@@ -39,43 +39,53 @@ const QuotationAddOrUpdateForm = async ({
     ])
 
     if (
-        orderGetResult.status === 'rejected' || 
+        quotationGetResult.status === 'rejected' || 
         promotionListResult.status === 'rejected'
     ) return html`error`
 
-    const { data: order, isCached } = orderGetResult.value
+    const { data: quotation } = quotationGetResult.value
     const { data: promotions } = promotionListResult.value
 
-    console.log('order =', order)
-    console.log('isCached =', isCached)
+    const correlative = getCMSCorrelative({ collectionName: 'quotations', count: quotation?.count ?? '' })
 
-    return Boolean(order)
+    return Boolean(quotation)
         ? html`
-            <form on-submit="Quotation${orderId === 'new' ? 'Add' : 'Update'}Form.submit">
+            <form on-submit="Quotation${quotationId === 'new' ? 'Add' : 'Update'}Form.submit">
                 <header>
                     <p>COTIZACIÓN</p>
                     <h2>
                         ${
-                            orderId === 'new'
+                            quotationId === 'new'
                                 ? 'Nuevo cotización'
-                                : `${getCMSCorrelative({ collectionName: 'orders', count: order.count })}`
+                                : correlative
                         }
                     </h2>
                 </header>
                 <div class="form__scroller">
                     <fieldset columns="1">
                         ${
-                            Input({
-                                id: 'id',
-                                value: orderId,
-                                type: 'hidden',
-                            })
+                            quotationId === 'new'
+                                ? ''
+                                : Input({
+                                    id: 'id',
+                                    value: quotationId,
+                                    type: 'hidden',
+                                })
+                        }
+                        ${
+                            quotationId === 'new'
+                                ? ''
+                                : Input({
+                                    id: 'correlative',
+                                    value: correlative,
+                                    type: 'hidden',
+                                })
                         }
                         ${
                             Input({
                                 id: 'clientName',
                                 label: 'Nombre completo o Razón social',
-                                value: order?.client?.name ?? '',
+                                value: quotation?.client?.name ?? '',
                                 placeholder: 'Ingresa el nombre completo o razón social',
                             })
                         }
@@ -83,7 +93,7 @@ const QuotationAddOrUpdateForm = async ({
                             Input({
                                 id: 'clientCode',
                                 label: 'RUC',
-                                value: order?.client?.code ?? '',
+                                value: quotation?.client?.code ?? '',
                                 placeholder: 'Ingresa el RUC',
                             })
                         }
@@ -91,7 +101,7 @@ const QuotationAddOrUpdateForm = async ({
                             Input({
                                 id: 'clientEmail',
                                 label: 'Correo electrónico',
-                                value: order?.client?.email ?? '',
+                                value: quotation?.client?.email ?? '',
                                 placeholder: 'Ingresa el correo electrónico',
                             })
                         }
@@ -99,7 +109,7 @@ const QuotationAddOrUpdateForm = async ({
                             Input({
                                 id: 'clientPhone',
                                 label: 'Celular (con Whatsapp)',
-                                value: order?.client?.phone ?? '',
+                                value: quotation?.client?.phone ?? '',
                                 placeholder: 'Ingresa el celular',
                             })
                         }
@@ -111,7 +121,7 @@ const QuotationAddOrUpdateForm = async ({
                                     value: type,
                                     label: CLIENT_TYPE_LABELS[type],
                                 })),
-                                value: order?.client?.type,
+                                value: quotation?.client?.type,
                             })
                         }
                         ${
@@ -122,10 +132,10 @@ const QuotationAddOrUpdateForm = async ({
                                 accept: 'application/pdf',
                                 acceptLabel: 'PDF',
                                 multiple: true,
-                                files: (order?.attachments ?? []).map((order) => {
-                                    const name = order.path.split('/').at(-1)
+                                files: (quotation?.attachments ?? []).map((quotation) => {
+                                    const name = quotation.path.split('/').at(-1)
                                     return {
-                                        ...order,
+                                        ...quotation,
                                         name,
                                     }
                                 }),
@@ -135,7 +145,7 @@ const QuotationAddOrUpdateForm = async ({
                             Textarea({
                                 id: 'request',
                                 label: 'Solicitud de cotización (opcional)',
-                                value: order?.request ?? '',
+                                value: quotation?.request ?? '',
                                 placeholder: 'Ingresa la solicitud de cotización',
                             })
                         }
@@ -143,7 +153,7 @@ const QuotationAddOrUpdateForm = async ({
                             Input({
                                 id: 'deliveryLocation',
                                 label: 'Lugar de entrega',
-                                value: order?.deliveryLocation ?? '',
+                                value: quotation?.deliveryLocation ?? '',
                                 placeholder: 'Ingresa el lugar de entrega',
                             })
                         }
@@ -155,7 +165,7 @@ const QuotationAddOrUpdateForm = async ({
                                     value: promotion.id,
                                     label: `${getCMSCorrelative({ collectionName: 'promotions', count: promotion.count })}: ${promotion.name}`,
                                 })),
-                                selectedOptions: (order?.promotionIds ?? []).reduce((acc, promotionId) => {
+                                selectedOptions: (quotation?.promotionIds ?? []).reduce((acc, promotionId) => {
                                     acc[promotionId] = true
                                     return acc
                                 }, {}),
@@ -169,7 +179,7 @@ const QuotationAddOrUpdateForm = async ({
                                     value: type,
                                     label: QUOTATION_TYPE_LABELS[type],
                                 })),
-                                value: order?.type,
+                                value: quotation?.type,
                             })
                         }
                         ${
@@ -180,30 +190,29 @@ const QuotationAddOrUpdateForm = async ({
                                     value: status,
                                     label: QUOTATION_STATUS_LABELS[status],
                                 })),
-                                value: order?.status,
+                                value: quotation?.status,
                             })
                         }
                     </fieldset>
                 </div>
                 <inputgroup>
+                    <a href="${listUrl}?${searchParams?.toString()}" class="Button PrimaryButton PrimaryGray">
+                        <img src="/img/icon/corner-up-left-black.svg" width="18" height="18" alt="go back">
+                    </a>
                     ${
-                        orderId === 'new'
-                            ? html`
-                                <a href="${listUrl}?${searchParams?.toString()}" class="Button PrimaryButton PrimaryGray">
-                                    <img src="/img/icon/corner-up-left-black.svg" width="18" height="18" alt="go back">
-                                </a>
-                            `
+                        quotationId === 'new'
+                            ? ''
                             : html`
-                                <button popovertarget="DeleteQuotationDialog-${orderId}" type="button" class="Button PrimaryButton PrimaryGray">
+                                <button popovertarget="DeleteQuotationDialog-${quotationId}" type="button" class="Button PrimaryButton PrimaryGray">
                                     <img src="/img/icon/trash-black.svg" width="18" height="18" alt="trash">
                                 </button>
                             `
                     }
                     <hr>
                     ${
-                        orderId !== 'new'
+                        quotationId !== 'new'
                             ? html`
-                                <small>${lastUpdatedMessage({ date: order.updatedAt ?? order.createdAt })}</small>
+                                <small>${lastUpdatedMessage({ date: quotation.updatedAt ?? quotation.createdAt })}</small>
                             `
                             : ''
                     }

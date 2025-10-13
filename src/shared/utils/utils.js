@@ -12,7 +12,7 @@ const lastUpdatedMessage = ({ date }) => {
 }
 
 const keywords = ({ keys }) => {
-    return keys.flatMap((key) => `${key}`.toLowerCase().split(' '))
+    return keys.flatMap((key) => `${key}`.toLowerCase().split(' ').filter((word) => word.length > 1))
 }
 
 const formatCount = ({ count }) => {

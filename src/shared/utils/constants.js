@@ -23,7 +23,7 @@ const CMS_CODES = {
     categories: 'CAT',
     promotions: 'PROM',
     products: 'PROD',
-    orders: 'COT',
+    quotations: 'COT',
 }
 
 export {

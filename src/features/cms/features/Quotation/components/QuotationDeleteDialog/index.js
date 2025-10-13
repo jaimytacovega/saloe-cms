@@ -8,16 +8,16 @@ import { Source } from '@/shared/utils/constants'
 
 
 const QuotationDeleteDialog = async ({
-    orderId,
+    quotationId,
 }) => {
-    const { data: order } = orderId === 'new'
+    const { data: quotation } = quotationId === 'new'
         ? { data: {} }
         : await QuotationRepository.get({
             source: Source.FIREBASE,
-            id: orderId,
+            id: quotationId,
         })
 
-    const dialogId = `DeleteQuotationDialog-${orderId}`
+    const dialogId = `DeleteQuotationDialog-${quotationId}`
 
     return Dialog({
         id: dialogId,
@@ -29,14 +29,14 @@ const QuotationDeleteDialog = async ({
                 ${
                     Input({
                         id: 'id',
-                        value: orderId,
+                        value: quotationId,
                         type: 'hidden',
                     })
                 }
                 ${
                     Input({
                         id: 'attachmentPaths',
-                        value: order?.attachments?.map((attachment) => attachment.path) ?? '',
+                        value: quotation?.attachments?.map((attachment) => attachment.path) ?? '',
                         type: 'hidden',
                     })
                 }

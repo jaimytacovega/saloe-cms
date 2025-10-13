@@ -1,7 +1,7 @@
 import { useQuery } from '@/shared/lib/@saloe-hook'
 
-import * as OrderManager from '@/shared/managers/QuotationManager'
-import { ListOrderArraySchema, OrderSchema } from '@/shared/schemas/QuotationSchema'
+import * as QuotationManager from '@/shared/managers/QuotationManager'
+import { ListQuotationArraySchema, QuotationSchema } from '@/shared/schemas/QuotationSchema'
 import { listArgumentsToQueryString } from '@/shared/services/DatabaseService'
 
 
@@ -13,10 +13,10 @@ const useList = ({
     ttl,
 }) => {
     return useQuery({
-        queryKey: ['order', 'list', source, listArgumentsToQueryString({ filters, sorters, pageSize })],
-        queryGroup: ['order', 'list', source],
-        queryFn: () => OrderManager.list({ source, filters, sorters, pageSize }),
-        querySchema: ListOrderArraySchema,
+        queryKey: ['quotation', 'list', source, listArgumentsToQueryString({ filters, sorters, pageSize })],
+        queryGroup: ['quotation', 'list', source],
+        queryFn: () => QuotationManager.list({ source, filters, sorters, pageSize }),
+        querySchema: ListQuotationArraySchema,
         ttl,
     })
 }
@@ -27,9 +27,9 @@ const useGet = ({
     ttl,
 }) => {
     return useQuery({
-        queryKey: ['order', 'get', source, id],
-        queryFn: () => OrderManager.get({ source, id }),
-        querySchema: OrderSchema,
+        queryKey: ['quotation', 'get', source, id],
+        queryFn: () => QuotationManager.get({ source, id }),
+        querySchema: QuotationSchema,
         ttl,
     })
 }
@@ -42,7 +42,7 @@ const useAdd = async ({
     pageSize,
 }) => {
     try{
-        const addResult = await OrderManager.add({ source, data })
+        const addResult = await QuotationManager.add({ source, data })
         if (addResult?.err) return addResult
 
         const [useGetRevalidate, useListRevalidate] = await Promise.allSettled([
@@ -74,7 +74,7 @@ const useUpdate = async ({
     pageSize,
 }) => {
     try{
-        const updateResult = await OrderManager.update({ source, data })
+        const updateResult = await QuotationManager.update({ source, data })
         if (updateResult?.err) return updateResult
 
         const [useGetRevalidate, useListRevalidate] = await Promise.allSettled([

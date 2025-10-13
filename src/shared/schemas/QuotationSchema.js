@@ -2,10 +2,10 @@ import { z } from 'zod'
 import { FileSchema } from '@/shared/schemas/utils/FileSchema'
 import { DateSchema } from '@/shared/schemas/utils/DateSchema'
 import { ClientSchema } from '@/shared/schemas/utils/ClientSchema'
-import { QUOTATION_TYPES, QUOTATION_STATUSES, CLIENT_TYPES } from '@/shared/repositories/QuotationRepository'
+import { QUOTATION_TYPES, QUOTATION_STATUSES } from '@/shared/repositories/QuotationRepository'
 
 
-const OrderSchema = z.object({
+const QuotationSchema = z.object({
     id: z.string().min(1, 'El id es obligatorio').trim(),
     count: z.number(),
     client: ClientSchema,
@@ -20,9 +20,9 @@ const OrderSchema = z.object({
     updatedAt: DateSchema.optional(),
 })
 
-const ListOrderArraySchema = z.array(OrderSchema)
+const ListQuotationArraySchema = z.array(QuotationSchema)
 
-const AddOrderSchema = z.object({
+const AddQuotationSchema = z.object({
     client: ClientSchema,
     attachments: z.array(z.instanceof(File)).optional(),
     request: z.string().trim().optional(),
@@ -30,12 +30,11 @@ const AddOrderSchema = z.object({
     promotionIds: z.array(z.string()).optional(),
     type: z.enum(Object.values(QUOTATION_TYPES), 'El tipo de cotización debe ser uno de los valores permitidos'),
     status: z.enum(Object.values(QUOTATION_STATUSES), 'El estado debe ser uno de los valores permitidos'),
-    keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
     createdAt: DateSchema,
     updatedAt: DateSchema,
 })
 
-const UpdateOrderSchema = z.object({
+const UpdateQuotationSchema = z.object({
     id: z.string().min(1, 'El id es obligatorio').trim(),
     client: ClientSchema,
     attachments: z.array(z.instanceof(File)).optional(),
@@ -50,15 +49,15 @@ const UpdateOrderSchema = z.object({
     updatedAt: DateSchema,
 })
 
-const DeleteOrderSchema = z.object({
+const DeleteQuotationSchema = z.object({
     id: z.string().min(1, 'El id es obligatorio').trim(),
     attachmentPaths: z.array(z.string().trim()).optional(),
 })
 
 export {
-    OrderSchema,
-    ListOrderArraySchema,
-    AddOrderSchema,
-    UpdateOrderSchema,
-    DeleteOrderSchema,
+    QuotationSchema,
+    ListQuotationArraySchema,
+    AddQuotationSchema,
+    UpdateQuotationSchema,
+    DeleteQuotationSchema,
 }

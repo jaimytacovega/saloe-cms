@@ -1,12 +1,14 @@
 import * as DatabaseService from '@/shared/services/DatabaseService'
 import * as StorageService from '@/shared/services/StorageService'
 
+import { keywords, getCMSCorrelative } from '@/shared/utils/utils'
+
 
 const storagePath = ({
     id = null,
     name,
 }) => {
-    return `/uploads/orders${id ? `/${id}` : ''}/${Date.now()}-${name}`
+    return `/uploads/quotations${id ? `/${id}` : ''}/${Date.now()}-${name}`
 }
 
 const list = ({
@@ -17,7 +19,7 @@ const list = ({
 }) => {
     return DatabaseService.list({
         source,
-        collectionName: 'orders',
+        collectionName: 'quotations',
         filters,
         sorters,
         pageSize,
@@ -30,7 +32,7 @@ const get = ({
 }) => {
     return DatabaseService.get({
         source,
-        collectionName: 'orders',
+        collectionName: 'quotations',
         id,
     })
 }
@@ -47,22 +49,34 @@ const add = async ({
                     source,
                     tx,
                     collectionName: 'counters',
-                    id: 'orders',
+                    id: 'quotations',
                 })
 
                 const count = counterTx?.data 
                     ? counterTx.data.count + 1 
                     : 1
 
-                const orderTx = await DatabaseService.getWithTransaction({
+                const quotationTx = await DatabaseService.getWithTransaction({
                     source,
                     tx,
-                    collectionName: 'orders',
+                    collectionName: 'quotations',
                 })
 
-                const order = {
+                const correlative = getCMSCorrelative({ collectionName: 'quotations', count })
+
+                const quotation = {
                     ...data,
                     count,
+                    keywords: keywords({ 
+                        keys: [
+                            correlative,
+                            data.client.name,
+                            data.client.code,
+                            data.client.email,
+                            data.client.phone,
+                            data.deliveryLocation,
+                        ] 
+                    }),
                 }
 
                 Boolean(counterTx?.data)
@@ -82,13 +96,13 @@ const add = async ({
                 await DatabaseService.addWithTransaction({
                     source,
                     tx,
-                    ref: orderTx.ref,
-                    data: order,
+                    ref: quotationTx.ref,
+                    data: quotation,
                 })
                 
                 return { 
-                    id: orderTx.ref.id,
-                    ...order, 
+                    id: quotationTx.ref.id,
+                    ...quotation, 
                 }
             }catch(err){
                 return Promise.reject(err)
@@ -132,22 +146,22 @@ const update = async({
             
                 delete data.attachmentsToKeep
 
-                const orderTx = await DatabaseService.getWithTransaction({
+                const quotationTx = await DatabaseService.getWithTransaction({
                     source,
                     tx,
-                    collectionName: 'orders',
+                    collectionName: 'quotations',
                     id: data.id,
                 })
 
                 await DatabaseService.updateWithTransaction({
                     source,
                     tx,
-                    ref: orderTx.ref,
+                    ref: quotationTx.ref,
                     data,
                 })
 
                 return {
-                    id: orderTx.ref.id,
+                    id: quotationTx.ref.id,
                     ...data,
                 }
             }catch(err){
@@ -175,14 +189,14 @@ const remove = async ({
 
                 if (removeFilesResults?.err) throw removeFilesResults.err
 
-                const orderTx = await DatabaseService.getWithTransaction({
+                const quotationTx = await DatabaseService.getWithTransaction({
                     source,
                     tx,
-                    collectionName: 'orders',
+                    collectionName: 'quotations',
                     id,
                 })
 
-                await tx.delete(orderTx.ref)
+                await tx.delete(quotationTx.ref)
 
                 return {
                     data: { id },

@@ -7,13 +7,14 @@ import QuotationTable from '@/features/cms/features/Quotation/components/Quotati
 import QuotationAddOrUpdateForm from '@/features/cms/features/Quotation/components/QuotationAddOrUpdateForm'
 import QuotationDeleteDialog from '@/features/cms/features/Quotation/components/QuotationDeleteDialog'
 import NotFoundItem from '@/features/cms/components/NotFoundItem'
+import QuotationToolboxActions from '@/features/cms/features/Quotation/components/QuotationToolboxActions'
 
 
 const QuotationPage = async ({
-    orderId,
+    quotationId,
     searchParams,
 } = { 
-    orderId: null, 
+    quotationId: null, 
     searchParams: null,
 }) => {
     const createUrl = '/cms/cotizaciones/crear'
@@ -23,7 +24,7 @@ const QuotationPage = async ({
     return html`
         ${
             await CmsPage({
-                id: orderId,
+                id: quotationId,
                 searchParams,
                 header: html`
                     <h1>Cotizaciones</h1>
@@ -31,18 +32,22 @@ const QuotationPage = async ({
                 toolbox: html`
                     ${
                         CmsToolbox({
-                            id: orderId,
+                            id: quotationId,
                             searchParams,
                             createUrl,
                             listUrl,
                             title,
+                            actions: await QuotationToolboxActions({
+                                searchParams,
+                                createUrl,
+                            })
                         })
                     }
                 `,
                 table: html`
                     ${
                         await QuotationTable({
-                            orderId,
+                            quotationId,
                             searchParams,
                             createUrl,
                             listUrl,
@@ -51,13 +56,13 @@ const QuotationPage = async ({
                 `,
                 addOrUpdateForm: ({ id }) => {
                     return QuotationAddOrUpdateForm({ 
-                        orderId: id, 
+                        quotationId: id, 
                         listUrl,
                         searchParams, 
                     })
                 },
                 deleteDialog: ({ id }) => {
-                    return QuotationDeleteDialog({ orderId: id })
+                    return QuotationDeleteDialog({ quotationId: id })
                 },
                 notFoundItem: NotFoundItem({
                     header: html`

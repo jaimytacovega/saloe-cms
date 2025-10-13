@@ -24,7 +24,7 @@ const page = async ({
         body: async () => html`
             ${
                 await QuotationPage({
-                    orderId: 'new',
+                    quotationId: 'new',
                     searchParams,
                 })
             }

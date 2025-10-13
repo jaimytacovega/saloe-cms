@@ -13,6 +13,7 @@ const submit = ({
     e.preventDefault()
 
     const id = form.querySelector('#id').value.trim()
+    const correlative = form.querySelector('#correlative').value.trim()
     const clientName = form.querySelector('#clientName').value.trim()
     const clientCode = form.querySelector('#clientCode').value.trim()
     const clientEmail = form.querySelector('#clientEmail').value.trim()
@@ -38,7 +39,7 @@ const submit = ({
     const type = form.querySelector('#type').value.trim()
     const status = form.querySelector('#status').value.trim()
 
-    const order = {
+    const quotation = {
         id,
         client: {
             name: clientName,
@@ -55,7 +56,16 @@ const submit = ({
         promotionIds,
         type,
         status,
-        keywords: keywords({ keys: [clientName, clientCode, clientEmail, clientPhone, type, status] }),
+        keywords: keywords({ 
+            keys: [
+                correlative,
+                clientName,
+                clientCode, 
+                clientEmail, 
+                clientPhone, 
+                deliveryLocation
+            ], 
+        }),
         updatedAt: new Date(),
     }
 
@@ -68,7 +78,7 @@ const submit = ({
 
             const updateResult = await QuotationHook.useUpdate({
                 source: Source.FIREBASE,
-                data: order,
+                data: quotation,
                 ...listArguments,
             })
 

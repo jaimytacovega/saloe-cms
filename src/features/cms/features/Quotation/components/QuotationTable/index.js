@@ -3,8 +3,9 @@ import { html } from 'saloe/html'
 import Table from '@/shared/components/Table'
 
 import { Source } from '@/shared/utils/constants'
-import { searchParamsToListArguments } from '@/shared/services/DatabaseService'
+import { queryBySearchParams } from '@/shared/services/DatabaseService'
 import { getCMSCorrelative, lastUpdatedMessage } from '@/shared/utils/utils'
+import { QUOTATION_TYPE_LABELS, QUOTATION_STATUS_LABELS } from '@/shared/repositories/QuotationRepository'
 
 import * as QuotationHook from '@/shared/hooks/QuotationHook'
 
@@ -29,32 +30,41 @@ const QuotationTableRow = ({
 }
 
 const QuotationTable = async ({
-    orderId,
+    quotationId,
     searchParams,
     createUrl,
     listUrl,
 }) => {
-    const listArguments = searchParamsToListArguments({ searchParams })
-    const { data: orders, isCached } = await QuotationHook.useList({
-        source: Source.FIREBASE,
-        pageSize: 20,
-        ...listArguments,
-        ttl: 60_000,
-    })
+    // const listArguments = searchParamsToListArguments({ searchParams })
+    // const { data: quotations } = await QuotationHook.useList({
+    //     source: Source.FIREBASE,
+    //     pageSize: 20,
+    //     ...listArguments,
+    //     ttl: 60_000,
+    // })
 
-    console.log('orders', orders)
-    console.log('isCached', isCached)
+    const { data: quotations } = await queryBySearchParams({
+        query: ({ listArguments }) => {
+            return QuotationHook.useList({
+                source: Source.FIREBASE,
+                pageSize: 20,
+                ...listArguments,
+                ttl: 60_000,
+            })
+        },
+        searchParams,
+    })
 
     return html`
         ${
             Table({
-                rows: orders.map((order) => QuotationTableRow({
-                    id: order.id,
-                    name: `RUC: ${order.client.code} - ${order.client.name}`,
-                    correlative: getCMSCorrelative({ collectionName: 'orders', count: order.count }),
-                    createdAt: order.createdAt,
-                    updatedAt: order.updatedAt,
-                    toggled: order.id === orderId,
+                rows: quotations.map((quotation) => QuotationTableRow({
+                    id: quotation.id,
+                    name: `RUC: ${quotation.client.code} - ${quotation.client.name}`,
+                    correlative: `${getCMSCorrelative({ collectionName: 'quotations', count: quotation.count })}&nbsp;&nbsp;-&nbsp;&nbsp;Tipo: ${QUOTATION_TYPE_LABELS[quotation.type]}&nbsp;&nbsp;-&nbsp;&nbsp;Estado: ${QUOTATION_STATUS_LABELS[quotation.status]}`,
+                    createdAt: quotation.createdAt,
+                    updatedAt: quotation.updatedAt,
+                    toggled: quotation.id === quotationId,
                     searchParams,
                     listUrl,
                 })),

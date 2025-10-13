@@ -14,7 +14,7 @@ const page = async ({
 }) => {
     const url = new URL(request?.url)
     const match = urlPattern?.exec(url?.href)
-    const orderId = match?.pathname?.groups?.id
+    const quotationId = match?.pathname?.groups?.id
 
     const searchParams = new URL(request.url).searchParams
     const { response: redirectResponse } = redirectIfMissingSearchParams({ request, searchParams })
@@ -29,7 +29,7 @@ const page = async ({
         body: async () => html`
             ${
                 await QuotationPage({
-                    orderId,
+                    quotationId,
                     searchParams,
                 })
             }
