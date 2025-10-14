@@ -24,7 +24,6 @@ const AddSubCategorySchema = z.object({
     image: z.instanceof(File, 'La imagen es obligatoria'),
     categoryIds: z.array(z.string()).optional(),
     seoKeywords: z.string().trim().optional(),
-    keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
     createdAt: z.date(),
     updatedAt: z.date(),
 })

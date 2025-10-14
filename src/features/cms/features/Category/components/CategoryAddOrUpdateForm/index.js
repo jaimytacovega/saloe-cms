@@ -56,13 +56,12 @@ const CategoryAddOrUpdateForm = async ({
         promotionListResult.status === 'rejected'
     ) return html`error`
 
-    const { data: category, isCached } = categoryGetResult.value
+    const { data: category } = categoryGetResult.value
     const { data: subCategories } = subCategoryListResult.value
     const { data: brands } = brandListResult.value
     const { data: promotions } = promotionListResult.value
 
-    console.log('category =', category)
-    console.log('isCached =', isCached)
+    const correlative = getCMSCorrelative({ collectionName: 'categories', count: category?.count ?? '' })
 
     return Boolean(category)
         ? html`
@@ -73,18 +72,29 @@ const CategoryAddOrUpdateForm = async ({
                         ${
                             categoryId === 'new'
                                 ? 'Nueva categoría'
-                                : `${getCMSCorrelative({ collectionName: 'categories', count: category.count })}`
+                                : correlative
                         }
                     </h2>
                 </header>
                 <div class="form__scroller">
                     <fieldset columns="1">
                         ${
-                            Input({
-                                id: 'id',
-                                value: categoryId,
-                                type: 'hidden',
-                            })
+                            categoryId === 'new'
+                                ? ''
+                                : Input({
+                                    id: 'id',
+                                    value: categoryId,
+                                    type: 'hidden',
+                                })
+                        }
+                        ${
+                            categoryId === 'new'
+                                ? ''
+                                : Input({
+                                    id: 'correlative',
+                                    value: correlative,
+                                    type: 'hidden',
+                                })
                         }
                         ${
                             Input({

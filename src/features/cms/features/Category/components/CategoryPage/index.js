@@ -7,6 +7,7 @@ import CategoryTable from '@/features/cms/features/Category/components/CategoryT
 import CategoryAddOrUpdateForm from '@/features/cms/features/Category/components/CategoryAddOrUpdateForm'
 import CategoryDeleteDialog from '@/features/cms/features/Category/components/CategoryDeleteDialog'
 import NotFoundItem from '@/features/cms/components/NotFoundItem'
+import CategoryToolboxActions from '@/features/cms/features/Category/components/CategoryToolboxActions'
 
 
 const CategoryPage = async ({
@@ -36,6 +37,10 @@ const CategoryPage = async ({
                             createUrl,
                             listUrl,
                             title,
+                            actions: await CategoryToolboxActions({
+                                searchParams,
+                                createUrl,
+                            })
                         })
                     }
                 `,

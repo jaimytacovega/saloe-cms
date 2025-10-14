@@ -3,6 +3,7 @@ import * as StorageService from '@/shared/services/StorageService'
 
 import * as Category_SubCategoryRepository from '@/shared/repositories/Category_SubCategoryRepository'
 import { Operators } from '@/shared/services/DatabaseService'
+import { keywords, getCMSCorrelative } from '@/shared/utils/utils'
 
 
 const storagePath = ({
@@ -112,6 +113,8 @@ const add = async ({
                     collectionName: 'categories',
                 })
 
+                const correlative = getCMSCorrelative({ collectionName: 'categories', count })
+
                 const { subCategoryIds, ...rest } = data
 
                 const category = {
@@ -119,6 +122,13 @@ const add = async ({
                     image: imageStorageResult.data,
                     catalogs: catalogsStorageResults.data,
                     count,
+                    keywords: keywords({ 
+                        keys: [
+                            correlative,
+                            data.name,
+                            data.description,
+                        ] 
+                    }),
                 }
                 
                 await Promise.all(

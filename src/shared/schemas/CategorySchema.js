@@ -28,7 +28,6 @@ const AddCategorySchema = z.object({
     brandIds: z.array(z.string()).optional(),
     promotionIds: z.array(z.string()).optional(),
     catalogs: z.array(z.instanceof(File)).optional(),
-    keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
     createdAt: DateSchema,
     updatedAt: DateSchema,
 })  

@@ -22,7 +22,6 @@ const AddPromotionSchema = z.object({
     description: z.string().trim().optional(),
     image: z.instanceof(File, 'La imagen es obligatoria'),
     brandId: z.string().min(1, 'El id de la marca es obligatorio').trim(),
-    keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
     createdAt: DateSchema,
     updatedAt: DateSchema,
 })

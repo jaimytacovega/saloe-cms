@@ -2,7 +2,6 @@ import * as CategoryHook from '@/shared/hooks/CategoryHook'
 
 import * as Form from '@/shared/components/Form'
 import { Source } from '@/shared/utils/constants'
-import { keywords } from '@/shared/utils/utils'
 import { searchParamsToListArguments } from '@/shared/services/DatabaseService'
 
 
@@ -29,7 +28,6 @@ const submit = ({
         promotionIds,
         catalogs,
         image,
-        keywords: keywords({ keys: [name, description] }),
         createdAt: now,
         updatedAt: now,
     }

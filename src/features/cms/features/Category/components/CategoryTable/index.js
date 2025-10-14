@@ -3,7 +3,7 @@ import { html } from 'saloe/html'
 import Table from '@/shared/components/Table'
 
 import { Source } from '@/shared/utils/constants'
-import { searchParamsToListArguments } from '@/shared/services/DatabaseService'
+import { queryBySearchParams } from '@/shared/services/DatabaseService'
 import { getCMSCorrelative, lastUpdatedMessage } from '@/shared/utils/utils'
 
 import * as CategoryHook from '@/shared/hooks/CategoryHook'
@@ -34,16 +34,17 @@ const CategoryTable = async ({
     createUrl,
     listUrl,
 }) => {
-    const listArguments = searchParamsToListArguments({ searchParams })
-    const { data: categories, isCached } = await CategoryHook.useList({
-        source: Source.FIREBASE,
-        pageSize: 20,
-        ...listArguments,
-        ttl: 60_000,
+    const { data: categories } = await queryBySearchParams({
+        query: ({ listArguments }) => {
+            return CategoryHook.useList({
+                source: Source.FIREBASE,
+                pageSize: 20,
+                ...listArguments,
+                ttl: 60_000,
+            })
+        },
+        searchParams,
     })
-
-    console.log('categories', categories)
-    console.log('isCached', isCached)
 
     return html`
         ${
