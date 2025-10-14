@@ -3,7 +3,7 @@ import { html } from 'saloe/html'
 import Table from '@/shared/components/Table'
 
 import { Source } from '@/shared/utils/constants'
-import { searchParamsToListArguments } from '@/shared/services/DatabaseService'
+import { queryBySearchParams } from '@/shared/services/DatabaseService'
 import { getCMSCorrelative, lastUpdatedMessage } from '@/shared/utils/utils'
 
 import * as BrandHook from '@/shared/hooks/BrandHook'
@@ -34,16 +34,17 @@ const BrandTable = async ({
     createUrl,
     listUrl,
 }) => {
-    const listArguments = searchParamsToListArguments({ searchParams })
-    const { data: brands, isCached } = await BrandHook.useList({
-        source: Source.FIREBASE,
-        pageSize: 20,
-        ...listArguments,
-        ttl: 60_000,
+    const { data: brands } = await queryBySearchParams({
+        query: ({ listArguments }) => {
+            return BrandHook.useList({
+                source: Source.FIREBASE,
+                pageSize: 20,
+                ...listArguments,
+                ttl: 60_000,
+            })
+        },
+        searchParams,
     })
-
-    console.log('brands', brands)
-    console.log('isCached', isCached)
 
     return html`
         ${

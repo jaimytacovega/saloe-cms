@@ -35,14 +35,6 @@ const QuotationTable = async ({
     createUrl,
     listUrl,
 }) => {
-    // const listArguments = searchParamsToListArguments({ searchParams })
-    // const { data: quotations } = await QuotationHook.useList({
-    //     source: Source.FIREBASE,
-    //     pageSize: 20,
-    //     ...listArguments,
-    //     ttl: 60_000,
-    // })
-
     const { data: quotations } = await queryBySearchParams({
         query: ({ listArguments }) => {
             return QuotationHook.useList({

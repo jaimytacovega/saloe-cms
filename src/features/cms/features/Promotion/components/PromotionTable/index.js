@@ -4,8 +4,8 @@ import Table from '@/shared/components/Table'
 
 import * as PromotionHook from '@/shared/hooks/PromotionHook'
 import { Source } from '@/shared/utils/constants'
-import { Operators } from '@/shared/services/DatabaseService'
 import { getCMSCorrelative, lastUpdatedMessage } from '@/shared/utils/utils'
+import { queryBySearchParams } from '@/shared/services/DatabaseService'
 
 
 const PromotionTableRow = ({
@@ -33,25 +33,17 @@ const PromotionTable = async ({
     createUrl,
     listUrl,
 }) => {
-    const search = searchParams?.get('search')
-    const filters = search
-        ? [
-            {
-                field: 'keywords',
-                operator: Operators.Contains,
-                value: search,
-            }
-        ]
-        : []
-
-    const { data: promotions, isCached } = await PromotionHook.useList({
-        source: Source.FIREBASE,
-        pageSize: 20,
-        filters,
-        ttl: 10_000,
+    const { data: promotions } = await queryBySearchParams({
+        query: ({ listArguments }) => {
+            return PromotionHook.useList({
+                source: Source.FIREBASE,
+                pageSize: 20,
+                ...listArguments,
+                ttl: 60_000,
+            })
+        },
+        searchParams,
     })
-
-    console.log({ promotions, isCached })
 
     return html`
         ${

@@ -12,7 +12,7 @@ const PromotionFilterDropdown = async ({
     searchParams,
 }) => {
     const listArguments = searchParamsToListArguments({ searchParams })
-    const brandIdsMap = (listArguments.filters?.find((filter) => filter.field === 'brandIds')?.value ?? []).reduce((acc, brandId) => {
+    const brandIdsMap = (listArguments.filters?.find((filter) => filter.field === 'brandId')?.value ?? []).reduce((acc, brandId) => {
         acc.set(brandId, true)
         return acc
     }, new Map())
@@ -50,10 +50,10 @@ const PromotionFilterDropdown = async ({
                         return html`
                             ${
                                 Input({
-                                    id: `brandIds-${brand.id}`,
+                                    id: `brandId-${brand.id}`,
                                     label: brand.name,
                                     type: 'checkbox',
-                                    name: 'brandIds',
+                                    name: 'brandId',
                                     value: brand.id,
                                     reverse: true,
                                     checked: Boolean(brandIdsMap.get(brand.id)),

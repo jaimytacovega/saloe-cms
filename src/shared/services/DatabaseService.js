@@ -14,6 +14,11 @@ const Operators = {
     ContainsAny: 'array-contains-any',
 }
 
+const OperatorSymbols = {
+    In: '{}',
+    ContainsAny: '[]',
+}
+
 const list = ({
     source,
     collectionName,
@@ -322,11 +327,15 @@ const searchParamsToListArguments = ({
             case 'filter':
                 value.split(',').forEach((filter) => {
                     const [field, rawValue] = filter.split(':')
-                    const isValueArray = rawValue.startsWith('[') && rawValue.endsWith(']')
+                    const isContainsAnyValueArray = rawValue.startsWith(OperatorSymbols.ContainsAny.at(0)) && rawValue.endsWith(OperatorSymbols.ContainsAny.at(1))
+                    const isInValueArray = rawValue.startsWith(OperatorSymbols.In.at(0)) && rawValue.endsWith(OperatorSymbols.In.at(1))
+                    const isValueArray = isContainsAnyValueArray || isInValueArray
 
-                    const operator = isValueArray 
+                    const operator = isContainsAnyValueArray 
                         ? Operators.ContainsAny 
-                        : Operators.EqualTo
+                        : isInValueArray 
+                            ? Operators.In 
+                            : Operators.EqualTo
 
                     const value = isValueArray 
                         ? rawValue.slice(1, -1).split(';') 
@@ -352,18 +361,39 @@ const searchParamsToListArguments = ({
     }
 }
 
-const getUrlByFilterForm = ({
+const getFilterParamFromForm = ({
+    filterKeys,
+    symbol,
     form,
-    filterKeys = [],
-    url,
 }) => {
     const filterParam = filterKeys.map((filterKey) => {
         const filterValue = [...form.querySelectorAll(`input[name="${filterKey}"]:checked`)].map((input) => input.value)
         const filterValueParam = filterValue.length > 0 
-            ? `${filterKey}:[${filterValue.join(';')}]` 
+            ? `${filterKey}:${symbol.at(0)}${filterValue.join(';')}${symbol.at(1)}` 
             : ''
         return filterValueParam
     }).filter((param) => param !== '').join(',')
+    return filterParam
+}
+
+const getUrlByFilterForm = ({
+    form,
+    filterContainsAnyKeys = [],
+    filterInKeys = [],
+    url,
+}) => {
+    const filterParam = [
+        getFilterParamFromForm({
+            filterKeys: filterContainsAnyKeys,
+            symbol: OperatorSymbols.ContainsAny,
+            form,
+        }),
+        getFilterParamFromForm({
+            filterKeys: filterInKeys,
+            symbol: OperatorSymbols.In,
+            form,
+        }),
+    ].filter((param) => param !== '').join(',')
 
     filterParam === ''
         ? url.searchParams.delete('filter')
