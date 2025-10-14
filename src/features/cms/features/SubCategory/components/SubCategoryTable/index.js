@@ -3,7 +3,7 @@ import { html } from 'saloe/html'
 import Table from '@/shared/components/Table'
 
 import { Source } from '@/shared/utils/constants'
-import { searchParamsToListArguments } from '@/shared/services/DatabaseService'
+import { queryBySearchParams } from '@/shared/services/DatabaseService'
 import { getCMSCorrelative, lastUpdatedMessage } from '@/shared/utils/utils'
 
 import * as SubCategoryHook from '@/shared/hooks/SubCategoryHook'
@@ -34,16 +34,17 @@ const SubCategoryTable = async ({
     createUrl,
     listUrl,
 }) => {
-    const listArguments = searchParamsToListArguments({ searchParams })
-    const { data: subCategories, isCached } = await SubCategoryHook.useList({
-        source: Source.FIREBASE,
-        pageSize: 20,
-        ...listArguments,
-        ttl: 60_000,
+    const { data: subCategories } = await queryBySearchParams({
+        query: ({ listArguments }) => {
+            return SubCategoryHook.useList({
+                source: Source.FIREBASE,
+                pageSize: 20,
+                ...listArguments,
+                ttl: 60_000,
+            })
+        },
+        searchParams,
     })
-
-    console.log('subCategories', subCategories)
-    console.log('isCached', isCached)
 
     return html`
         ${

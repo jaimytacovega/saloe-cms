@@ -12,6 +12,7 @@ const submit = ({
     e.preventDefault()
 
     const id = form.querySelector('#id').value.trim()
+    const correlative = form.querySelector('#correlative').value.trim()
     const name = form.querySelector('#name').value.trim()
     const description = form.querySelector('#description').value.trim()
     const imagePath = form.querySelector('#imagePath').value.trim()
@@ -27,7 +28,13 @@ const submit = ({
         imagePath,
         categoryIds,
         seoKeywords,
-        keywords: keywords({ keys: [name, description, seoKeywords] }),
+        keywords: keywords({ 
+            keys: [
+                correlative,
+                name, 
+                description, 
+            ], 
+        }),
         updatedAt: new Date(),
     }
 

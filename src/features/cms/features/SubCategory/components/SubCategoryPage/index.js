@@ -7,6 +7,7 @@ import SubCategoryTable from '@/features/cms/features/SubCategory/components/Sub
 import SubCategoryAddOrUpdateForm from '@/features/cms/features/SubCategory/components/SubCategoryAddOrUpdateForm'
 import SubCategoryDeleteDialog from '@/features/cms/features/SubCategory/components/SubCategoryDeleteDialog'
 import NotFoundItem from '@/features/cms/components/NotFoundItem'
+import SubCategoryToolboxActions from '@/features/cms/features/SubCategory/components/SubCategoryToolboxActions'
 
 
 const SubCategoryPage = async ({
@@ -36,6 +37,10 @@ const SubCategoryPage = async ({
                             createUrl,
                             listUrl,
                             title,
+                            actions: await SubCategoryToolboxActions({
+                                searchParams,
+                                createUrl,
+                            })
                         })
                     }
                 `,

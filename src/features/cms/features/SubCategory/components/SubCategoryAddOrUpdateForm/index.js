@@ -42,11 +42,10 @@ const SubCategoryAddOrUpdateForm = async ({
         categoryListResult.status === 'rejected'
     ) return html`error`
 
-    const { data: subCategory, isCached } = subCategoryGetResult.value
+    const { data: subCategory } = subCategoryGetResult.value
     const { data: categories } = categoryListResult.value
 
-    console.log('subCategory =', subCategory)
-    console.log('isCached =', isCached)
+    const correlative = getCMSCorrelative({ collectionName: 'subCategories', count: subCategory?.count ?? '' })
 
     return Boolean(subCategory)
         ? html`
@@ -57,18 +56,29 @@ const SubCategoryAddOrUpdateForm = async ({
                     ${
                         subCategoryId === 'new'
                             ? 'Nueva subcategoría'
-                            : `${getCMSCorrelative({ collectionName: 'subCategories', count: subCategory.count })}`
+                            : correlative
                     }       
                     </h2>
                 </header>
                 <div class="form__scroller">
                     <fieldset columns="1">
                         ${
-                            Input({
-                                id: 'id',
-                                value: subCategoryId,
-                                type: 'hidden',
-                            })
+                            subCategoryId === 'new'
+                                ? ''
+                                : Input({
+                                    id: 'id',
+                                    value: subCategoryId,
+                                    type: 'hidden',
+                                })
+                        }
+                        ${
+                            subCategoryId === 'new'
+                                ? ''
+                                : Input({
+                                    id: 'correlative',
+                                    value: correlative,
+                                    type: 'hidden',
+                                })
                         }
                         ${
                             Input({
@@ -125,13 +135,12 @@ const SubCategoryAddOrUpdateForm = async ({
                     </fieldset>
                 </div>
                 <inputgroup>
+                    <a href="${listUrl}?${searchParams?.toString()}" class="Button PrimaryButton PrimaryGray">
+                        <img src="/img/icon/corner-up-left-black.svg" width="18" height="18" alt="go back">
+                    </a>
                     ${
                         subCategoryId === 'new'
-                            ? html`
-                                <a href="${listUrl}?${searchParams?.toString()}" class="Button PrimaryButton PrimaryGray">
-                                    <img src="/img/icon/corner-up-left-black.svg" width="18" height="18" alt="go back">
-                                </a>
-                            `
+                            ? ''
                             : html`
                                 <button popovertarget="DeleteSubCategoryDialog-${subCategoryId}" type="button" class="Button PrimaryButton PrimaryGray">
                                     <img src="/img/icon/trash-black.svg" width="18" height="18" alt="trash">
