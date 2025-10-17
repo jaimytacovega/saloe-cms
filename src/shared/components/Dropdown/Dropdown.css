@@ -14,13 +14,14 @@
         border-radius: 8px;
         padding-inline: 0;
         padding-block: 0;
+        transition: display .3s;
 
         &:popover-open {
-            transform: translateY(0);
+            transform: none;
             opacity: 1;
     
             @starting-style {
-                transform: translateY(20px);
+                transform: none;
                 opacity: 0;
             }
         }
