@@ -4,16 +4,26 @@
     dialog{
         position: absolute;
         top: .5ch;
-        left: unset;
+        left: 0;
         transform: none;
-        inline-size: auto;
-        min-inline-size: 120px;
+        inline-size: 200px;
+        min-inline-size: 200px;
         max-inline-size: 240px;
         position-area: block-end span-inline-end;
         border: 1px solid var(--color-gray-2);
         border-radius: 8px;
         padding-inline: 0;
         padding-block: 0;
+
+        &:popover-open {
+            transform: translateY(0);
+            opacity: 1;
+    
+            @starting-style {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+        }
 
         &::backdrop{
             display: none;
