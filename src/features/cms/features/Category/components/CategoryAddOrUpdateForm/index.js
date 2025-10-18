@@ -188,13 +188,12 @@ const CategoryAddOrUpdateForm = async ({
                     </fieldset>
                 </div>
                 <inputgroup>
+                    <a href="${listUrl}?${searchParams?.toString()}" class="Button PrimaryButton PrimaryGray">
+                        <img src="/img/icon/corner-up-left-black.svg" width="18" height="18" alt="go back">
+                    </a>
                     ${
                         categoryId === 'new'
-                            ? html`
-                                <a href="${listUrl}?${searchParams?.toString()}" class="Button PrimaryButton PrimaryGray">
-                                    <img src="/img/icon/corner-up-left-black.svg" width="18" height="18" alt="go back">
-                                </a>
-                            `
+                            ? ''
                             : html`
                                 <button popovertarget="DeleteCategoryDialog-${categoryId}" type="button" class="Button PrimaryButton PrimaryGray">
                                     <img src="/img/icon/trash-black.svg" width="18" height="18" alt="trash">

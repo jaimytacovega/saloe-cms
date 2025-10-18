@@ -13,6 +13,7 @@ import ProductToolboxActions from '@/features/cms/features/Product/components/Pr
 const ProductPage = async ({
     productId,
     searchParams,
+    pathname,
 } = { 
     productId: null, 
     searchParams: null,
@@ -69,6 +70,7 @@ const ProductPage = async ({
                         <h5>Selecciona una marca para ver detalles</h5>
                     `,
                 }),
+                pathname,
             })
         }
     `

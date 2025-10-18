@@ -11,7 +11,7 @@ const page = async ({
     env, 
     cookies,
 }) => {
-    const searchParams = new URL(request.url).searchParams
+    const { searchParams, pathname } = new URL(request?.url)
     const { response: redirectResponse } = redirectIfMissingSearchParams({ request, searchParams })
     if (redirectResponse) return { response: redirectResponse }
 
@@ -25,6 +25,7 @@ const page = async ({
             ${
                 await ProductPage({
                     searchParams,
+                    pathname,
                 })
             }
         `,

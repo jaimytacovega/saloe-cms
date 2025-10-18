@@ -18,6 +18,15 @@ const redirectIfMissingSearchParams = ({ request,searchParams }) => {
     return { response: null }
 }
 
+const isListUrl = ({
+    pathname,
+    listUrl,
+}) => {
+    const parts = pathname.split('/')
+    return `${parts.at(0)}/${parts.at(1)}/${parts.at(2)}` === listUrl
+}
+
 export {
     redirectIfMissingSearchParams,
+    isListUrl,
 }

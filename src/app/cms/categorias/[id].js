@@ -13,13 +13,13 @@ const page = async ({
     urlPattern,
 }) => {
     const url = new URL(request?.url)
+    const { searchParams, pathname } = url
     const match = urlPattern?.exec(url?.href)
     const categoryId = match?.pathname?.groups?.id
-
-    const searchParams = new URL(request.url).searchParams
+    
     const { response: redirectResponse } = redirectIfMissingSearchParams({ request, searchParams })
     if (redirectResponse) return { response: redirectResponse }
-    
+
     return stream({
         head: () => html`
             ${
@@ -31,6 +31,7 @@ const page = async ({
                 await CategoryPage({
                     categoryId,
                     searchParams,
+                    pathname,
                 })
             }
         `,

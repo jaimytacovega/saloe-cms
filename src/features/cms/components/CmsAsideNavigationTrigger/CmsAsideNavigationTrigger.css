@@ -1,0 +1,22 @@
+.CmsAsideNavigationTrigger{
+    & > img[open]{
+        display: block;
+    }
+
+    & > img[close]{
+        display: none;
+    }
+}
+
+body:has(.CmsAsideNavigation > dialog:popover-open){
+    .CmsAsideNavigationTrigger{
+
+        & > img[open]{
+            display: none;
+        }
+
+        & > img[close]{
+            display: block;
+        }
+    }
+}

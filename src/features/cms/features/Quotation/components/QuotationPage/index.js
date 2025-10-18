@@ -13,6 +13,7 @@ import QuotationToolboxActions from '@/features/cms/features/Quotation/component
 const QuotationPage = async ({
     quotationId,
     searchParams,
+    pathname,
 } = { 
     quotationId: null, 
     searchParams: null,
@@ -69,6 +70,7 @@ const QuotationPage = async ({
                         <h5>Selecciona una marca para ver detalles</h5>
                     `,
                 }),
+                pathname,
             })
         }
     `

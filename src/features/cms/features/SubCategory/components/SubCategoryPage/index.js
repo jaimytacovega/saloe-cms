@@ -13,6 +13,7 @@ import SubCategoryToolboxActions from '@/features/cms/features/SubCategory/compo
 const SubCategoryPage = async ({
     subCategoryId,
     searchParams,
+    pathname,
 } = { 
     subCategoryId: null, 
     searchParams: null,
@@ -69,6 +70,7 @@ const SubCategoryPage = async ({
                         <h5>Selecciona una marca para ver detalles</h5>
                     `,
                 }),
+                pathname,
             })
         }
     `

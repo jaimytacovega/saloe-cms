@@ -13,6 +13,7 @@ import CategoryToolboxActions from '@/features/cms/features/Category/components/
 const CategoryPage = async ({
     categoryId,
     searchParams,
+    pathname,
 } = { 
     categoryId: null, 
     searchParams: null,
@@ -69,6 +70,7 @@ const CategoryPage = async ({
                         <h5>Selecciona una categoría para ver detalles</h5>
                     `,
                 }),
+                pathname,
             })
         }
     `

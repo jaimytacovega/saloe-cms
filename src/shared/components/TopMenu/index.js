@@ -1,5 +1,8 @@
 import { html } from 'saloe/html'
 
+import CmsAsideNavigationTrigger from '@/features/cms/components/CmsAsideNavigationTrigger'
+
+
 const TopMenu = ({
     companyName,
 }) => {
@@ -7,9 +10,9 @@ const TopMenu = ({
         <container class="TopMenu__container">
             <menu class="TopMenu">
             <p>${companyName}</p>
-            <button class="Button PrimaryButton">
-                <img loading="lazy" src="/img/icon/menu-black.svg" width="20" height="20" alt="menu">
-            </button>
+            ${
+                CmsAsideNavigationTrigger()
+            }
             </menu>
         </container>
     `

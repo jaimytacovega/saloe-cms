@@ -13,6 +13,7 @@ import BrandToolboxActions from '@/features/cms/features/Brand/components/BrandT
 const BrandPage = async ({
     brandId,
     searchParams,
+    pathname,
 } = { 
     brandId: null, 
     searchParams: null,
@@ -26,6 +27,7 @@ const BrandPage = async ({
             await CmsPage({
                 id: brandId,
                 searchParams,
+                pathname,
                 header: html`
                     <h1>Marcas</h1>
                 `,
@@ -40,7 +42,7 @@ const BrandPage = async ({
                             actions: await BrandToolboxActions({
                                 searchParams,
                                 createUrl,
-                            })
+                            }),
                         })
                     }
                 `,

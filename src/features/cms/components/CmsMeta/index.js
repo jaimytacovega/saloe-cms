@@ -22,6 +22,8 @@ const CmsMeta = () => {
 
         <link rel="stylesheet" href="/TopMenu.css">
         <link rel="stylesheet" href="/WorkStation.css">
+        <link rel="stylesheet" href="/CmsAsideNavigation.css">
+        <link rel="stylesheet" href="/CmsAsideNavigationTrigger.css">
     `
 }
 

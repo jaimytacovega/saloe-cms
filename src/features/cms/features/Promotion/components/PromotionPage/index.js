@@ -13,6 +13,7 @@ import PromotionToolboxActions from '@/features/cms/features/Promotion/component
 const PromotionPage = async ({
     promotionId,
     searchParams,
+    pathname,
 } = { 
     promotionId: null, 
     searchParams: null,
@@ -69,6 +70,7 @@ const PromotionPage = async ({
                         <h5>Selecciona una promoción para ver detalles</h5>
                     `,
                 }),
+                pathname,
             })
         }
     `
