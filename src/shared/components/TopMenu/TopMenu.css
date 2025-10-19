@@ -1,5 +1,5 @@
 container.TopMenu__container{
-
+    grid-area: TopMenu;
 }
 
 .TopMenu{

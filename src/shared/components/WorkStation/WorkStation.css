@@ -1,5 +1,6 @@
 container.WorkStation__container{
     container: workstation / inline-size;
+    grid-area: WorkStation;
     display: flex;
     flex-flow: column wrap;
 }
@@ -19,19 +20,22 @@ main > container.WorkStation__container {
     gap: 8px;
     flex-grow: 1;
 
-    @container workstation (min-inline-size: 1000px){
+    @container workstation (min-inline-size: 792px){
         display: grid;
-        grid-template-columns: 5fr 4fr;
+        grid-template-columns: 9fr 8fr;
         grid-template-rows: auto auto 1fr;
+        grid-template-areas:
+            "WorkStation__header WorkStation__header"
+            "WorkStation__toolbox WorkStation__toolbox"
+            "WorkStation__table WorkStation__form";
         gap: 8px 0;
     }
 
     > header{
         padding-inline: 16px;
 
-        @container workstation (min-inline-size: 1000px){
-            grid-column: 1 / -1;
-            grid-row: 1 / 2;
+        @container workstation (min-inline-size: 792px){
+            grid-area: WorkStation__header;
         }
 
         > h1{
@@ -46,9 +50,8 @@ main > container.WorkStation__container {
         flex-flow: column wrap;
         gap: 8px;
 
-        @container workstation (min-inline-size: 1000px){
-            grid-column: 1 / -1;
-            grid-row: 2 / 3;
+        @container workstation (min-inline-size: 792px){
+            grid-area: WorkStation__toolbox;
         }
 
         > form{
@@ -67,10 +70,9 @@ main > container.WorkStation__container {
         &:has(~ .WorkStation__form > :not(table[empty])){
             display: none;
 
-            @container workstation (min-inline-size: 1000px){
+            @container workstation (min-inline-size: 792px){
                 display: flex;
-                grid-column: 1 / 2;
-                grid-row: 3 / 4;
+                grid-area: WorkStation__table;
             }
         }
     }
@@ -86,14 +88,15 @@ main > container.WorkStation__container {
         &:has(> table[empty]){
             display: none;
 
-            @container workstation (min-inline-size: 1000px){
+            @container workstation (min-inline-size: 792px){
                 display: flex;
             }
         }
 
-        @container workstation (min-inline-size: 1000px){
+        @container workstation (min-inline-size: 792px){
             border-inline-start: 1px solid var(--color-gray-3);
             flex-grow: 1;
+            grid-area: WorkStation__form;
         }
 
         > form{

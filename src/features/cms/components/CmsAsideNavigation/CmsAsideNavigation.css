@@ -1,9 +1,12 @@
 .CmsAsideNavigation{
+    grid-area: CmsAsideNavigation;
+
     & > dialog{
         top: 52px;
         left: 12px;
         inline-size: calc(100% - 24px);
         block-size: calc(100% - 52px - 12px);
+        max-inline-size: 100%;
         border-radius: 8px;
         border: 1px solid var(--color-gray-3);
         padding-inline: 12px;
@@ -46,6 +49,24 @@
                     background: var(--color-gray-3);
                 }
             }
+        }
+    }
+}
+
+@media (min-width: 1024px) {
+    .CmsAsideNavigation{
+        & > dialog{
+            position: relative;
+            top: unset;
+            left: unset;
+            opacity: 1;
+            min-inline-size: 0;
+            inline-size: 100%;
+            border: none;
+            background: none;
+            padding-inline: 0;
+            padding-block: 4px;
+            display: flex;
         }
     }
 }
