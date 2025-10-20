@@ -55,7 +55,7 @@
 
 @media (min-width: 1024px) {
     .CmsAsideNavigation{
-        & > dialog{
+        & > dialog{            
             position: relative;
             top: unset;
             left: unset;
@@ -65,8 +65,21 @@
             border: none;
             background: none;
             padding-inline: 0;
-            padding-block: 4px;
+            padding-block: 10px;
             display: flex;
+            gap: 18px;
+
+            &:popover-open {
+                inline-size: var(--cmsasidenavigation-inline-size);
+                top: 52px;
+                left: 12px;
+                transition: none;
+            }
+
+            & > h6{
+                font-size: var(--font-size-xs);
+                background: none !important;
+            }
         }
     }
 }

@@ -10,13 +10,24 @@
 
 body:has(.CmsAsideNavigation > dialog:popover-open){
     .CmsAsideNavigationTrigger{
-
         & > img[open]{
             display: none;
         }
 
         & > img[close]{
             display: block;
+        }
+    }
+}
+
+@media (min-width: 1024px) {
+    .CmsAsideNavigationTrigger{
+        & > img[open]{
+            display: block !important;
+        }
+
+        & > img[close]{
+            display: none !important;
         }
     }
 }

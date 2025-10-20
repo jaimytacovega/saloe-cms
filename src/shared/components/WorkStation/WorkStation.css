@@ -21,13 +21,13 @@ main > container.WorkStation__container {
     flex-grow: 1;
 
     @container workstation (min-inline-size: 792px){
+        padding-block: 10px 0;
         display: grid;
-        grid-template-columns: 9fr 8fr;
-        grid-template-rows: auto auto 1fr;
+        grid-template-columns: 8fr 1fr 8fr;
+        grid-template-rows: auto 1fr;
         grid-template-areas:
-            "WorkStation__header WorkStation__header"
-            "WorkStation__toolbox WorkStation__toolbox"
-            "WorkStation__table WorkStation__form";
+            "WorkStation__header WorkStation__toolbox WorkStation__toolbox"
+            "WorkStation__table WorkStation__table WorkStation__form";
         gap: 8px 0;
     }
 
@@ -36,6 +36,7 @@ main > container.WorkStation__container {
 
         @container workstation (min-inline-size: 792px){
             grid-area: WorkStation__header;
+            align-self: center;
         }
 
         > h1{
@@ -51,11 +52,35 @@ main > container.WorkStation__container {
         gap: 8px;
 
         @container workstation (min-inline-size: 792px){
+            padding-inline: 0 16px;
+            padding-block: 0;
             grid-area: WorkStation__toolbox;
+            flex-flow: row wrap;
         }
 
         > form{
             inline-size: 100%;
+
+            @container workstation (min-inline-size: 792px){
+                inline-size: auto;
+                flex-grow: 1;
+            }
+
+            > inputgroup{
+                > input[type="search"]{
+                    @container workstation (min-inline-size: 792px){
+                        padding-block: 7.5px;
+                    }
+                }
+            }
+        }
+
+        > inputgroup{
+            > hr{
+                @container workstation (min-inline-size: 792px){
+                    display: none;
+                }
+            }
         }
     }
 
@@ -65,14 +90,17 @@ main > container.WorkStation__container {
         padding-block: 2px 0;
         display: flex;
         flex-flow: column wrap;
-        flex-grow: 1;  
+        flex-grow: 1; 
+        
+        @container workstation (min-inline-size: 792px){
+            grid-area: WorkStation__table;
+        }
         
         &:has(~ .WorkStation__form > :not(table[empty])){
             display: none;
 
             @container workstation (min-inline-size: 792px){
                 display: flex;
-                grid-area: WorkStation__table;
             }
         }
     }

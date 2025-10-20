@@ -25,6 +25,8 @@
     --font-size-h3: 1.667em;
     --font-size-h2: 2em;
     --font-size-h1: 2.333em;
+
+    --cmsasidenavigation-inline-size: 200px;
 }
 
 @font-face {
@@ -149,7 +151,7 @@ main{
 @media (min-width: 1024px) {
     main{
         display: grid;
-        grid-template-columns: 200px auto;
+        grid-template-columns: var(--cmsasidenavigation-inline-size) auto;
         grid-template-rows: auto 1fr;
         grid-template-areas:
             "TopMenu TopMenu"

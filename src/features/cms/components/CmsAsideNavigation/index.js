@@ -13,7 +13,10 @@ const CmsAsideNavigation = ({
                 Dialog({
                     id: 'cms-aside-navigation',
                     children: html`
-                        <h6 class="Button PrimaryButton PrimaryGray">Gestor de datos</h6>
+                        <h6 class="Button PrimaryButton PrimaryGray">
+                            <img loading="lazy" src="/img/icon/database-black.svg" width="20" height="20" alt="brand">
+                            <span>GESTOR DE DATOS</span>
+                        </h6>
                         <nav>
                             <a class="Button" href="/cms/marcas"${isListUrl({ pathname, listUrl: '/cms/marcas' }) ? ' aria-current="page"' : ''}>
                                 <img loading="lazy" src="/img/icon/star-gray-1.svg" width="20" height="20" alt="brand"/>
