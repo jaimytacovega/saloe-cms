@@ -23,7 +23,7 @@ main > container.WorkStation__container {
     @container workstation (min-inline-size: 792px){
         padding-block: 10px 0;
         display: grid;
-        grid-template-columns: 8fr 1fr 8fr;
+        grid-template-columns: 7fr 2fr 8fr;
         grid-template-rows: auto 1fr;
         grid-template-areas:
             "WorkStation__header WorkStation__toolbox WorkStation__toolbox"
