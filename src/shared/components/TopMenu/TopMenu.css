@@ -1,4 +1,5 @@
 container.TopMenu__container{
+    inline-size: 100%;
     container: topmenu / inline-size;
     grid-area: TopMenu;
 }
@@ -13,7 +14,7 @@ container.TopMenu__container{
         font-family: var(--font-family-semibold);
         color: var(--color-black);
 
-        @container topmenu (min-inline-size: 1011px){
+        @container topmenu (min-inline-size: 1000px){
             padding-inline: 12px 0;
         }
     }
