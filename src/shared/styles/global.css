@@ -159,3 +159,9 @@ main{
         gap: 8px;
     }
 }
+
+@media (min-width: 1280px) {
+    main{
+        gap: 8px 16px;
+    }
+}

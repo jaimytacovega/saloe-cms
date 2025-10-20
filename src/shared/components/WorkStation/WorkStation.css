@@ -31,12 +31,21 @@ main > container.WorkStation__container {
         gap: 8px 0;
     }
 
+    @container workstation (min-inline-size: 1040px){
+        padding-block: 12px 0;
+        gap: 10px 0;
+    }
+
     > header{
         padding-inline: 16px;
 
         @container workstation (min-inline-size: 792px){
             grid-area: WorkStation__header;
             align-self: center;
+        }
+
+        @container workstation (min-inline-size: 1040px){
+            padding-inline: 24px;
         }
 
         > h1{
@@ -56,6 +65,10 @@ main > container.WorkStation__container {
             padding-block: 0;
             grid-area: WorkStation__toolbox;
             flex-flow: row wrap;
+        }
+
+        @container workstation (min-inline-size: 1040px){
+            padding-inline: 0 24px;
         }
 
         > form{
@@ -95,6 +108,14 @@ main > container.WorkStation__container {
         @container workstation (min-inline-size: 792px){
             grid-area: WorkStation__table;
         }
+
+        > table{
+            padding-block: 8px;
+
+            @container workstation (min-inline-size: 1040px){
+                padding-block: 10px;
+            }
+        }
         
         &:has(~ .WorkStation__form > :not(table[empty])){
             display: none;
@@ -130,6 +151,10 @@ main > container.WorkStation__container {
         > form{
             padding-block: 8px;
             flex-grow: 1;
+
+            @container workstation (min-inline-size: 1040px){
+                padding-block: 22px 12px;
+            }
         }
     }
 }

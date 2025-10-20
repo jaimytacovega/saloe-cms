@@ -112,3 +112,13 @@ inputgroup {
         font-size: var(--font-size-sm);
     }
 }
+
+@media (min-width: 1280px) {
+    form{
+        gap: 12px;
+    }
+
+    fieldset{
+        gap: 12px;
+    }
+}
