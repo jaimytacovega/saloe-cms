@@ -24,6 +24,8 @@ import * as CmsQuotationsPage from '@/app/cms/cotizaciones/page'
 import * as CmsQuotationsCreatePage from '@/app/cms/cotizaciones/crear/page'
 import * as CmsQuotationsByIdPage from '@/app/cms/cotizaciones/[id]'
 
+import * as AuthLoginPage from '@/app/auth/login/page'
+
 
 const setRouter = () => {
     addRoute({ pathname: '/cms/marcas', route: CmsBrandsPage.default })
@@ -49,6 +51,8 @@ const setRouter = () => {
     addRoute({ pathname: '/cms/cotizaciones', route: CmsQuotationsPage.default })
     addRoute({ pathname: '/cms/cotizaciones/crear', route: CmsQuotationsCreatePage.default })
     addRoute({ pathname: '/cms/cotizaciones/:id', route: CmsQuotationsByIdPage.default })
+
+    addRoute({ pathname: '/auth/login', route: AuthLoginPage.default })
 }
 
 export {

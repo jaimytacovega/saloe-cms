@@ -1,0 +1,55 @@
+main{
+    padding-block: 36px;
+    padding-inline: 12px;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+
+    & > form{
+        inline-size: 100%;
+        max-inline-size: 320px;
+
+        & > fieldset{
+            overflow-y: hidden;
+
+            & > header{
+                text-align: center;
+                padding-block: 0 16px;
+                display: flex;
+                flex-flow: column wrap;
+                gap: 16px;
+
+                & > inputgroup{
+                    justify-content: center;
+
+                    & > p{
+                        font-family: var(--font-family-semibold);
+                        color: var(--color-black);
+                    }
+                }
+
+                & > h1{
+                    font-size: var(--font-size-h3);
+                }
+            }
+
+            & > inputgroup:has(> [type="submit"]){
+                text-align: center;
+                padding-block: 16px 0;
+                gap: 1ch;
+
+                & > [type="submit"]{
+                    min-block-size: 46px;
+                }
+
+                & > p{
+                    font-family: var(--font-family-medium);
+                }
+            }
+        }
+
+        input{
+            padding-block: 14px;
+        }
+    }
+}
