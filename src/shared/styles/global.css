@@ -27,6 +27,7 @@
     --font-size-h1: 2.333em;
 
     --cmsasidenavigation-inline-size: 200px;
+    --cmsasidenavigation-block-size: calc(100% - 60px);
 }
 
 @font-face {

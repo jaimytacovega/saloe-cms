@@ -26,15 +26,6 @@ const signOut = ({
     }
 }
 
-const getCurrentUser = ({
-    source,
-}) => {
-    if (source === Source.FIREBASE) {
-        FirebaseAuthAdapter.init({ credentials: FIREBASE_CREDENTIALS })
-        return FirebaseAuthAdapter.getCurrentUser()
-    }
-}
-
 const getCredentialsFromCookies = ({
     cookies,
 }) => {
@@ -60,11 +51,17 @@ const setCredentialsInCookies = ({
     })
 }
 
+const removeCredentialsFromCookies = () => {
+    return CookieService.remove({
+        key: 'Authorization',
+    })
+}
+
 export {
     signInWithEmailAndPassword,
     signOut,
-    getCurrentUser,
 
     getCredentialsFromCookies,
     setCredentialsInCookies,
+    removeCredentialsFromCookies,
 }

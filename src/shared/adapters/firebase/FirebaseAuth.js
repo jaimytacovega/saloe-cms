@@ -42,13 +42,8 @@ const signOut = async () => {
     }
 }
 
-const getCurrentUser = () => {
-    return FirebaseAuth.getCurrentUser(auth)
-}
-
 export {
     init,
     signInWithEmailAndPassword,
     signOut,
-    getCurrentUser,
 }

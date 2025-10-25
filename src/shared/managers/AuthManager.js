@@ -30,16 +30,30 @@ const signInWithEmailAndPassword = async ({
     }
 }
 
-const signOut = () => {
-    return AuthRepository.signOut()
+const signOut = ({
+    source,
+}) => {
+    return AuthRepository.signOut({
+        source,
+    })
 }
 
-const getCurrentUser = () => {
-    return AuthRepository.getCurrentUser()
+const setCredentialsInCookies = ({
+    credentials,
+}) => {
+    return AuthRepository.setCredentialsInCookies({
+        credentials,
+    })
+}
+
+const removeCredentialsFromCookies = () => {
+    return AuthRepository.removeCredentialsFromCookies()
 }
 
 export {
     signInWithEmailAndPassword,
     signOut,
-    getCurrentUser,
+
+    setCredentialsInCookies,
+    removeCredentialsFromCookies,
 }

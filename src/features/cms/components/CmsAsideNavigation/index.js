@@ -1,6 +1,7 @@
 import { html } from 'saloe/html'
 
 import Dialog from '@/shared/components/Dialog'
+import LogoutButton from '@/features/auth/components/LogoutButton'
 import { isListUrl } from '@/features/cms/utils/utils'
 
 
@@ -42,6 +43,11 @@ const CmsAsideNavigation = ({
                                 <img loading="lazy" src="/img/icon/file-text-gray-1.svg" width="20" height="20" alt="brand"/>
                                 <span>Cotizaciones</span>
                             </a>
+                        </nav>
+                        <nav>
+                            ${
+                                LogoutButton()
+                            }
                         </nav>
                     `,
                 })

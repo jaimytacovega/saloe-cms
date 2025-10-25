@@ -1,6 +1,4 @@
 import * as AuthManager from '@/shared/managers/AuthManager'
-import * as CookieService from '@/shared/services/CookieService'
-import * as AuthService from '@/shared/services/AuthService'
 
 import { Source } from '@/shared/utils/constants'
 import * as Form from '@/shared/components/Form'
@@ -26,7 +24,7 @@ const submit = ({
 
             if (signInWithEmailAndPasswordResult?.err) throw signInWithEmailAndPasswordResult.err
 
-            AuthService.setCredentialsInCookies({
+            AuthManager.setCredentialsInCookies({
                 credentials: signInWithEmailAndPasswordResult.data.credentials,
             })
         },

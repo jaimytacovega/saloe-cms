@@ -21,16 +21,22 @@ const signOut = ({
     })
 }
 
-const getCurrentUser = ({
-    source,
+const setCredentialsInCookies = ({
+    credentials,
 }) => {
-    return AuthService.getCurrentUser({
-        source,
+    return AuthService.setCredentialsInCookies({
+        credentials,
     })
+}
+
+const removeCredentialsFromCookies = () => {
+    return AuthService.removeCredentialsFromCookies()
 }
 
 export {
     signInWithEmailAndPassword,
     signOut,
-    getCurrentUser,
+
+    setCredentialsInCookies,
+    removeCredentialsFromCookies,
 }
