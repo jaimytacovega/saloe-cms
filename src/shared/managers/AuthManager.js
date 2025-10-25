@@ -1,5 +1,6 @@
 import * as AuthRepository from '@/shared/repositories/AuthRepository'
 import { SignInWithEmailAndPasswordSchema } from '@/shared/schemas/AuthSchema'
+import { prettifyError } from '@/shared/schemas/utils/utils'
 
 
 const signInWithEmailAndPassword = async ({

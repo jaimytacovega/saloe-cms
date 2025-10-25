@@ -5,12 +5,17 @@ import CmsMeta from '@/features/cms/components/CmsMeta'
 import QuotationPage from '@/features/cms/features/Quotation/components/QuotationPage'
 import { redirectIfMissingSearchParams } from '@/features/cms/utils/utils'
 
+import * as AuthService from '@/shared/services/AuthService'
+
 
 const page = async ({ 
     request, 
     env, 
     cookies,
 }) => {
+    const { authId } = AuthService.getCredentialsFromCookies({ cookies })
+    if (!authId) return { response: Response.redirect(new URL('/auth/login', request.url)) }
+    
     const { searchParams, pathname } = new URL(request?.url)
     const { response: redirectResponse } = redirectIfMissingSearchParams({ request, searchParams })
     if (redirectResponse) return { response: redirectResponse }

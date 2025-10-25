@@ -5,6 +5,8 @@ import CmsMeta from '@/features/cms/components/CmsMeta'
 import CategoryPage from '@/features/cms/features/Category/components/CategoryPage'
 import { redirectIfMissingSearchParams } from '@/features/cms/utils/utils'
 
+import * as AuthService from '@/shared/services/AuthService'
+
 
 const page = async ({ 
     request, 
@@ -12,6 +14,9 @@ const page = async ({
     cookies,
     urlPattern,
 }) => {
+    const { authId } = AuthService.getCredentialsFromCookies({ cookies })
+    if (!authId) return { response: Response.redirect(new URL('/auth/login', request.url)) }
+    
     const url = new URL(request?.url)
     const { searchParams, pathname } = url
     const match = urlPattern?.exec(url?.href)

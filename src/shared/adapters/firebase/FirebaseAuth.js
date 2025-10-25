@@ -18,10 +18,10 @@ const signInWithEmailAndPassword = async ({
     password,
 }) => {
     try{
-        const userCredential = await FirebaseAuth.signInWithEmailAndPassword(auth, email, password)
+        const credentials = await FirebaseAuth.signInWithEmailAndPassword(auth, email, password)
         return {
             data: {
-                user: userCredential.user,
+                credentials,
             }
         }
     }catch(err){

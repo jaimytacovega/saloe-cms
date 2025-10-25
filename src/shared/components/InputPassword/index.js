@@ -6,7 +6,15 @@ const InputPassword = () => {
         <inputgroup>
             <label for="password">Contraseña</label>
             <inputgroup>
-                <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" password/>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    placeholder="Ingresa tu contraseña" 
+                    autocomplete="current-password"
+
+                    password
+                />
                 <button 
                     type="button" 
                     class="Button PrimaryButton" 

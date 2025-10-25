@@ -17,7 +17,13 @@ const LoginForm = () => {
                 </header>
                 <inputgroup>
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Ingresa tu email" />
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        placeholder="Ingresa tu email" 
+                        autocomplete="email"
+                    />
                 </inputgroup>
                 ${
                     InputPassword()

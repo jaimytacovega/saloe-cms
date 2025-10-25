@@ -1,4 +1,5 @@
 import * as FirebaseAuthAdapter from '@/shared/adapters/firebase/FirebaseAuth'
+import * as CookieService from '@/shared/services/CookieService'
 import { FIREBASE_CREDENTIALS, Source } from '@/shared/utils/constants'
 
 
@@ -34,8 +35,36 @@ const getCurrentUser = ({
     }
 }
 
+const getCredentialsFromCookies = ({
+    cookies,
+}) => {
+    const authorizationCookie = CookieService.get({
+        key: 'Authorization',
+        cookies,
+    }) ?? '{}'
+
+    return JSON.parse(authorizationCookie)
+}
+
+const setCredentialsInCookies = ({
+    credentials,
+}) => {
+    return CookieService.set({
+        key: 'Authorization',
+        value: JSON.stringify({
+            authId: credentials.user.uid,
+            email: credentials.user.email,
+            displayName: credentials.user.displayName,
+            photoURL: credentials.user.photoURL,
+        }),
+    })
+}
+
 export {
     signInWithEmailAndPassword,
     signOut,
     getCurrentUser,
+
+    getCredentialsFromCookies,
+    setCredentialsInCookies,
 }
