@@ -3,7 +3,7 @@ import { FileSchema } from '@/shared/schemas/utils/FileSchema'
 import { DateSchema } from '@/shared/schemas/utils/DateSchema'
 
 
-const ProductSKUSchema = z.string().regex(/^[A-Z]{4}\d{6}$/, 'El SKU debe tener 4 letras y 6 dígitos numéricos').trim()
+const ProductSKUSchema = z.string().regex(/^[A-Z]{4}\d{6}$/, 'El SKU debe tener 4 letras mayúsculas y 6 dígitos numéricos').trim()
 
 const ProductSchema = z.object({
     id: z.string().min(1, 'El id es obligatorio').trim(),
