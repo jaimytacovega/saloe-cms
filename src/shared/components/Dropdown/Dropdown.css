@@ -1,13 +1,13 @@
 .Dropdown{
     position: relative;
 
-    dialog{
+    & > dialog{
         position: absolute;
         top: .5ch;
         left: 0;
         transform: none;
-        inline-size: 200px;
-        min-inline-size: 200px;
+        inline-size: 230px;
+        min-inline-size: 230px;
         max-inline-size: 240px;
         position-area: block-end span-inline-end;
         border: 1px solid var(--color-gray-2);
@@ -37,6 +37,14 @@
             h6{
                 font: var(--font-size-sm)/1.2 var(--font-family-semibold);
             }
+        }
+    }
+}
+
+@media (min-width: 820px) {
+    .Dropdown{
+        & > dialog{
+            position-area: block-end span-inline-start;
         }
     }
 }
