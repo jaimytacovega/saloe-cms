@@ -67,7 +67,7 @@ const ProductPage = async ({
                 },
                 notFoundItem: NotFoundItem({
                     header: html`
-                        <h5>Selecciona una marca para ver detalles</h5>
+                        <h5>Selecciona un producto para ver detalles</h5>
                     `,
                 }),
                 pathname,
