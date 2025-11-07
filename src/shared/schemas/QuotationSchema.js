@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { FileSchema } from '@/shared/schemas/utils/FileSchema'
 import { DateSchema } from '@/shared/schemas/utils/DateSchema'
-import { ClientSchema } from '@/shared/schemas/utils/ClientSchema'
+import { ClientSchema, ClientTypeSchema } from '@/shared/schemas/utils/ClientSchema'
 import { QUOTATION_TYPES, QUOTATION_STATUSES } from '@/shared/repositories/QuotationRepository'
 
 
@@ -9,6 +9,7 @@ const QuotationSchema = z.object({
     id: z.string().min(1, 'El id es obligatorio').trim(),
     count: z.number(),
     client: ClientSchema,
+    clientType: ClientTypeSchema,
     attachments: z.array(FileSchema).optional(),
     request: z.string().trim().optional(),
     deliveryLocation: z.string().trim().optional(),
@@ -24,6 +25,7 @@ const ListQuotationArraySchema = z.array(QuotationSchema)
 
 const AddQuotationSchema = z.object({
     client: ClientSchema,
+    clientType: ClientTypeSchema,
     attachments: z.array(z.instanceof(File)).optional(),
     request: z.string().trim().optional(),
     deliveryLocation: z.string().trim().optional(),
@@ -37,6 +39,7 @@ const AddQuotationSchema = z.object({
 const UpdateQuotationSchema = z.object({
     id: z.string().min(1, 'El id es obligatorio').trim(),
     client: ClientSchema,
+    clientType: ClientTypeSchema,
     attachments: z.array(z.instanceof(File)).optional(),
     request: z.string().trim().optional(),
     deliveryLocation: z.string().trim().optional(),

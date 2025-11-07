@@ -4,7 +4,7 @@ import * as BrandHook from '@/shared/hooks/BrandHook'
 import * as SubCategoryHook from '@/shared/hooks/SubCategoryHook'
 import { Source } from '@/shared/utils/constants'
 import { searchParamsToListArguments } from '@/shared/services/DatabaseService'
-import { QUOTATION_TYPES, QUOTATION_TYPE_LABELS, QUOTATION_STATUSES, QUOTATION_STATUS_LABELS } from '@/shared/repositories/QuotationRepository'
+import { QUOTATION_TYPES, QUOTATION_TYPE_LABELS, QUOTATION_STATUSES, QUOTATION_STATUS_LABELS, CLIENT_TYPES, CLIENT_TYPE_LABELS } from '@/shared/repositories/QuotationRepository'
 
 import Input from '@/shared/components/Input'
 import Dropdown from '@/shared/components/Dropdown'
@@ -14,6 +14,7 @@ const QuotationFilterDropdown = async ({
     searchParams,
 }) => {
     const listArguments = searchParamsToListArguments({ searchParams })
+
     const typesMap = (listArguments.filters?.find((filter) => filter.field === 'type')?.value ?? []).reduce((acc, type) => {
         acc.set(type, true)
         return acc
@@ -24,9 +25,15 @@ const QuotationFilterDropdown = async ({
         return acc
     }, new Map())
 
+    const clientTypesMap = (listArguments.filters?.find((filter) => filter.field === 'clientType')?.value ?? []).reduce((acc, clientType) => {
+        acc.set(clientType, true)
+        return acc
+    }, new Map())
+
     const [
         listQuotationTypesResult,
         listQuotationStatusesResult,
+        listClientTypesResult,
     ] = await Promise.allSettled([
         { 
             data: Object.values(QUOTATION_TYPES).map((value) => ({
@@ -40,16 +47,24 @@ const QuotationFilterDropdown = async ({
                 label: QUOTATION_STATUS_LABELS[value],
             })),
         },
+        {
+            data: Object.values(CLIENT_TYPES).map((value) => ({
+                value,
+                label: CLIENT_TYPE_LABELS[value],
+            })),
+        },
     ])
 
     // TODO: Make error page
     if (
         listQuotationTypesResult.status === 'rejected' ||
-        listQuotationStatusesResult.status === 'rejected'
+        listQuotationStatusesResult.status === 'rejected' ||
+        listClientTypesResult.status === 'rejected'
     ) return html`error`
 
     const { data: types } = listQuotationTypesResult.value
     const { data: statuses } = listQuotationStatusesResult.value
+    const { data: clientTypes } = listClientTypesResult.value
 
     const id = 'filter'
 
@@ -75,6 +90,27 @@ const QuotationFilterDropdown = async ({
                                     value: type.value,
                                     reverse: true,
                                     checked: Boolean(typesMap.get(type.value)),
+                                })
+                            }
+                        `
+                    }).join('')
+                }
+                <inputgroup></inputgroup>
+                <inputgroup>
+                    <h6>Tipos de cliente</h6>
+                </inputgroup>
+                ${
+                    clientTypes.map((clientType) => {
+                        return html`
+                            ${
+                                Input({
+                                    id: `clientType-${clientType.value}`,
+                                    label: clientType.label,
+                                    type: 'checkbox',
+                                    name: 'clientType',
+                                    value: clientType.value,
+                                    reverse: true,
+                                    checked: Boolean(clientTypesMap.get(clientType.value)),
                                 })
                             }
                         `

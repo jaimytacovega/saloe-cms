@@ -2,7 +2,6 @@ import * as QuotationHook from '@/shared/hooks/QuotationHook'
 
 import * as Form from '@/shared/components/Form'
 import { Source } from '@/shared/utils/constants'
-import { keywords } from '@/shared/utils/utils'
 import { searchParamsToListArguments } from '@/shared/services/DatabaseService'
 
 
@@ -33,6 +32,7 @@ const submit = ({
             phone,
             type: clientType,
         },
+        clientType,
         attachments,
         request,
         deliveryLocation,

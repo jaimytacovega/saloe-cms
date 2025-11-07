@@ -5,7 +5,8 @@ import Table from '@/shared/components/Table'
 import { Source } from '@/shared/utils/constants'
 import { queryBySearchParams } from '@/shared/services/DatabaseService'
 import { getCMSCorrelative, lastUpdatedMessage } from '@/shared/utils/utils'
-import { QUOTATION_TYPE_LABELS, QUOTATION_STATUS_LABELS } from '@/shared/repositories/QuotationRepository'
+import { QUOTATION_TYPE_LABELS, QUOTATION_STATUS_LABELS, CLIENT_TYPE_LABELS } from '@/shared/repositories/QuotationRepository'
+import { TABLE_ROW_WHITESPACE } from '@/shared/utils/constants'
 
 import * as QuotationHook from '@/shared/hooks/QuotationHook'
 
@@ -52,8 +53,21 @@ const QuotationTable = async ({
             Table({
                 rows: quotations.map((quotation) => QuotationTableRow({
                     id: quotation.id,
-                    name: `RUC: ${quotation.client.code} - ${quotation.client.name}`,
-                    correlative: `${getCMSCorrelative({ collectionName: 'quotations', count: quotation.count })}&nbsp;&nbsp;-&nbsp;&nbsp;Tipo: ${QUOTATION_TYPE_LABELS[quotation.type]}&nbsp;&nbsp;-&nbsp;&nbsp;Estado: ${QUOTATION_STATUS_LABELS[quotation.status]}`,
+                    name: `
+                        RUC: ${quotation.client.code}
+                        ${TABLE_ROW_WHITESPACE}
+                        ${quotation.client.name}
+                        ${TABLE_ROW_WHITESPACE}
+                        ${CLIENT_TYPE_LABELS[quotation.clientType]}
+                    `,
+                    correlative: `${
+                        getCMSCorrelative({ collectionName: 'quotations', count: quotation.count })}&nbsp;&nbsp;-&nbsp;&nbsp;
+                        Tipo: ${QUOTATION_TYPE_LABELS[quotation.type]}
+                        ${TABLE_ROW_WHITESPACE}
+                        Estado: ${QUOTATION_STATUS_LABELS[quotation.status]}
+                        ${TABLE_ROW_WHITESPACE}
+                        Lugar de entrega: ${quotation.deliveryLocation || '-'}
+                    `,
                     createdAt: quotation.createdAt,
                     updatedAt: quotation.updatedAt,
                     toggled: quotation.id === quotationId,

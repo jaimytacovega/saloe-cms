@@ -48,6 +48,7 @@ const submit = ({
             phone: clientPhone,
             type: clientType,
         },
+        clientType,
         attachments,
         attachmentsToKeep,
         attachmentsToRemove,
