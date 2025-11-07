@@ -18,6 +18,7 @@ const PromotionToolboxActions = async ({
             ${
                 CmsSortDropdown({
                     searchParams,
+                    includeSortByName: true,
                 })
             }
             <hr>

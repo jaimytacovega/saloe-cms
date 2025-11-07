@@ -12,6 +12,7 @@ const CategoryToolboxActions = async ({
             ${
                 CmsSortDropdown({
                     searchParams,
+                    includeSortByName: true,
                 })
             }
             <hr>

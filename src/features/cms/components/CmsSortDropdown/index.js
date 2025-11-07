@@ -8,6 +8,7 @@ import Dropdown from '@/shared/components/Dropdown'
 
 const CmsSortDropdown = ({
     searchParams,
+    includeSortByName = false,
 }) => {
     const listArguments = searchParamsToListArguments({ searchParams })
     const sortersMap = (listArguments.sorters ?? []).reduce((acc, sorter) => {
@@ -48,6 +49,34 @@ const CmsSortDropdown = ({
                         checked: sortersMap.get('updatedAt:asc'),
                         reverse: true,
                     })
+                }
+                ${
+                    includeSortByName
+                        ? html`
+                            ${
+                                Input({
+                                    id: 'name:asc',
+                                    label: 'De A-Z',
+                                    type: 'radio',
+                                    value: 'name:asc',
+                                    name: id,
+                                    checked: sortersMap.get('name:asc'),
+                                    reverse: true,
+                                })
+                            }
+                            ${
+                                Input({
+                                    id: 'name:desc',
+                                    label: 'De Z-A',
+                                    type: 'radio',
+                                    value: 'name:desc',
+                                    name: id,
+                                    checked: sortersMap.get('name:desc'),
+                                    reverse: true,
+                                })
+                            }
+                        `
+                        : ''
                 }
                 <inputgroup></inputgroup>
                 <inputgroup>

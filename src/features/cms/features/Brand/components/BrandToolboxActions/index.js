@@ -12,6 +12,7 @@ const BrandToolboxActions = async ({
             ${
                 CmsSortDropdown({
                     searchParams,
+                    includeSortByName: true,
                 })
             }
             <hr>
