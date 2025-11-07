@@ -1,4 +1,5 @@
-import * as BrandManager from '@/shared/managers/BrandManager'
+import * as BrandHook from '@/shared/hooks/BrandHook'
+import { searchParamsToListArguments } from '@/shared/services/DatabaseService'
 import { Source } from '@/shared/utils/constants'
 import * as Form from '@/shared/components/Form'
 
@@ -15,10 +16,15 @@ const submit = ({
     Form.submit({
         form,
         onProcess: async () => {
-            const removeResult = await BrandManager.remove({
+            const listArguments = searchParamsToListArguments({
+                searchParams: (new URL(location.href)).searchParams,
+            })
+
+            const removeResult = await BrandHook.useRemove({
                 source: Source.FIREBASE,
                 id,
                 imagePath,
+                ...listArguments,
             })
 
             if (removeResult.err) throw removeResult.err

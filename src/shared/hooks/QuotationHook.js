@@ -98,9 +98,39 @@ const useUpdate = async ({
     }
 }
 
+const useRemove = async ({
+    source,
+    id,
+    attachmentPaths,
+    filters,
+    sorters,
+    pageSize,
+}) => {
+    try{
+        const removeResult = await QuotationManager.remove({ source, id, attachmentPaths })
+        if (removeResult?.err) return removeResult
+
+        const [useListRevalidate] = await Promise.allSettled([
+            useList({ source, filters, sorters, pageSize, ttl: 0 }),
+        ])  
+
+        if (useListRevalidate.status === 'rejected') throw useListRevalidate.reason
+
+        const useListResult = useListRevalidate.value
+        
+        if (useListResult?.err) throw useListResult.err
+
+        return removeResult
+    }catch(err){
+        console.error(err)
+        return { err }
+    }
+}
+
 export {
     useList,
     useGet,
     useAdd,
     useUpdate,
+    useRemove,
 }

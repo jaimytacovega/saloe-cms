@@ -1,4 +1,5 @@
-import * as CategoryManager from '@/shared/managers/CategoryManager'
+import * as CategoryHook from '@/shared/hooks/CategoryHook'
+import { searchParamsToListArguments } from '@/shared/services/DatabaseService'
 import { Source } from '@/shared/utils/constants'
 import * as Form from '@/shared/components/Form'
 
@@ -16,11 +17,16 @@ const submit = ({
     Form.submit({
         form,
         onProcess: async () => {
-            const removeResult = await CategoryManager.remove({
+            const listArguments = searchParamsToListArguments({
+                searchParams: (new URL(location.href)).searchParams,
+            })
+
+            const removeResult = await CategoryHook.useRemove({
                 source: Source.FIREBASE,
                 id,
                 imagePath,
                 catalogPaths,
+                ...listArguments,
             })
 
             if (removeResult.err) throw removeResult.err

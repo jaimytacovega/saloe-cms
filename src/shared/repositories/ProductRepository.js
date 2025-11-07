@@ -173,6 +173,9 @@ const remove = async ({
     imagePath,
     technicalSheetPath,
 }) => {
+    console.log('imagePath', imagePath)
+    console.log('technicalSheetPath', technicalSheetPath)
+
     const imageStorageResult = await StorageService.remove({
         source,
         filePath: imagePath,
@@ -180,10 +183,12 @@ const remove = async ({
 
     if (imageStorageResult?.err) return imageStorageResult
 
-    const technicalSheetStorageResult = await StorageService.remove({
-        source,
-        filePath: technicalSheetPath,
-    })
+    const technicalSheetStorageResult = !technicalSheetPath?.length
+        ? {}
+        : await StorageService.remove({
+            source,
+            filePath: technicalSheetPath,
+        })
 
     if (technicalSheetStorageResult?.err) return technicalSheetStorageResult
 

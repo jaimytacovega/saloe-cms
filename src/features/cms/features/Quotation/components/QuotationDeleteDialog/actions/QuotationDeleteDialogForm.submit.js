@@ -1,4 +1,5 @@
-import * as QuotationManager from '@/shared/managers/QuotationManager'
+import * as QuotationHook from '@/shared/hooks/QuotationHook'
+import { searchParamsToListArguments } from '@/shared/services/DatabaseService'
 import { Source } from '@/shared/utils/constants'
 import * as Form from '@/shared/components/Form'
 
@@ -15,10 +16,15 @@ const submit = ({
     Form.submit({
         form,
         onProcess: async () => {
-            const removeResult = await QuotationManager.remove({
+            const listArguments = searchParamsToListArguments({
+                searchParams: (new URL(location.href)).searchParams,
+            })
+
+            const removeResult = await QuotationHook.useRemove({
                 source: Source.FIREBASE,
                 id,
                 attachmentPaths,
+                ...listArguments,
             })
 
             if (removeResult.err) throw removeResult.err

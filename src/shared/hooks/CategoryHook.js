@@ -98,9 +98,40 @@ const useUpdate = async ({
     }
 }
 
+const useRemove = async ({
+    source,
+    id,
+    imagePath,
+    catalogPaths,
+    filters,
+    sorters,
+    pageSize,
+}) => {
+    try{
+        const removeResult = await CategoryManager.remove({ source, id, imagePath, catalogPaths })
+        if (removeResult?.err) return removeResult
+
+        const [useListRevalidate] = await Promise.allSettled([
+            useList({ source, filters, sorters, pageSize, ttl: 0 }),
+        ])  
+
+        if (useListRevalidate.status === 'rejected') throw useListRevalidate.reason
+
+        const useListResult = useListRevalidate.value
+        
+        if (useListResult?.err) throw useListResult.err
+
+        return removeResult
+    }catch(err){
+        console.error(err)
+        return { err }
+    }
+}
+
 export {
     useList,
     useGet,
     useAdd,
     useUpdate,
+    useRemove,
 }
