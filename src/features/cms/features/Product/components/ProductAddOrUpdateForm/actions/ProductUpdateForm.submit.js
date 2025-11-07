@@ -37,7 +37,8 @@ const submit = ({
             keys: [
                 correlative,
                 name,
-                sku,
+                sku.substring(0, 4),
+                sku.substring(4),
             ] 
         }),
         updatedAt: new Date(),

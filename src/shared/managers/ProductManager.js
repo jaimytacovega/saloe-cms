@@ -85,7 +85,7 @@ const update = async ({
     try {
         const schemaResult = UpdateProductSchema.safeParse(data)
         if (!schemaResult.success) throw prettifyError({ error: schemaResult.error })
-                
+        
         const updateResult = await ProductRepository.update({
             source,
             data: schemaResult.data,

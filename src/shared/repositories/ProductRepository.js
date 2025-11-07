@@ -88,7 +88,8 @@ const add = async ({
                         keys: [
                             correlative,
                             data.name,
-                            data.sku,
+                            data.sku.substring(0, 4),
+                            data.sku.substring(4),
                         ] 
                     }),
                 }

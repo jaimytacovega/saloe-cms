@@ -44,6 +44,7 @@ const UpdateProductSchema = z.object({
     brandIds: z.array(z.string()).optional(),
     technicalSheetPath: z.string().trim(),
     technicalSheet: z.instanceof(File).optional(),
+    keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
     updatedAt: DateSchema,
 }).transform((data) => {
     if (data.image === undefined) delete data.image
