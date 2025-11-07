@@ -19,7 +19,6 @@ const submit = ({
     const brand = {
         name,
         image,
-        keywords: keywords({ keys: [name] }),
         createdAt: now,
         updatedAt: now,
     }
