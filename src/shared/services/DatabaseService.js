@@ -268,7 +268,6 @@ const searchParamsToListArgumentsArray = ({
     searchParams,
 }) => {
     const listArguments = searchParamsToListArguments({ searchParams })
-    console.log('listArguments =', listArguments)
 
     const {
         containsAnyFilters,

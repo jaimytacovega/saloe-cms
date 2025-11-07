@@ -9,7 +9,7 @@ const submit = ({
 
     location.href = getUrlByFilterForm({
         form,
-        filterContainsAnyKeys: ['type', 'status'],
+        filterInKeys: ['type', 'status'],
         url: new URL(location.href),
     })
 }
