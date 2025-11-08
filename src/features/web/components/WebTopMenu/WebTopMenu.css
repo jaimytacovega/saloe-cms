@@ -1,0 +1,36 @@
+container.WebTopMenu__container{
+    container: webtopmenu / inline-size;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 3;
+}
+
+.WebTopMenu{
+    background: var(--color-white);
+    padding-inline: 16px;
+    padding-block: 8px;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+
+    > a{
+        margin-inline: 0 auto;
+    }
+
+    > nav{
+        display: none;
+    }
+
+    > .WebTopMenu__toolbox{
+        display: flex;
+        flex-flow: row wrap;
+        gap: 8px;
+
+        > a[href^="tel:"]{
+            > span{
+                display: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,52 @@
+container.WebHeroSection__container{
+    container: webherosection / inline-size;
+}
+
+.WebHeroSection{
+    padding-block: 56px;
+    display: flex;
+    flex-flow: column wrap;
+    gap: 48px;
+
+    > header{
+        text-align: center;
+        padding-inline: 24px;
+        display: flex;
+        flex-flow: column wrap;
+        align-items: center;
+        gap: 1ch;
+
+        > h1{
+            padding-block: 0 .25ch;
+        }
+
+        > p{
+            padding-block: 0 1.5ch;
+
+            > strong{
+                font-family: var(--font-family-semibold);
+            }
+        }
+
+        > .WebHeroSection__header__toolbox{
+            display: flex;
+            flex-flow: row wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+
+            > button{
+                padding-block: 14px !important;
+                padding-inline: 20px !important;
+            }
+        }
+
+        
+    }
+
+    > .WebHeroSection__thumbnail{
+        inline-size: 100%;
+        min-block-size: 280px;
+        background: var(--color-gray-3);
+    }
+}

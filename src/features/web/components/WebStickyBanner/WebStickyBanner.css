@@ -1,0 +1,24 @@
+container.WebStickyBanner__container{
+    container: webstickybanner / inline-size;
+    position: sticky;
+    top: -52px;
+    left: 0;
+    z-index: 2;
+}
+
+.WebStickyBanner{
+    text-align: center;
+    padding-inline: 32px;
+    padding-block: 16px;
+    background: var(--color-gray-3);
+    
+
+    > p{
+        font-size: var(--font-size-min);
+        font-family: var(--font-family-medium);
+
+        > :is(a, strong){
+            font-family: var(--font-family-bold);
+        }
+    }
+}

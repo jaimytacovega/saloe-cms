@@ -1,0 +1,44 @@
+container.WebNavigation__container{
+    container: webnavigation / inline-size;
+    position: sticky;
+    top: 52px;
+    left: 0;
+    z-index: 1;
+}
+
+.WebNavigation{
+    padding-block: 16px;
+    background: var(--color-gray-4);
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 16px;
+
+    > nav{
+        padding-inline: 16px;
+        overflow-y: auto;
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 16px;
+        flex-grow: 1;
+
+        > :is(a, button){
+            font-family: var(--font-family-semibold);
+            white-space: nowrap;
+            color: var(--color-gray-1);
+
+            &[toggled]{
+                /* font-family: var(--font-family-semibold); */
+                color: var(--color-black);
+            }
+        }
+
+        &::-webkit-scrollbar{
+            display: none;
+        }
+    }
+    
+    > button{
+        border-radius: 0 !important;
+        border-inline: 1px solid var(--color-gray-2);
+    }
+}

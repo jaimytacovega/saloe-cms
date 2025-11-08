@@ -43,3 +43,7 @@
 .ColorBlue{
     color: var(--color-blue);
 }
+
+.ColorRed{
+    color: var(--color-red);
+}
