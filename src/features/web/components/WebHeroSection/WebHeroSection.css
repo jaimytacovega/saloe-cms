@@ -4,13 +4,29 @@ container.WebHeroSection__container{
 
 .WebHeroSection{
     padding-block: 56px;
+    padding-inline: 24px;
     display: flex;
     flex-flow: column wrap;
     gap: 48px;
 
+    &[hero-image]{
+        padding-inline: 0;
+
+        > header{
+            padding-inline: 24px;
+        }
+
+        > .WebHeroSection__thumbnail{
+            border-radius: 0;
+        }
+    }
+
+    &[reversed]{
+        flex-flow: column-reverse wrap;
+    }
+
     > header{
         text-align: center;
-        padding-inline: 24px;
         display: flex;
         flex-flow: column wrap;
         align-items: center;
@@ -48,5 +64,6 @@ container.WebHeroSection__container{
         inline-size: 100%;
         min-block-size: 280px;
         background: var(--color-gray-3);
+        border-radius: 8px;
     }
 }

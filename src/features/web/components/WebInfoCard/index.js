@@ -5,10 +5,15 @@ const WebInfoCard = ({
     title,
     description,
     toolbox,
+    isThumbnailWithTag = false,
+    isPromo = false,
 }) => {
     return html`
         <container class="WebInfoCard__container">
-            <div class="WebInfoCard">
+            <div 
+                class="WebInfoCard"
+                ${isPromo ? ' promo' : ''}
+            >
                 <header>
                     ${title}
                     ${description}
@@ -16,8 +21,16 @@ const WebInfoCard = ({
                 <div class="WebInfoCard__toolbox">
                     ${toolbox}
                 </div>
-                <figure>
-                </figure>
+                <div class="WebInfoCard__thumbnail">
+                    ${
+                        isThumbnailWithTag
+                            ? html`
+                                <figure>
+                                </figure>
+                            `
+                            : ''
+                    }
+                </div>
             </div>
         </container>
     `

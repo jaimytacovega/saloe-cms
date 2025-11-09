@@ -6,10 +6,16 @@ const WebHeroSection = ({
     title,
     description,
     toolbox,
+    isHeroImage = false,
+    isReversed = false,
 }) => {
     return html`
         <container class="WebHeroSection__container">
-            <section class="WebHeroSection">
+            <section 
+                class="WebHeroSection"
+                ${isHeroImage ? ' hero-image' : ''}
+                ${isReversed ? ' reversed' : ''}
+            >
                 <header>
                     ${
                         Boolean(preTitle)

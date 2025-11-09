@@ -111,7 +111,3 @@ a, button{
     color: inherit;
     cursor: pointer;
 }
-
-main{
-    min-height: 200svh;
-}

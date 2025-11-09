@@ -1,34 +1,89 @@
 container.WebInfoCard__container{
     container: webinfocard / inline-size;
     display: flex;
+
+    > .WebInfoCard{
+        inline-size: 100%;
+    }
 }
 
 .WebInfoCard{
     background: var(--color-gray-4);
     border-radius: 8px;
     padding-inline: 16px;
-    padding-block: 16px;
+    padding-block: 24px;
     text-align: center;
     display: flex;
     flex-flow: column wrap;
     align-items: center;
     gap: 12px;
 
+    &[promo]{
+        display: grid;
+        grid-template-areas:
+            "thumbnail header"
+            "toolbox toolbox";
+        gap: 16px;
+
+        > header{
+            text-align: start;
+            grid-area: header;
+        }
+
+        > .WebInfoCard__toolbox{
+            padding-block: 0;
+            grid-area: toolbox;
+        }
+
+        > .WebInfoCard__thumbnail{
+            min-block-size: 160px;
+            grid-area: thumbnail;
+
+            > figure{
+                inline-size: 48px;
+            }
+        }
+    }
+
     > header{
         display: flex;
         flex-flow: column wrap;
         gap: 1ch;
+
+        > p{
+            > strong{
+                font-family: var(--font-family-semibold);
+            }
+        }
     }
 
     > .WebInfoCard__toolbox{
         padding-block: 0 8px;
+
+        > :is(a, button){
+            inline-size: 100%;
+            padding-block: 14px;
+            padding-inline: 20px;
+            justify-content: center;
+        }
     }
 
-    > figure{
+    > .WebInfoCard__thumbnail{
+        position: relative;
         inline-size: 100%;
         min-block-size: 120px;
         aspect-ratio: 1 / 1;
         background: var(--color-gray-2);
         border-radius: 8px;
+
+        > figure{
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            inline-size: 80px;
+            aspect-ratio: 1 / 1;
+            background: var(--color-white);
+            border-radius: 8px;
+        }
     }
 }
