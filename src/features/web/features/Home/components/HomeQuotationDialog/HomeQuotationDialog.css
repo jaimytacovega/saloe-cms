@@ -1,0 +1,7 @@
+dialog.HomeQuotationDialog{
+    padding-block: 24px;
+
+    > form{
+        min-block-size: 80svh;
+    }
+}

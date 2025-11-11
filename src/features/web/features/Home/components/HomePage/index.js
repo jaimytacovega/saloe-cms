@@ -6,6 +6,7 @@ import HomeCategoryGridSection from '@/features/web/features/Home/components/Hom
 import HomePromoSection from '@/features/web/features/Home/components/HomePromoSection'
 import HomePromoGridSection from '@/features/web/features/Home/components/HomePromoGridSection'
 import WebInfoCard from '@/features/web/components/WebInfoCard'
+import HomeQuotationDialog from '@/features/web/features/Home/components/HomeQuotationDialog'
 
 const CategoryCard = WebInfoCard({
     title: html`
@@ -116,6 +117,9 @@ const HomePage = () => {
                         PromoCard,
                     ].join(''),
                 })
+            }
+            ${
+                HomeQuotationDialog()
             }
         </main>
     `

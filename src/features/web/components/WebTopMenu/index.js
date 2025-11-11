@@ -21,7 +21,10 @@ const WebTopMenu = () => {
                         <img loading="lazy" src="/img/icon/phone-call-gray-1.svg" width="20" height="20" alt="phone">
                         <span>Habla con un asesor</span>
                     </a>
-                    <button class="Button PrimaryButton PrimaryBlue">
+                    <button 
+                        class="Button PrimaryButton PrimaryBlue"
+                        popovertarget="HomeQuotationDialog"
+                    >
                         <span>Cotizar pedido</span>
                     </button>
                 </div>
