@@ -24,6 +24,7 @@ const HomePromoSection = ({
                     </button>
                 `,
                 isReversed,
+                thumbnail: '/img/thumbnail/promotion.png',
             })
         }
     `

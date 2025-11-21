@@ -20,6 +20,7 @@ const CategoryCard = WebInfoCard({
             <u>Me interesa</u>
         </button>
     `,
+    thumbnail: '/img/thumbnail/product.png',
 })
 
 const PromoCard = WebInfoCard({
@@ -38,6 +39,7 @@ const PromoCard = WebInfoCard({
     `,
     isThumbnailWithTag: true,
     isPromo: true,
+    thumbnail: '/img/thumbnail/promotion.png',
 })
 
 const HomePage = () => {

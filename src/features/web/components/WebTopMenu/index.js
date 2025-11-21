@@ -5,8 +5,8 @@ const WebTopMenu = () => {
     return html`
         <container class="WebTopMenu__container">
             <menu class="WebTopMenu">
-                <a href="/" class="Button PrimaryButton PrimaryGray">
-                    Logo
+                <a href="/" class="Button">
+                    <img loading="lazy" src="/img/logo/logo.svg" width="40" height="40" alt="logo">
                 </a>
                 <nav>
                     <a href="/">

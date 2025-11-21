@@ -8,6 +8,7 @@ const WebHeroSection = ({
     toolbox,
     isHeroImage = false,
     isReversed = false,
+    thumbnail,
 }) => {
     return html`
         <container class="WebHeroSection__container">
@@ -29,9 +30,13 @@ const WebHeroSection = ({
                     </div>
                 </header>
                 <figure class="WebHeroSection__thumbnail">
-                    <!--
-                    <img loading="lazy" src="/img/hero-section.png" width="100%" height="100%" alt="hero section">
-                    -->
+                    ${
+                        Boolean(thumbnail)
+                            ? html`
+                                <img loading="lazy" src="${thumbnail}" width="100%" height="100%" alt="hero section">
+                            `
+                            : ''
+                    }
                 </figure>
             </section>
         </container>

@@ -7,6 +7,7 @@ const WebInfoCard = ({
     toolbox,
     isThumbnailWithTag = false,
     isPromo = false,
+    thumbnail,
 }) => {
     return html`
         <container class="WebInfoCard__container">
@@ -27,6 +28,13 @@ const WebInfoCard = ({
                             ? html`
                                 <figure>
                                 </figure>
+                            `
+                            : ''
+                    }
+                    ${
+                        Boolean(thumbnail)
+                            ? html`
+                                <img loading="lazy" src="${thumbnail}" width="100%" height="100%" alt="thumbnail">
                             `
                             : ''
                     }

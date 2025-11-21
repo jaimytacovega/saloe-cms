@@ -20,6 +20,7 @@ container.WebInfoCard__container{
 
     &[promo]{
         display: grid;
+        grid-template-columns: minmax(160px, 1fr) 1fr;
         grid-template-areas:
             "thumbnail header"
             "toolbox toolbox";
@@ -83,6 +84,10 @@ container.WebInfoCard__container{
             inline-size: 80px;
             aspect-ratio: 1 / 1;
             background: var(--color-white);
+            border-radius: 8px;
+        }
+
+        > img{
             border-radius: 8px;
         }
     }
