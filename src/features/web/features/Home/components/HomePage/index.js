@@ -10,6 +10,14 @@ import HomeQuotationDialog from '@/features/web/features/Home/components/HomeQuo
 
 import WebStickySection from '@/features/web/components/WebStickySection'
 
+import * as BrandHook from '@/shared/hooks/BrandHook'
+import * as CategoryHook from '@/shared/hooks/CategoryHook'
+import * as SubCategoryHook from '@/shared/hooks/SubCategoryHook'
+import * as PromotionHook from '@/shared/hooks/PromotionHook'
+
+import { Source } from '@/shared/utils/constants'
+import { queryBySearchParams } from '@/shared/services/DatabaseService'
+
 
 const CategoryCard = WebInfoCard({
     title: html`
@@ -45,11 +53,121 @@ const PromoCard = WebInfoCard({
     thumbnail: '/img/thumbnail/promotion.png',
 })
 
-const HomePage = () => {
+const getBrands = async () => {
+    const searchParams = new URLSearchParams()
+    searchParams.set('page', '1')
+    searchParams.set('pageSize', '20')
+    searchParams.set('sort', 'updatedAt:desc')
+
+    const { data: brands } = await queryBySearchParams({
+        query: ({ listArguments }) => {
+            return BrandHook.useList({
+                source: Source.FIREBASE,
+                ...listArguments,
+                ttl: 60_000,
+            })
+        },
+        searchParams,
+    })
+
+    return brands
+}
+
+const getCategories = async () => {
+    const searchParams = new URLSearchParams()
+    searchParams.set('page', '1')
+    searchParams.set('pageSize', '20')
+    searchParams.set('sort', 'updatedAt:desc')
+
+    const { data: categories } = await queryBySearchParams({
+        query: ({ listArguments }) => {
+            return CategoryHook.useList({
+                source: Source.FIREBASE,
+                ...listArguments,
+                ttl: 60_000,
+            })
+        },
+        searchParams,
+    })
+
+    return categories
+}
+
+const getPromotions = async () => {
+    const searchParams = new URLSearchParams()
+    searchParams.set('page', '1')
+    searchParams.set('pageSize', '20')
+    searchParams.set('sort', 'updatedAt:desc')
+
+    const { data: promotions } = await queryBySearchParams({
+        query: ({ listArguments }) => {
+            return PromotionHook.useList({
+                source: Source.FIREBASE,
+                ...listArguments,
+                ttl: 60_000,
+            })
+        },
+        searchParams,
+    })
+
+    return promotions
+}
+
+const getSubCategories = async () => {
+    const searchParams = new URLSearchParams()
+    searchParams.set('page', '1')
+    searchParams.set('pageSize', '20')
+    searchParams.set('sort', 'updatedAt:desc')
+
+    const { data: subCategories } = await queryBySearchParams({
+        query: ({ listArguments }) => {
+            return SubCategoryHook.useList({
+                source: Source.FIREBASE,
+                ...listArguments,
+                ttl: 60_000,
+            })
+        },
+        searchParams,
+    })
+
+    return subCategories
+}
+
+const getSubCategoriesByCategories = async () => {
+    const searchParams = new URLSearchParams()
+    searchParams.set('page', '1')
+    searchParams.set('pageSize', '20')
+    searchParams.set('sort', 'updatedAt:desc')
+
+    const { data: subCategoriesByCategories } = await queryBySearchParams({
+        query: ({ listArguments }) => {
+            return SubCategoryHook.useList({
+                source: Source.FIREBASE,
+                ...listArguments,
+                ttl: 60_000,
+            })
+        },
+        searchParams,
+    })
+    return subCategoriesByCategories
+}
+
+const HomePage = async () => {
+    const brands = await getBrands()
+    const categories = await getCategories()
+    // const promotions = await getPromotions()
+    // const subCategories = await getSubCategories()
+    // console.log('subCategories =', subCategories)
+
+    // const subCategoriesByCategories = await getSubCategoriesByCategories()
+
     return html`
         <main>
             ${
-                HomeMenu()
+                HomeMenu({
+                    brands,
+                    categories,
+                })
             }
             ${
                 HomeHeroSection()

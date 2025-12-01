@@ -266,11 +266,8 @@ const update = async({
 
                 const subCategoryIdsToAdd = subCategoryIds.filter((subCategoryId) => !categoryBySubcategories.some((categoryBySubcategory) => categoryBySubcategory.subCategoryId === subCategoryId))
 
-                await Promise.all([
-                    ...categoryBySubcategoriesToRemoveTxs.map((categoryBySubcategoriesToRemoveTx) => {
-                        return tx.delete(categoryBySubcategoriesToRemoveTx.ref)
-                    }),
-                    ...subCategoryIdsToAdd.map(async (subCategoryIdToAdd) => {
+                await Promise.all(
+                    subCategoryIdsToAdd.map(async (subCategoryIdToAdd) => {
                         const categoryBySubCategoryToAddTx = await DatabaseService.getWithTransaction({
                             source,
                             tx,
@@ -286,14 +283,21 @@ const update = async({
                                 data: { categoryId: categoryTx.ref.id, subCategoryId: subCategoryIdToAdd },
                             })
                         }
-                    }),
-                    DatabaseService.updateWithTransaction({
-                        source,
-                        tx,
-                        ref: categoryTx.ref,
-                        data: category,
-                    }),
-                ])
+                    })
+                )
+
+                await Promise.all(
+                    categoryBySubcategoriesToRemoveTxs.map((categoryBySubcategoriesToRemoveTx) => {
+                        return tx.delete(categoryBySubcategoriesToRemoveTx.ref)
+                    })
+                )
+
+                await DatabaseService.updateWithTransaction({
+                    source,
+                    tx,
+                    ref: categoryTx.ref,
+                    data: category,
+                })
 
                 return { 
                     id: categoryTx.ref.id,

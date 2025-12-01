@@ -18,7 +18,7 @@ const page = async ({
         `,
         body: async () => html`
             ${
-                HomePage()
+                await HomePage()
             }
         `,
         scripts: () => html`
