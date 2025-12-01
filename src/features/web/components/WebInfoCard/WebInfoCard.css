@@ -39,7 +39,7 @@ container.WebInfoCard__container{
             text-align: start;
             display: flex;
             flex-flow: column wrap;
-            align-items: center;
+            align-items: start;
         }
 
         > .WebInfoCard__thumbnail{
@@ -108,12 +108,16 @@ container.WebInfoCard__container{
 
         > figure{
             position: absolute;
-            top: 16px;
-            left: 16px;
+            top: 8px;
+            left: 8px;
             inline-size: 80px;
             aspect-ratio: 1 / 1;
             background: var(--color-white);
             border-radius: 8px;
+
+            > img{
+                border-radius: 8px;
+            }
         }
 
         > img{

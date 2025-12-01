@@ -10,6 +10,7 @@ const WebInfoCard = ({
     isItem = false,
     thumbnail,
     isButton = false,
+    tagThumbnail,
 }) => {
     return html`
         <container class="WebInfoCard__container">
@@ -36,6 +37,7 @@ const WebInfoCard = ({
                         isThumbnailWithTag
                             ? html`
                                 <figure>
+                                    <img loading="lazy" src="${tagThumbnail}" width="100%" height="100%" alt="tag thumbnail">
                                 </figure>
                             `
                             : ''

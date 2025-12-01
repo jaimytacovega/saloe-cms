@@ -4,16 +4,17 @@ import WebHeroSection from '@/features/web/components/WebHeroSection'
 
 
 const HomePromoSection = ({
+    promotion,
     isReversed = false,
 }= {}) => {
     return html`
         ${
             WebHeroSection({
                 title: html`
-                    <h3>Tubos de agua 1/2 C/R Nicoll</h3>
+                    <h3>${promotion.name}</h3>
                 `,
                 description: html`
-                    <span>Por la compra de 25 unidades</span>
+                    <span>${promotion.description}</span>
                     <br/>
                     <strong class="ColorRed">Gratis codo 20x90</strong>
                 `,
@@ -24,7 +25,7 @@ const HomePromoSection = ({
                     </button>
                 `,
                 isReversed,
-                thumbnail: '/img/thumbnail/promotion.png',
+                thumbnail: promotion.image.downloadURL,
             })
         }
     `

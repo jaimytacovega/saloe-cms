@@ -32,8 +32,6 @@ const submit = ({
         updatedAt: now,
     }
 
-    console.log('category =', category)
-
     Form.submit({
         form,
         onProcess: async () => {

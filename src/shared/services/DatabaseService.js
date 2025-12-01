@@ -428,6 +428,7 @@ const getUrlBySearchForm = ({
 
 export {
     Operators,
+    OperatorSymbols,
 
     list,
     get,

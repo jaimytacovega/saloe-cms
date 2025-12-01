@@ -7,9 +7,12 @@ import Select from '@/shared/components/Select'
 import Textarea from '@/shared/components/Textarea'
 import MultipleSelect from '@/shared/components/MultipleSelect'
 import { CLIENT_TYPES, CLIENT_TYPE_LABELS } from '@/shared/repositories/QuotationRepository'
+import { getCMSCorrelative } from '@/shared/utils/utils'
 
-const HomeQuotationDialog = () => {
-    const promotions = []
+
+const HomeQuotationDialog = ({
+    promotions,
+}) => {
     const quotation = {}
 
     return Dialog({

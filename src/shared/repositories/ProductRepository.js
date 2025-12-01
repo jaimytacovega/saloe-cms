@@ -173,9 +173,6 @@ const remove = async ({
     imagePath,
     technicalSheetPath,
 }) => {
-    console.log('imagePath', imagePath)
-    console.log('technicalSheetPath', technicalSheetPath)
-
     const imageStorageResult = await StorageService.remove({
         source,
         filePath: imagePath,

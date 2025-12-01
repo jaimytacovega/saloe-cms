@@ -24,6 +24,9 @@ import * as CmsQuotationsPage from '@/app/cms/cotizaciones/page'
 import * as CmsQuotationsCreatePage from '@/app/cms/cotizaciones/crear/page'
 import * as CmsQuotationsByIdPage from '@/app/cms/cotizaciones/[id]'
 
+import * as Category_SubCategoryListPage from '@/app/api/Category_SubCategory/list/page'
+import * as BrandListPage from '@/app/api/Brand/list/page'
+
 import * as AuthLoginPage from '@/app/auth/login/page'
 
 import * as HomeWebPage from '@/app/page'
@@ -53,6 +56,9 @@ const setRouter = () => {
     addRoute({ pathname: '/cms/cotizaciones', route: CmsQuotationsPage.default })
     addRoute({ pathname: '/cms/cotizaciones/crear', route: CmsQuotationsCreatePage.default })
     addRoute({ pathname: '/cms/cotizaciones/:id', route: CmsQuotationsByIdPage.default })
+
+    addRoute({ pathname: '/api/category_subCategory/list', route: Category_SubCategoryListPage.default })
+    addRoute({ pathname: '/api/brand/list', route: BrandListPage.default })
 
     addRoute({ pathname: '/auth/login', route: AuthLoginPage.default })
 

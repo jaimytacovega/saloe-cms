@@ -14,6 +14,7 @@ import {
     increment,
     orderBy,
     deleteDoc,
+    documentId,
 } from 'firebase/firestore/lite'
 
 import { getApp } from '@/shared/adapters/firebase/FirebaseApp'
@@ -36,7 +37,7 @@ const buildQuery = ({
     pageSize,
 }) => {
     const coll = collection(firestore, collectionName)
-    const whr = filters?.map((filter) => where(filter.field, filter.operator, filter.value)) ?? []
+    const whr = filters?.map((filter) => where(filter.field === 'id' ? documentId() : filter.field, filter.operator, filter.value)) ?? []
     const lim = pageSize ? [limit(pageSize)] : []
     const ord = sorters?.map((sorter) => orderBy(sorter.field, sorter.direction)) ?? []
 
