@@ -1,7 +1,7 @@
 container.WebNavigation__container{
     container: webnavigation / inline-size;
     position: sticky;
-    top: 52px;
+    top: var(--topmenu-block-size);
     left: 0;
     z-index: 1;
 }

@@ -9,12 +9,14 @@ const WebGridSection = ({
     grid,
     columns,
     isSticky = false,
+    isItem = false,
 }) => {
     return html`
         <container class="WebGridSection__container">
             <section 
                 class="WebGridSection"
                 ${isSticky ? ' sticky' : ''}
+                ${isItem ? ' item' : ''}
             >
                 <header>
                     ${title}

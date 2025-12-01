@@ -1,7 +1,6 @@
 import { html } from 'saloe/html'
 
 import WebGridSection from '@/features/web/components/WebGridSection'
-import WebInfoCard from '@/features/web/components/WebInfoCard'
 
 
 const HomeCategoryGridSection = ({

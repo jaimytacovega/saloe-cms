@@ -9,6 +9,12 @@ container.WebGridSection__container{
     flex-flow: column nowrap;
     gap: 32px;
 
+    &[item]{
+        padding-inline: 0;
+        padding-block: 0;
+        gap: 16px;
+    }
+
     > header{
         display: flex;
         flex-flow: row wrap;

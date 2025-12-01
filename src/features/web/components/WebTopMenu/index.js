@@ -6,7 +6,7 @@ const WebTopMenu = () => {
         <container class="WebTopMenu__container">
             <menu class="WebTopMenu">
                 <a href="/" class="Button">
-                    <img loading="lazy" src="/img/logo/logo.svg" width="40" height="40" alt="logo">
+                    <img loading="lazy" src="/img/logo/logo.svg" width="48" height="48" alt="logo">
                 </a>
                 <nav>
                     <a href="/">

@@ -1,7 +1,7 @@
 container.WebStickyBanner__container{
     container: webstickybanner / inline-size;
     position: sticky;
-    top: -52px;
+    top: calc(var(--topmenu-block-size) * -1);
     left: 0;
     z-index: 2;
 }

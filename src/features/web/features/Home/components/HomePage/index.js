@@ -8,6 +8,9 @@ import HomePromoGridSection from '@/features/web/features/Home/components/HomePr
 import WebInfoCard from '@/features/web/components/WebInfoCard'
 import HomeQuotationDialog from '@/features/web/features/Home/components/HomeQuotationDialog'
 
+import WebStickySection from '@/features/web/components/WebStickySection'
+
+
 const CategoryCard = WebInfoCard({
     title: html`
         <h5>Tubos y Conexiones de PVC</h5>
@@ -50,6 +53,9 @@ const HomePage = () => {
             }
             ${
                 HomeHeroSection()
+            }
+            ${
+                WebStickySection()
             }
             ${
                 HomeCategoryGridSection({

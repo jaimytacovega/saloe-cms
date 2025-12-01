@@ -7,21 +7,30 @@ const WebInfoCard = ({
     toolbox,
     isThumbnailWithTag = false,
     isPromo = false,
+    isItem = false,
     thumbnail,
+    isButton = false,
 }) => {
     return html`
         <container class="WebInfoCard__container">
-            <div 
+            <${isButton ? 'button' : 'div'} 
                 class="WebInfoCard"
                 ${isPromo ? ' promo' : ''}
+                ${isItem ? ' item' : ''}
             >
                 <header>
                     ${title}
                     ${description}
                 </header>
-                <div class="WebInfoCard__toolbox">
-                    ${toolbox}
-                </div>
+                ${
+                    Boolean(toolbox) ? 
+                        html`
+                            <div class="WebInfoCard__toolbox">
+                                ${toolbox}
+                            </div>
+                        `
+                        : ''
+                }
                 <div class="WebInfoCard__thumbnail">
                     ${
                         isThumbnailWithTag
@@ -39,7 +48,7 @@ const WebInfoCard = ({
                             : ''
                     }
                 </div>
-            </div>
+            </${isButton ? 'button' : 'div'}>
         </container>
     `
 }

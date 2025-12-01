@@ -47,3 +47,8 @@
 .ColorRed{
     color: var(--color-red);
 }
+
+.BorderedGray1{
+    color: var(--color-gray-1);
+    border: 1px solid var(--color-gray-1);
+}

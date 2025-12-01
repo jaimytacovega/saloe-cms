@@ -1,5 +1,11 @@
 container.WebHeroSection__container{
     container: webherosection / inline-size;
+
+    &:has(+ .WebStickySection__container){
+        > .WebHeroSection{
+            padding-block: 56px 0;
+        }
+    }
 }
 
 .WebHeroSection{
