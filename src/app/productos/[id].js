@@ -18,7 +18,7 @@ const page = async ({
     return stream({
         head: () => html`
             ${
-                WebMeta()
+                WebMeta({})
             }
         `,
         body: async () => html`
