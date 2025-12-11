@@ -5,9 +5,10 @@ import * as CategoryHook from '@/shared/hooks/CategoryHook'
 import * as SubCategoryHook from '@/shared/hooks/SubCategoryHook'
 import * as PromotionHook from '@/shared/hooks/PromotionHook'
 import * as Category_SubCategoryHook from '@/shared/hooks/Category_SubCategoryHook'
+import * as ProductHook from '@/shared/hooks/ProductHook'
 
 import { Source } from '@/shared/utils/constants'
-import { listArgumentsToQueryString, queryBySearchParams, OperatorSymbols } from '@/shared/services/DatabaseService'
+import { queryBySearchParams, OperatorSymbols } from '@/shared/services/DatabaseService'
 
 
 const useListCategories = ({
@@ -175,11 +176,36 @@ const useListPromotionsByBrands = ({
     })
 }
 
+const useGetProductById = ({
+    id,
+    ttl,
+}) => {
+    return useQuery({
+        queryKey: ['web', 'getProductById', id],
+        queryFn: async () => {
+            const { data: product } = await ProductHook.useGet({
+                source: Source.FIREBASE,
+                id,
+                ttl: 0,
+            })
+
+            return { data: product }
+        },
+        ttl,
+    })
+}
+
 export {
     useListCategories,
+
     useListBrandsByCategories,
+
     useListCategory_SubCategoriesByCategories,
+
     useListSubCategoriesByIds,
     useGetSubCategoryById,
+
     useListPromotionsByBrands,
+
+    useGetProductById,
 }

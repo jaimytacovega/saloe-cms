@@ -31,6 +31,7 @@ import * as AuthLoginPage from '@/app/auth/login/page'
 
 import * as HomeWebPage from '@/app/page'
 import * as SubCategoryWebPage from '@/app/subcategoria/[id]'
+import * as ProductWebPage from '@/app/productos/[id]'
 
 
 const setRouter = () => {
@@ -65,6 +66,7 @@ const setRouter = () => {
 
     addRoute({ pathname: '/', route: HomeWebPage.default })
     addRoute({ pathname: '/subcategoria/:id', route: SubCategoryWebPage.default })
+    addRoute({ pathname: '/productos/:id', route: ProductWebPage.default })
 }
 
 export {
