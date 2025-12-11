@@ -30,6 +30,7 @@ import * as BrandListPage from '@/app/api/Brand/list/page'
 import * as AuthLoginPage from '@/app/auth/login/page'
 
 import * as HomeWebPage from '@/app/page'
+import * as SubCategoryWebPage from '@/app/subcategoria/[id]'
 
 
 const setRouter = () => {
@@ -63,6 +64,7 @@ const setRouter = () => {
     addRoute({ pathname: '/auth/login', route: AuthLoginPage.default })
 
     addRoute({ pathname: '/', route: HomeWebPage.default })
+    addRoute({ pathname: '/subcategoria/:id', route: SubCategoryWebPage.default })
 }
 
 export {

@@ -23,6 +23,7 @@ const WebMeta = () => {
         <link rel="stylesheet" href="/WebInfoCard.css">
         <link rel="stylesheet" href="/HomeQuotationDialog.css">
         <link rel="stylesheet" href="/WebStickySection.css">
+        <link rel="stylesheet" href="/WebLegalsSection.css">
     `
 }
 

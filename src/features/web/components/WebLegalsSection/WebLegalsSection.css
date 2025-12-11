@@ -1,0 +1,16 @@
+container.WebLegalsSection__container{
+    container: weblegalssection / inline-size;
+}
+
+.WebLegalsSection{
+    padding-block: 56px;
+    padding-inline: 48px;
+    display: flex;
+    flex-flow: column wrap;
+    gap: 1ch;
+
+    > p{
+        font: var(--font-size-xs)/1.2 var(--font-family-medium);
+        color: var(--color-gray-2);
+    }
+}

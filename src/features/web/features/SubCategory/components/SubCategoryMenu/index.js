@@ -2,12 +2,11 @@ import { html } from 'saloe/html'
 
 import WebTopMenu from '@/features/web/components/WebTopMenu'
 import WebStickyBanner from '@/features/web/components/WebStickyBanner'
-import WebNavigation from '@/features/web/components/WebNavigation'
 
 import * as WebHook from '@/features/web/hooks/WebHook'
 
 
-const HomeMenu = async () => {
+const SubCategoryMenu = async () => {
     const { data: categories } = await WebHook.useListCategories({ ttl: 10_000 })
     const { data: brands } = await WebHook.useListBrandsByCategories({ categories, ttl: 10_000 })
 
@@ -20,12 +19,7 @@ const HomeMenu = async () => {
                 brands,
             })
         }
-        ${
-            WebNavigation({
-                categories,
-            })
-        }
     `
 }
 
-export default HomeMenu
+export default SubCategoryMenu

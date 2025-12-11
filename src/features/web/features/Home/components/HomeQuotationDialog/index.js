@@ -6,13 +6,18 @@ import InputFile from '@/shared/components/InputFile'
 import Select from '@/shared/components/Select'
 import Textarea from '@/shared/components/Textarea'
 import MultipleSelect from '@/shared/components/MultipleSelect'
+
 import { CLIENT_TYPES, CLIENT_TYPE_LABELS } from '@/shared/repositories/QuotationRepository'
 import { getCMSCorrelative } from '@/shared/utils/utils'
 
+import * as WebHook from '@/features/web/hooks/WebHook'
 
-const HomeQuotationDialog = ({
-    promotions,
-}) => {
+
+const HomeQuotationDialog = async () => {
+    const { data: categories } = await WebHook.useListCategories({ ttl: 10_000 })
+    const { data: brands } = await WebHook.useListBrandsByCategories({ categories, ttl: 10_000 })
+    const { data: promotions } = await WebHook.useListPromotionsByBrands({ brands, ttl: 10_000 })
+
     const quotation = {}
 
     return Dialog({
