@@ -38,7 +38,7 @@ container.WebNavigation__container{
         }
 
         @container webnavigation (min-inline-size: 768px){
-            --webnavigation__padding-inline: 48px;
+            --webnavigation__padding-inline: var(--web__padding-inline);
         }
     }
     

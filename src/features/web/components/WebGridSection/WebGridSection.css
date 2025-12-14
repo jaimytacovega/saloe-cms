@@ -47,7 +47,7 @@ container.WebGridSection__container{
     }
 
     @container webgridsection (min-inline-size: 768px){
-        --webgridsection__padding-inline: 48px;
+        --webgridsection__padding-inline: var(--web__padding-inline);
         --webgridsection__padding-block: 80px;
         --webgridsection__gap: 48px;
     }

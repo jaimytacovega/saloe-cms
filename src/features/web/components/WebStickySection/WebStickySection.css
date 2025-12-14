@@ -103,7 +103,7 @@ container.WebStickySection__container{
     }
 
     @container webstickysection (min-inline-size: 768px){
-        --webstickysection__padding-inline: 48px;
+        --webstickysection__padding-inline: var(--web__padding-inline);
         --webstickysection__padding-block: 80px;
     }
 }

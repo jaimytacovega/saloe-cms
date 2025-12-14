@@ -4,7 +4,7 @@ container.WebLegalsSection__container{
 
 .WebLegalsSection{
     padding-block: 56px;
-    padding-inline: 48px;
+    padding-inline: var(--web__padding-inline);
     display: flex;
     flex-flow: column wrap;
     gap: 1ch;

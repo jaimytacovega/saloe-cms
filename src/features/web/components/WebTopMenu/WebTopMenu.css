@@ -36,6 +36,6 @@ container.WebTopMenu__container{
     }
 
     @container webtopmenu (min-inline-size: 768px){
-        --webtopmenu__padding-inline: 48px;
+        --webtopmenu__padding-inline: var(--web__padding-inline);
     }
 }

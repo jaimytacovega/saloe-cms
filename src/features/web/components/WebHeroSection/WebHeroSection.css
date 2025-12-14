@@ -107,7 +107,7 @@ container.WebHeroSection__container{
     }
 
     @container webherosection (min-inline-size: 768px){
-        --webherosection__padding-inline: 48px;
+        --webherosection__padding-inline: var(--web__padding-inline);
         --webherosection__padding-block: 80px;
         --webherosection__gap: 64px;
 
