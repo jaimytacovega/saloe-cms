@@ -29,7 +29,7 @@ const WebHeroSection = ({
                         ${toolbox} 
                     </div>
                 </header>
-                <figure class="WebHeroSection__thumbnail">
+                <figure class="WebHeroSection__figure">
                     ${
                         Boolean(thumbnail)
                             ? html`

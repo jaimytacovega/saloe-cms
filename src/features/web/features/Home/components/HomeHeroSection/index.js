@@ -16,6 +16,7 @@ const HomeHeroSection = () => {
                     <button class="Button PrimaryButton PrimaryBlue">Cotizar pedido</button>
                 `,
                 isHeroImage: true,
+                thumbnail: '/img/thumbnail/hero.jpeg',
             })
         }
     `

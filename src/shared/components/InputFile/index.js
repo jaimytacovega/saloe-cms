@@ -24,7 +24,7 @@ const InputFile = ({
             <label for="${id}">${label}</label>
             <input type="file" id="${id}" accept="${accept ?? 'image/*'}" on-change="InputFile.change" ${multiple ? 'multiple' : ''}/>
             <div class="InputFile__decorator" loaded=${showThumbnail}>
-                <div class="InputFile__decorator__thumbnail">
+                <div class="InputFile__decorator__figure">
                     <img 
                         loading="lazy" 
                         width="24" 

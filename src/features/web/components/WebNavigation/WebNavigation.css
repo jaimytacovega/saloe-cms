@@ -14,7 +14,8 @@ container.WebNavigation__container{
     gap: 16px;
 
     > nav{
-        padding-inline: 16px;
+        --webnavigation__padding-inline: 16px;
+        padding-inline: var(--webnavigation__padding-inline);
         overflow-y: auto;
         display: flex;
         flex-flow: row nowrap;
@@ -34,6 +35,10 @@ container.WebNavigation__container{
 
         &::-webkit-scrollbar{
             display: none;
+        }
+
+        @container webnavigation (min-inline-size: 768px){
+            --webnavigation__padding-inline: 48px;
         }
     }
     

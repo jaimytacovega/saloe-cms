@@ -8,10 +8,29 @@ container.WebInfoCard__container{
 }
 
 .WebInfoCard{
+    --webinfocard-promo__padding-inline: 16px;
+    --webinfocard-promo__padding-block: 24px;
+    --webinfocard-promo__grid-template-areas: 
+        "thumbnail header"
+        "toolbox toolbox";
+    --webinfocard-promo__gap: 16px;
+
+    --webinfocard-item__grid-template-columns: minmax(100px, auto) 2fr;
+    --webinfocard-item__gap: 16px;
+    --webinfocard-item__figure__inline-size: 120px;
+
+    --webinfocard-promo-header__align-self: unset;
+    --webinfocard-promo-toolbox__align-self: unset;
+    --webinfocard-promo-figure-figure-inline-size: 48px;
+
+    --webinfocard__padding-inline: 16px;
+    --webinfocard__padding-block: 24px;
+    --webinfocard__gap: 12px;
+
     background: var(--color-gray-4);
     border-radius: 8px;
-    padding-inline: 16px;
-    padding-block: 24px;
+    padding-inline: var(--webinfocard__padding-inline);
+    padding-block: var(--webinfocard__padding-block);
     text-align: center;
     display: flex;
     flex-flow: column wrap;
@@ -23,11 +42,11 @@ container.WebInfoCard__container{
         padding-block: 0;
         background: none;
         display: grid;
-        grid-template-columns: minmax(100px, 1fr) 2fr;
+        grid-template-columns: var(--webinfocard-item__grid-template-columns);
         grid-template-areas:
             "thumbnail header"
             "thumbnail header";
-        gap: 16px;
+        gap: var(--webinfocard-item__gap);
 
         &:has(.WebInfoCard__toolbox){
             grid-template-areas:
@@ -42,37 +61,42 @@ container.WebInfoCard__container{
             align-items: start;
         }
 
-        > .WebInfoCard__thumbnail{
-            min-block-size: 100px;
+        > .WebInfoCard__figure{
+            /* min-block-size: 100px; */
+            inline-size: var(--webinfocard-item__figure__inline-size);
         }
     }
 
     &[promo]{
+        padding-inline: var(--webinfocard-promo__padding-inline);
+        padding-block: var(--webinfocard-promo__padding-block);
         display: grid;
         grid-template-columns: minmax(160px, 1fr) 1fr;
-        grid-template-areas:
-            "thumbnail header"
-            "toolbox toolbox";
-        gap: 16px;
+        grid-template-areas: var(--webinfocard-promo__grid-template-areas);
+        align-items: center;
+        gap: var(--webinfocard-promo__gap);
 
         > header{
             text-align: start;
+            align-self: var(--webinfocard-promo-header__align-self);
         }
 
         > .WebInfoCard__toolbox{
             padding-block: 0;
+            align-self: var(--webinfocard-promo-toolbox__align-self);
         }
 
-        > .WebInfoCard__thumbnail{
+        > .WebInfoCard__figure{
             min-block-size: 160px;
 
             > figure{
-                inline-size: 48px;
+                inline-size: var(--webinfocard-promo-figure-figure-inline-size);
             }
         }
     }
 
     > header{
+        max-inline-size: 420px;
         grid-area: header;
         display: flex;
         flex-flow: column wrap;
@@ -97,9 +121,10 @@ container.WebInfoCard__container{
         }
     }
 
-    > .WebInfoCard__thumbnail{
+    > .WebInfoCard__figure{
         position: relative;
         inline-size: 100%;
+        max-inline-size: 480px;
         min-block-size: 120px;
         aspect-ratio: 1 / 1;
         background: var(--color-gray-2);
@@ -123,5 +148,31 @@ container.WebInfoCard__container{
         > img{
             border-radius: 8px;
         }
+    }
+
+    @container webinfocard (min-inline-size: 330px){
+        --webinfocard__padding-inline: 32px;
+        --webinfocard__padding-block: 36px;
+        --webinfocard__gap: 16px;
+    }
+
+    @container webinfocard (min-inline-size: 672px){
+        --webinfocard__padding-inline: 64px;
+        --webinfocard__padding-block: 40px;
+        --webinfocard__gap: 24px;
+
+        --webinfocard-promo__padding-inline: 40px;
+        --webinfocard-promo__padding-block: 32px;
+        --webinfocard-promo__grid-template-areas: 
+            "thumbnail header"
+            "thumbnail toolbox";
+        --webinfocard-promo__gap: 24px 32px;
+
+        --webinfocard-item__gap: 24px;
+        --webinfocard-item__figure__inline-size: 140px;
+
+        --webinfocard-promo-header__align-self: end;
+        --webinfocard-promo-toolbox__align-self: start;
+        --webinfocard-promo-figure-figure-inline-size: 64px;
     }
 }

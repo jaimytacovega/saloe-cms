@@ -32,7 +32,7 @@ const WebInfoCard = ({
                         `
                         : ''
                 }
-                <div class="WebInfoCard__thumbnail">
+                <div class="WebInfoCard__figure">
                     ${
                         isThumbnailWithTag
                             ? html`

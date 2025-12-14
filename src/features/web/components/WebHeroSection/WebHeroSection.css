@@ -3,27 +3,51 @@ container.WebHeroSection__container{
 
     &:has(+ .WebStickySection__container){
         > .WebHeroSection{
-            padding-block: 56px 0;
+            padding-block: var(--webherosection__padding-block) 0;
         }
     }
 }
 
 .WebHeroSection{
-    padding-block: 56px;
-    padding-inline: 24px;
+    --webherosection__padding-inline: 24px;
+    --webherosection__padding-block: 56px;
+    --webherosection__gap: 48px;
+
+    --webherosection-header__max-inline-size: 420px;
+
+    --webherosection-thumbnail__max-inline-size: 500px;
+    --webherosection-thumbnail__min-block-size: 280px;
+
+    padding-inline: var(--webherosection__padding-inline);
+    padding-block: var(--webherosection__padding-block);
     display: flex;
     flex-flow: column wrap;
-    gap: 48px;
+    align-items: center;
+    gap: var(--webherosection__gap);
 
     &[hero-image]{
         padding-inline: 0;
 
         > header{
-            padding-inline: 24px;
+            max-inline-size: calc(var(--webherosection-header__max-inline-size) + 100px);
         }
 
-        > .WebHeroSection__thumbnail{
+        > .WebHeroSection__figure{
+            position: relative;
+            max-inline-size: 100%;
             border-radius: 0;
+
+            &::before{
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: var(--color-black);
+                opacity: .4;
+            }
+
+            > img{
+                border-radius: 0;
+            }
         }
     }
 
@@ -32,6 +56,7 @@ container.WebHeroSection__container{
     }
 
     > header{
+        max-inline-size: var(--webherosection-header__max-inline-size);
         text-align: center;
         display: flex;
         flex-flow: column wrap;
@@ -66,14 +91,25 @@ container.WebHeroSection__container{
         
     }
 
-    > .WebHeroSection__thumbnail{
+    > .WebHeroSection__figure{
         inline-size: 100%;
-        min-block-size: 280px;
+        max-inline-size: var(--webherosection-thumbnail__max-inline-size);
+        min-block-size: var(--webherosection-thumbnail__min-block-size);
         background: var(--color-gray-3);
         border-radius: 8px;
 
         > img{
             border-radius: 8px;
+            inline-size: 100%;
+            block-size: 100%;
+            object-fit: cover;
         }
+    }
+
+    @container webherosection (min-inline-size: 768px){
+        --webherosection__padding-inline: 48px;
+        --webherosection__padding-block: 80px;
+        --webherosection__gap: 64px;
+
     }
 }

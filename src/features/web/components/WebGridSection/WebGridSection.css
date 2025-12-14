@@ -3,11 +3,14 @@ container.WebGridSection__container{
 }
 
 .WebGridSection{
-    padding-inline: 16px;
-    padding-block: 56px;
+    --webgridsection__padding-inline: 16px;
+    --webgridsection__padding-block: 56px;
+    --webgridsection__gap: 32px;
+    padding-inline: var(--webgridsection__padding-inline);
+    padding-block: var(--webgridsection__padding-block);
     display: flex;
     flex-flow: column nowrap;
-    gap: 32px;
+    gap: var(--webgridsection__gap);
 
     &[item]{
         padding-inline: 0;
@@ -17,10 +20,15 @@ container.WebGridSection__container{
 
     > header{
         display: flex;
-        flex-flow: row wrap;
+        flex-flow: column wrap;
         gap: 1ch;
 
         > p{
+            display: flex;
+            flex-flow: row wrap;
+            /* justify-content: space-between; */
+            gap: .5ch;
+
             > :is(a, button){
                 font-family: var(--font-family-semibold);
             }
@@ -36,5 +44,11 @@ container.WebGridSection__container{
         &[columns="4"]{
             --columns: 2;
         }
+    }
+
+    @container webgridsection (min-inline-size: 768px){
+        --webgridsection__padding-inline: 48px;
+        --webgridsection__padding-block: 80px;
+        --webgridsection__gap: 48px;
     }
 }

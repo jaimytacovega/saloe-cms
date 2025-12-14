@@ -1,21 +1,35 @@
+body:has(.WebStickySection[sticky]){
+    overflow: hidden;
+}
+
 container.WebStickySection__container{
     container: webstickysection / inline-size;
+
+    &:has(> .WebStickySection[sticky]){
+        position: sticky;
+        top: var(--topmenu-block-size);
+        left: 0;
+        z-index: 3;
+    }
 }
 
 .WebStickySection{
+    --webstickysection__padding-inline: 16px;
+    --webstickysection__padding-block: 56px;
+
     background: var(--color-black);
     color: var(--color-white);
-    padding-inline: 16px;
-    padding-block: 56px;
+    padding-inline: var(--webstickysection__padding-inline);
+    padding-block: var(--webstickysection__padding-block);
     display: flex;
     flex-flow: column wrap;
     gap: 24px;
 
     &[sticky]{
-        position: sticky;
+        /* position: sticky;
         top: var(--topmenu-block-size);
         left: 0;
-        z-index: 3;
+        z-index: 3; */
         min-block-size: calc(100svh - var(--topmenu-block-size));
         padding-block: 32px;
 
@@ -86,6 +100,11 @@ container.WebStickySection__container{
             padding-block: 14px !important;
             padding-inline: 20px !important;
         }
+    }
+
+    @container webstickysection (min-inline-size: 768px){
+        --webstickysection__padding-inline: 48px;
+        --webstickysection__padding-block: 80px;
     }
 }
 

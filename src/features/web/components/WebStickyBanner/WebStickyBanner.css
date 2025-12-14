@@ -7,8 +7,9 @@ container.WebStickyBanner__container{
 }
 
 .WebStickyBanner{
+    --webstickybanner__padding-inline: 32px;
     text-align: center;
-    padding-inline: 32px;
+    padding-inline: var(--webstickybanner__padding-inline);
     padding-block: 16px;
     background: var(--color-gray-3);
     
@@ -20,5 +21,9 @@ container.WebStickyBanner__container{
         > :is(a, strong){
             font-family: var(--font-family-bold);
         }
+    }
+
+    @container webstickybanner (min-inline-size: 768px){
+        --webstickybanner__padding-inline: 64px;
     }
 }

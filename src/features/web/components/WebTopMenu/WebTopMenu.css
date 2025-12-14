@@ -7,8 +7,9 @@ container.WebTopMenu__container{
 }
 
 .WebTopMenu{
+    --webtopmenu__padding-inline: 16px;
     background: var(--color-white);
-    padding-inline: 16px;
+    padding-inline: var(--webtopmenu__padding-inline);
     padding-block: 8px;
     display: flex;
     flex-flow: row wrap;
@@ -32,5 +33,9 @@ container.WebTopMenu__container{
                 display: none;
             }
         }
+    }
+
+    @container webtopmenu (min-inline-size: 768px){
+        --webtopmenu__padding-inline: 48px;
     }
 }
