@@ -1,6 +1,11 @@
 import * as WebHook from '@/features/web/hooks/WebHook'
 
 
+const MIN_BRANDS_LENGTH = 20
+const MIN_CATEGORIES_LENGTH = 20
+const MIN_SUB_CATEGORIES_LENGTH = 20
+const MIN_PROMOTIONS_LENGTH = 20
+
 const getSubCategoryIdsMapByCategoryIdMap = async ({
     category_subCategories,
 }) => {
@@ -38,6 +43,11 @@ const getRegularAndFeaturedPromotions = ({
 }
 
 export {
+    MIN_BRANDS_LENGTH,
+    MIN_CATEGORIES_LENGTH,
+    MIN_SUB_CATEGORIES_LENGTH,
+    MIN_PROMOTIONS_LENGTH,
+    
     getSubCategoryIdsMapByCategoryIdMap,
     getRegularAndFeaturedPromotions,
 }

@@ -26,7 +26,7 @@ const HomeCategoriesAndPromosGridSections = async () => {
     let promoIndex = 0
 
     categories.forEach((category, i) => {
-        const columns = i % 2 === 0 ? 4 : 2
+        const columns = i % 2 === 0 ? '2mobile4desktop' : '1mobile2desktop'
         result.push(
             HomeCategoryGridSection({
                 category,

@@ -6,6 +6,12 @@ container.WebGridSection__container{
     --webgridsection__padding-inline: 16px;
     --webgridsection__padding-block: 56px;
     --webgridsection__gap: 32px;
+
+    --webgridsection-grid__columns_1mobile2desktop: 1;
+    --webgridsection-grid__columns_2mobile4desktop: 2;
+    --webgridsection-grid__columns_1mobile3desktop: 1;
+    --webgridsection-grid__gap: 12px;
+
     padding-inline: var(--webgridsection__padding-inline);
     padding-block: var(--webgridsection__padding-block);
     display: flex;
@@ -17,6 +23,13 @@ container.WebGridSection__container{
         padding-block: 0;
         gap: 16px;
     }
+
+    /* &[sticky]{
+        position: sticky;
+        top: var(--topmenu-block-size);
+        left: 0;
+        z-index: 3;
+    } */
 
     > header{
         display: flex;
@@ -36,13 +49,16 @@ container.WebGridSection__container{
     }
 
     > .WebGridSection__grid{
-        --columns: 1;
         display: grid;
-        grid-template-columns: repeat(var(--columns), 1fr);
-        gap: 12px;
+        grid-template-columns: repeat(var(--webgridsection-grid__columns_1mobile2desktop), 1fr);
+        gap: var(--webgridsection-grid__gap);
 
-        &[columns="4"]{
-            --columns: 2;
+        &[columns="2mobile4desktop"]{
+            grid-template-columns: repeat(var(--webgridsection-grid__columns_2mobile4desktop), 1fr);
+        }
+
+        &[columns="1mobile3desktop"]{
+            grid-template-columns: repeat(var(--webgridsection-grid__columns_1mobile3desktop), 1fr);
         }
     }
 
@@ -50,5 +66,16 @@ container.WebGridSection__container{
         --webgridsection__padding-inline: var(--web__padding-inline);
         --webgridsection__padding-block: 80px;
         --webgridsection__gap: 48px;
+    }
+
+    @container webgridsection (min-inline-size: 1024px){
+        --webgridsection-grid__columns_1mobile2desktop: 2;
+        --webgridsection-grid__columns_2mobile4desktop: 3;
+        --webgridsection-grid__gap: 24px;
+    }
+
+    @container webgridsection (min-inline-size: 1280px){
+        --webgridsection-grid__columns_2mobile4desktop: 4;
+        --webgridsection-grid__columns_1mobile3desktop: 3;
     }
 }

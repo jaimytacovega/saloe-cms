@@ -3,6 +3,8 @@ import { html } from 'saloe/html'
 import WebGridSection from '@/features/web/components/WebGridSection'
 import WebInfoCard from '@/features/web/components/WebInfoCard'
 
+import { MIN_BRANDS_LENGTH } from '@/features/web/utils'
+
 
 const ItemGrid = ({
     category,
@@ -72,7 +74,14 @@ const WebStickySection = ({
                     <p>Selecciona una o varias marcas y mira lo que tenemos disponible</p>
                     <nav>
                         ${
-                            brands.map((brand) => {
+                            (
+                                brands.length < 1
+                                    ? []
+                                    : Array.from(
+                                        { length: MIN_BRANDS_LENGTH },
+                                        (_, i) => brands[i % brands.length]
+                                    )
+                            ).map((brand) => {
                                 return html`
                                     <a href="/">
                                         <img loading="lazy" src="${brand.image.downloadURL}" width="48" height="48" alt="Filtrar por marca ${brand.name}">

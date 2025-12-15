@@ -7,15 +7,18 @@ container.WebNavigation__container{
 }
 
 .WebNavigation{
+    --webnavigation__padding-inline: 0;
+    --webnavigation-nav__padding-inline: 16px;
+
+    padding-inline: var(--webnavigation__padding-inline);
     padding-block: 16px;
     background: var(--color-gray-4);
     display: flex;
     flex-flow: row nowrap;
     gap: 16px;
 
-    > nav{
-        --webnavigation__padding-inline: 16px;
-        padding-inline: var(--webnavigation__padding-inline);
+    > nav{    
+        padding-inline: var(--webnavigation-nav__padding-inline);
         overflow-y: auto;
         display: flex;
         flex-flow: row nowrap;
@@ -36,14 +39,18 @@ container.WebNavigation__container{
         &::-webkit-scrollbar{
             display: none;
         }
-
-        @container webnavigation (min-inline-size: 768px){
-            --webnavigation__padding-inline: var(--web__padding-inline);
-        }
     }
     
     > button{
         border-radius: 0 !important;
         border-inline: 1px solid var(--color-gray-2);
+    }
+
+    @container webnavigation (min-inline-size: 768px){
+        --webnavigation-nav__padding-inline: var(--web__padding-inline);
+    }
+
+    @container webnavigation (min-inline-size: 1024px){
+        --webnavigation__padding-inline: 0 var(--web__padding-inline);
     }
 }

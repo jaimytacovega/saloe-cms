@@ -1,5 +1,7 @@
 import { html } from 'saloe/html'
 
+import { MIN_CATEGORIES_LENGTH } from '@/features/web/utils'    
+
 
 const WebNavigation = ({
     categories,
@@ -9,7 +11,14 @@ const WebNavigation = ({
             <div class="WebNavigation">
                 <nav>
                     ${
-                        categories.map((category) => html`
+                        (
+                            categories.length < 1
+                                ? []
+                                : Array.from(
+                                    { length: MIN_CATEGORIES_LENGTH },
+                                    (_, i) => categories[i % categories.length]
+                                )
+                        ).map((category) => html`
                             <button>${category.name}</button>
                         `).join('')
                     }

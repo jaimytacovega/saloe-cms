@@ -110,6 +110,26 @@ container.WebHeroSection__container{
         --webherosection__padding-inline: var(--web__padding-inline);
         --webherosection__padding-block: 80px;
         --webherosection__gap: 64px;
-
     }
+
+    /* @container webherosection (min-inline-size: 1280px){
+        &[hero-image]{
+            padding-block: var(--webherosection__padding-block);
+            flex-flow: row wrap;
+            justify-content: center;
+
+            > header{
+                inline-size: 320px;
+            }
+            
+            > .WebHeroSection__figure{
+                inline-size: 320px;
+                border-radius: 8px;
+
+                > img{
+                    border-radius: 8px;
+                }
+            }
+        }
+    } */
 }

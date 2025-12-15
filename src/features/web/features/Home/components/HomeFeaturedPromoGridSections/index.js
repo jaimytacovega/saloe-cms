@@ -22,8 +22,15 @@ const HomeFeaturedPromoGridSections = async () => {
     }, new Map())
 
     return HomePromoGridSection({
-        columns: 3,
-        grid: featuredPromotions.map((promotion) => {
+        columns: '1mobile3desktop',
+        grid: (
+            featuredPromotions.length < 1
+                ? []
+                : Array.from(
+                    { length: 4 },
+                    (_, i) => featuredPromotions[i % featuredPromotions.length]
+                )
+        ).map((promotion) => {
             return WebInfoCard({
                 title: html`
                     <h5>${promotion.name}</h5>

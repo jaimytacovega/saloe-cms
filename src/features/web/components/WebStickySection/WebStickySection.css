@@ -5,12 +5,12 @@ body:has(.WebStickySection[sticky]){
 container.WebStickySection__container{
     container: webstickysection / inline-size;
 
-    &:has(> .WebStickySection[sticky]){
+    /* &:has(> .WebStickySection[sticky]){
         position: sticky;
         top: var(--topmenu-block-size);
         left: 0;
         z-index: 3;
-    }
+    } */
 }
 
 .WebStickySection{
@@ -26,10 +26,6 @@ container.WebStickySection__container{
     gap: 24px;
 
     &[sticky]{
-        /* position: sticky;
-        top: var(--topmenu-block-size);
-        left: 0;
-        z-index: 3; */
         min-block-size: calc(100svh - var(--topmenu-block-size));
         padding-block: 32px;
 
@@ -65,7 +61,7 @@ container.WebStickySection__container{
     > header{
         inline-size: 100%;
         display: flex;
-        flex-flow: row wrap;
+        flex-flow: column wrap;
         gap: 1ch;
 
         > nav{
