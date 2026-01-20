@@ -10,6 +10,8 @@ const page = async ({
     env,
     cookies,
 }) => {
+    const { searchParams } = new URL(request.url)
+
     return stream({
         head: () => html`
             ${
@@ -19,7 +21,8 @@ const page = async ({
         body: async () => html`
             ${
                 await HomePage({
-                    isSearch: false,
+                    isSearch: true,
+                    searchParams,
                 })
             }
         `,

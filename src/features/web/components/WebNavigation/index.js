@@ -11,14 +11,7 @@ const WebNavigation = ({
             <div class="WebNavigation">
                 <nav>
                     ${
-                        (
-                            categories.length < 1
-                                ? []
-                                : Array.from(
-                                    { length: MIN_CATEGORIES_LENGTH },
-                                    (_, i) => categories[i % categories.length]
-                                )
-                        ).map((category) => html`
+                        categories?.map((category) => html`
                             <button>${category.name}</button>
                         `).join('')
                     }

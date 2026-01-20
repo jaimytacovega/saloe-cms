@@ -2,6 +2,7 @@ import { html } from 'saloe/html'
 
 import WebGridSection from '@/features/web/components/WebGridSection'
 import WebInfoCard from '@/features/web/components/WebInfoCard'
+import WebSearchButton from '@/features/web/components/WebSearchButton'
 
 import { MIN_BRANDS_LENGTH } from '@/features/web/utils'
 
@@ -36,9 +37,9 @@ const ItemGrid = ({
 const PromotionsGrid = ({
     promotions,
 }) => WebGridSection({
-    title: html`
+    title: promotions.length > 0 ? html`
         <h5>Promociones</h5>
-    `,
+    ` : '',
     grid: promotions.map((promotion) => {
         return WebInfoCard({
             title: html`
@@ -61,32 +62,37 @@ const PromotionsGrid = ({
 })
 
 const WebStickySection = ({
+    id,
     brands,
     categories,
     subCategoryIdsMapByCategoryIdMap,
     promotions,
+    isSearch = false,
+    filteredBrandsMap = new Map(),
 }) => {
     return html`
-        <container class="WebStickySection__container">
-            <section class="WebStickySection">
+        <container 
+            class="WebStickySection__container" 
+            ${id ? `id="${id}"` : ''}
+        >
+            <section 
+                class="WebStickySection"
+                ${isSearch ? 'sticky' : ''}
+            >
                 <header>
                     <h3>¿Qué marcas estas buscando?</h3>
                     <p>Selecciona una o varias marcas y mira lo que tenemos disponible</p>
                     <nav>
                         ${
-                            (
-                                brands.length < 1
-                                    ? []
-                                    : Array.from(
-                                        { length: MIN_BRANDS_LENGTH },
-                                        (_, i) => brands[i % brands.length]
-                                    )
-                            ).map((brand) => {
-                                return html`
-                                    <a href="/">
+                            brands?.map((brand) => {
+                                return WebSearchButton({
+                                    key: 'brandIds',
+                                    param: brand.id,
+                                    isSelected: filteredBrandsMap.has(brand.id),
+                                    children: html`
                                         <img loading="lazy" src="${brand.image.downloadURL}" width="48" height="48" alt="Filtrar por marca ${brand.name}">
-                                    </a>
-                                `
+                                    `,
+                                })
                             }).join('')
                         }
                     </nav>
@@ -96,6 +102,7 @@ const WebStickySection = ({
                         categories.map((category) => {
                             const subCategoryIdsMap = subCategoryIdsMapByCategoryIdMap.get(category.id)
                             const subCategories = [...(subCategoryIdsMap ?? new Map()).values()]
+                            
                             return ItemGrid({
                                 category,
                                 subCategories,
@@ -110,7 +117,13 @@ const WebStickySection = ({
                     }
                 </div>
                 <footer>
-                    <button class="Button PrimaryButton BorderedGray1" full-width content-center>Regresar al inicio</button>
+                    <a 
+                        href="/"
+                        class="Button PrimaryButton BorderedGray1" 
+                        full-width content-center
+
+                        on-click="HomeBrandFilterStickySectionCloseButton.click"
+                    >Regresar al inicio</a>
                 </footer>
             </section>
         </container>

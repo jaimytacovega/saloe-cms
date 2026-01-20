@@ -42,6 +42,15 @@ const getRegularAndFeaturedPromotions = ({
     }, { regularPromotions: [], featuredPromotions: [] })
 }
 
+const getFilteredBrandsMapBySearchParams = ({
+    searchParams,
+}) => {
+    return (searchParams.get('brandIds') ?? '').split(',')?.map((brandId) => brandId.trim())?.reduce((acc, brandId) => {
+        acc.set(brandId, true)
+        return acc
+    }, new Map())
+}
+
 export {
     MIN_BRANDS_LENGTH,
     MIN_CATEGORIES_LENGTH,
@@ -50,4 +59,6 @@ export {
     
     getSubCategoryIdsMapByCategoryIdMap,
     getRegularAndFeaturedPromotions,
+
+    getFilteredBrandsMapBySearchParams,
 }

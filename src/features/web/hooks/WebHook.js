@@ -39,6 +39,36 @@ const useListCategories = ({
     })
 }
 
+const useListCategoriesByBrandIds = ({
+    brandIds,
+    ttl,
+}) => {
+    return useQuery({
+        queryKey: ['web', 'listCategoriesByBrandIds', brandIds.join(',')],
+        queryFn: async () => {
+            const searchParams = new URLSearchParams()
+            searchParams.set('page', '1')
+            searchParams.set('pageSize', '20')
+            searchParams.set('sort', 'updatedAt:desc')
+            if (brandIds.length > 0) searchParams.set('filter', `brandIds:${OperatorSymbols.ContainsAny.at(0)}${brandIds.join(';')}${OperatorSymbols.ContainsAny.at(1)}`)
+
+            const { data: categories } = await queryBySearchParams({
+                query: ({ listArguments }) => {
+                    return CategoryHook.useList({
+                        source: Source.FIREBASE,
+                        ...listArguments,
+                        ttl: 0,
+                    })
+                },
+                searchParams,
+            })
+
+            return { data: categories }
+        },
+        ttl,
+    })
+}
+
 const useListBrandsByCategories = ({
     categories,
     ttl,
@@ -54,7 +84,7 @@ const useListBrandsByCategories = ({
             }, new Set())]
         
             const searchParams = new URLSearchParams()
-            searchParams.set('filter', `id:${OperatorSymbols.In.at(0)}${ids.join(';')}${OperatorSymbols.In.at(1)}`)
+            if (ids.length > 0) searchParams.set('filter', `id:${OperatorSymbols.In.at(0)}${ids.join(';')}${OperatorSymbols.In.at(1)}`)
         
             const { data: brands } = await queryBySearchParams({
                 query: ({ listArguments }) => {
@@ -153,6 +183,7 @@ const useListPromotionsByBrands = ({
     ttl,
 }) => {
     const brandIds = brands.map((brand) => brand.id)
+
     return useQuery({
         queryKey: ['web', 'listPromotionsByBrands', brandIds.join(',')],
         queryFn: async () => {
@@ -197,6 +228,7 @@ const useGetProductById = ({
 
 export {
     useListCategories,
+    useListCategoriesByBrandIds,
 
     useListBrandsByCategories,
 

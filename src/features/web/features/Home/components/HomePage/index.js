@@ -8,23 +8,40 @@ import HomeCategoriesAndPromosGridSections from '@/features/web/features/Home/co
 import HomeFeaturedPromoGridSections from '@/features/web/features/Home/components/HomeFeaturedPromoGridSections'
 
 
-const HomePage = async () => {
+const HomePage = async ({
+    isSearch = false,
+    searchParams = new URLSearchParams(),
+}) => {
+    
     return html`
         <main>
             ${
-                await HomeMenu()
+                await HomeMenu({
+                    isSearch,
+                })
             }
             ${
-                HomeHeroSection()
+                isSearch
+                    ? ''
+                    : HomeHeroSection()
             }
             ${
-                await HomeBrandFilterStickySection()
+                await HomeBrandFilterStickySection({
+                    isSearch,
+                    searchParams,
+                })
             }
             ${
-                await HomeCategoriesAndPromosGridSections()
-            }
-            ${
-                await HomeFeaturedPromoGridSections()
+                isSearch
+                    ? ''
+                    : html`
+                        ${
+                            await HomeCategoriesAndPromosGridSections()
+                        }
+                        ${
+                            await HomeFeaturedPromoGridSections()
+                        }
+                    `
             }
             ${
                 await HomeQuotationDialog()

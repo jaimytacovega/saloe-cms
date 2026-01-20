@@ -63,3 +63,9 @@ import * as A31 from '@/features/cms/features/SubCategory/components/SubCategory
 console.log(A31)
 import * as A32 from '@/features/cms/features/SubCategory/components/SubCategoryDeleteDialog/actions/SubCategoryDeleteDialogForm.submit'
 console.log(A32)
+import * as A33 from '@/features/web/components/WebSearchButton/actions/WebSearchButton.click'
+console.log(A33)
+import * as A34 from '@/features/web/features/Home/components/HomeBrandFilterStickySection/actions/HomeBrandFilterStickySectionCloseButton.click'
+console.log(A34)
+import * as A35 from '@/features/web/features/Home/components/HomeBrandFilterStickySection/actions/HomeBrandFilterStickySectionNavigateButton.click'
+console.log(A35)
