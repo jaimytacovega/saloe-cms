@@ -1,0 +1,35 @@
+dialog[role="toast"] {
+    --toast-padding-inline: 16px;
+    
+    position: fixed;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, 100%);
+    inline-size: 100%;
+    min-inline-size: 320px;
+    max-inline-size: calc(100% - calc(var(--toast-padding-inline) * 2));
+    padding-inline: 16px;
+    padding-block: 12px;
+    border: 2px solid var(--color-gray-4);
+    max-inline-size: 320px;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .1);
+    opacity: 0;
+    transition: transform .3s, opacity .3s, display .3s;
+    transition-behavior: allow-discrete;
+
+    &:popover-open {
+        transform: translate(-50%, -200%);
+        opacity: 1;
+
+        @starting-style {
+            transform: translate(-50%, 100%);
+            opacity: 0;
+            opacity: 1;
+        }
+    }
+
+    &::backdrop {
+        display: none;
+    }
+}

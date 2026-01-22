@@ -7,9 +7,10 @@ const Dialog = ({
     className,
 }) => {
     return html`
-        <dialog 
-            popover 
+        <dialog  
             id="${id}" 
+            popover
+            role="dialog"
             ${
                 Boolean(className)
                     ? `class="${className}"`

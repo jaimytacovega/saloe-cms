@@ -29,6 +29,7 @@ const AddQuotationSchema = z.object({
     attachments: z.array(z.instanceof(File)).optional(),
     request: z.string().trim().optional(),
     deliveryLocation: z.string().trim().optional(),
+    subCategoryIds: z.array(z.string()).optional(),
     promotionIds: z.array(z.string()).optional(),
     type: z.enum(Object.values(QUOTATION_TYPES), 'El tipo de cotización debe ser uno de los valores permitidos'),
     status: z.enum(Object.values(QUOTATION_STATUSES), 'El estado debe ser uno de los valores permitidos'),

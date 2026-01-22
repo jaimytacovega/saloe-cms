@@ -3,6 +3,7 @@ import { html } from 'saloe/html'
 import HomePromoSection from '@/features/web/features/Home/components/HomePromoSection'
 import HomeCategoryGridSection from '@/features/web/features/Home/components/HomeCategoryGridSection'
 import WebInfoCard from '@/features/web/components/WebInfoCard'
+import WebAddToQuotationButton, { AddToQuotationButtonTypes } from '@/features/web/components/WebAddToQuotationButton'
 
 import * as WebHook from '@/features/web/hooks/WebHook'
 import {
@@ -40,9 +41,17 @@ const HomeCategoriesAndPromosGridSections = async () => {
                             <p>${subCategory.description}</p>
                         `,
                         toolbox: html`
-                            <button class="Button PrimaryButton ColorBlue">
-                                <u>Me interesa</u>
-                            </button>
+                            ${
+                                WebAddToQuotationButton({
+                                    toastId: `addSubCategoryToQuotationToast-${subCategory.id}`,
+                                    toastMessage: 'Subcategoría agregada al pedido',
+                                    toastTimeout: 2_500,
+                                    itemId: subCategory.id,
+                                    itemType: AddToQuotationButtonTypes.SubCategory,
+                                    className: 'Button PrimaryButton ColorBlue',
+                                    children: html`<u>Me interesa</u>`
+                                })
+                            }
                         `,
                         thumbnail: subCategory.image.downloadURL,
                     })

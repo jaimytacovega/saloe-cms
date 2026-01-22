@@ -27,6 +27,7 @@ const WebMeta = ({
         <link rel="stylesheet" href="/Input.css">
         <link rel="stylesheet" href="/Form.css">
         <link rel="stylesheet" href="/Dialog.css">
+        <link rel="stylesheet" href="/Toast.css">
 
         <link rel="stylesheet" href="/WebTopMenu.css">
         <link rel="stylesheet" href="/WebStickyBanner.css">
