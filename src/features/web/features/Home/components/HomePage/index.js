@@ -2,7 +2,7 @@ import { html } from 'saloe/html'
 
 import HomeMenu from '@/features/web/features/Home/components/HomeMenu'
 import HomeHeroSection from '@/features/web/features/Home/components/HomeHeroSection'
-import HomeQuotationDialog from '@/features/web/features/Home/components/HomeQuotationDialog'
+import WebQuotationDialog from '@/features/web/components/WebQuotationDialog'
 import HomeBrandFilterStickySection from '@/features/web/features/Home/components/HomeBrandFilterStickySection'
 import HomeCategoriesAndPromosGridSections from '@/features/web/features/Home/components/HomeCategoriesAndPromosGridSections'
 import HomeFeaturedPromoGridSections from '@/features/web/features/Home/components/HomeFeaturedPromoGridSections'
@@ -44,7 +44,7 @@ const HomePage = async ({
                     `
             }
             ${
-                await HomeQuotationDialog()
+                await WebQuotationDialog()
             }
         </main>
     `

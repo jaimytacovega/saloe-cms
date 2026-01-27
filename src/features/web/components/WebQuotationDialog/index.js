@@ -6,6 +6,7 @@ import InputFile from '@/shared/components/InputFile'
 import Select from '@/shared/components/Select'
 import Textarea from '@/shared/components/Textarea'
 import MultipleSelect from '@/shared/components/MultipleSelect'
+import { get as getQuotation } from '@/features/web/components/WebQuotation'
 
 import { CLIENT_TYPES, CLIENT_TYPE_LABELS } from '@/shared/repositories/QuotationRepository'
 import { getCMSCorrelative } from '@/shared/utils/utils'
@@ -13,16 +14,39 @@ import { getCMSCorrelative } from '@/shared/utils/utils'
 import * as WebHook from '@/features/web/hooks/WebHook'
 
 
-const HomeQuotationDialog = async () => {
+const update = async () => {
+    const quotation = getQuotation()
+    const form = document?.getElementById('WebQuotationDialog')?.querySelector('form')
+
+    console.log('quotation =', quotation)
+
+    form.querySelector('#clientName').value = quotation.client.name
+    form.querySelector('#clientCode').value = quotation.client.code
+    form.querySelector('#clientEmail').value = quotation.client.email
+    form.querySelector('#clientPhone').value = quotation.client.phone
+    form.querySelector('#clientType').value = quotation.client.type
+    form.querySelector('#request').value = quotation.request
+    form.querySelector('#deliveryLocation').value = quotation.deliveryLocation
+    // form.querySelector('#promotionIds').selectedOptions = quotation.promotionIds.map((promotionId) => {
+    //     return {
+    //         value: promotionId,
+    //     }
+    // })
+}
+
+const WebQuotationDialog = async ({
+    client = '',
+    request = '',
+    deliveryLocation = '',
+    promotionIds = [],
+} = {}) => {
     const { data: categories } = await WebHook.useListCategories({ ttl: 10_000 })
     const { data: brands } = await WebHook.useListBrandsByCategories({ categories, ttl: 10_000 })
     const { data: promotions } = await WebHook.useListPromotionsByBrands({ brands, ttl: 10_000 })
 
-    const quotation = {}
-
     return Dialog({
-        id: 'HomeQuotationDialog',
-        className: 'HomeQuotationDialog',
+        id: 'WebQuotationDialog',
+        className: 'WebQuotationDialog',
         children: html`
             <form>
                 <header>
@@ -35,7 +59,7 @@ const HomeQuotationDialog = async () => {
                             Input({
                                 id: 'clientName',
                                 label: 'Nombre completo o Razón social',
-                                value: '',
+                                value: client?.name ?? '',
                                 placeholder: 'Ingresa el nombre completo o razón social',
                             })
                         }
@@ -43,7 +67,7 @@ const HomeQuotationDialog = async () => {
                             Input({
                                 id: 'clientCode',
                                 label: 'RUC',
-                                value: '',
+                                value: client?.code ?? '',
                                 placeholder: 'Ingresa el RUC',
                             })
                         }
@@ -51,7 +75,7 @@ const HomeQuotationDialog = async () => {
                             Input({
                                 id: 'clientEmail',
                                 label: 'Correo electrónico',
-                                value: '',
+                                value: client?.email ?? '',
                                 placeholder: 'Ingresa el correo electrónico',
                             })
                         }
@@ -59,7 +83,7 @@ const HomeQuotationDialog = async () => {
                             Input({
                                 id: 'clientPhone',
                                 label: 'Celular (con Whatsapp)',
-                                value: '',
+                                value: client?.phone ?? '',
                                 placeholder: 'Ingresa el celular',
                             })
                         }
@@ -71,7 +95,7 @@ const HomeQuotationDialog = async () => {
                                     value: type,
                                     label: CLIENT_TYPE_LABELS[type],
                                 })),
-                                value: '',
+                                value: client?.type ?? '',
                             })
                         }
                         ${
@@ -89,7 +113,7 @@ const HomeQuotationDialog = async () => {
                             Textarea({
                                 id: 'request',
                                 label: 'Solicitud de cotización (opcional)',
-                                value: '',
+                                value: request ?? '',
                                 placeholder: 'Ingresa la solicitud de cotización',
                             })
                         }
@@ -97,7 +121,7 @@ const HomeQuotationDialog = async () => {
                             Input({
                                 id: 'deliveryLocation',
                                 label: 'Lugar de entrega',
-                                value: '',
+                                value: deliveryLocation ?? '',
                                 placeholder: 'Ingresa el lugar de entrega',
                             })
                         }
@@ -109,7 +133,7 @@ const HomeQuotationDialog = async () => {
                                     value: promotion.id,
                                     label: `${getCMSCorrelative({ collectionName: 'promotions', count: promotion.count })}: ${promotion.name}`,
                                 })),
-                                selectedOptions: (quotation?.promotionIds ?? []).reduce((acc, promotionId) => {
+                                selectedOptions: (promotionIds ?? []).reduce((acc, promotionId) => {
                                     acc[promotionId] = true
                                     return acc
                                 }, {}),
@@ -129,4 +153,8 @@ const HomeQuotationDialog = async () => {
     })
 }
 
-export default HomeQuotationDialog
+export default WebQuotationDialog
+
+export {
+    update,
+}

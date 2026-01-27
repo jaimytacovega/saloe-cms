@@ -35,7 +35,7 @@ const WebMeta = ({
         <link rel="stylesheet" href="/WebHeroSection.css">
         <link rel="stylesheet" href="/WebGridSection.css">
         <link rel="stylesheet" href="/WebInfoCard.css">
-        <link rel="stylesheet" href="/HomeQuotationDialog.css">
+        <link rel="stylesheet" href="/WebQuotationDialog.css">
         <link rel="stylesheet" href="/WebStickySection.css">
         <link rel="stylesheet" href="/WebLegalsSection.css">
 

@@ -23,7 +23,8 @@ const WebTopMenu = () => {
                     </a>
                     <button 
                         class="Button PrimaryButton PrimaryBlue"
-                        popovertarget="HomeQuotationDialog"
+
+                        on-click="WebQuotationDialogTargetButton.click"
                     >
                         <span>Cotizar pedido</span>
                     </button>

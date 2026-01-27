@@ -1,4 +1,4 @@
-import { QUOTATION_TYPES, QUOTATION_STATUSES } from '@/shared/repositories/QuotationRepository'
+import { QUOTATION_TYPES, QUOTATION_STATUSES, CLIENT_TYPES } from '@/shared/repositories/QuotationRepository'
 
 
 const update = ({       
@@ -33,6 +33,17 @@ const get = () => {
 const init = () => {
     const now = new Date()
     const quotationData = {
+        client: {
+            name: '',
+            code: '',
+            email: '',
+            phone: '',
+            type: CLIENT_TYPES.OTHER,
+        },
+        clientType: CLIENT_TYPES.OTHER,
+        attachments: [],
+        request: '',
+        deliveryLocation: '',
         subCategoryIds: [],
         promotionIds: [],
         type: QUOTATION_TYPES.WEB,
