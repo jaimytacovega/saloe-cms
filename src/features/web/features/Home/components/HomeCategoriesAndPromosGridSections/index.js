@@ -21,7 +21,7 @@ const HomeCategoriesAndPromosGridSections = async () => {
     const subCategoryIdsMapByCategoryIdMap = await getSubCategoryIdsMapByCategoryIdMap({
         category_subCategories,
     })
-    const { regularPromotions } = getRegularAndFeaturedPromotions({ promotions})
+    const { regularPromotions } = getRegularAndFeaturedPromotions({ promotions })
     
     const result = []
     let promoIndex = 0
@@ -64,15 +64,17 @@ const HomeCategoriesAndPromosGridSections = async () => {
         if (shouldInsertPromotion) {
             const promotion = regularPromotions[promoIndex]
             const isReversed = promoIndex % 2 === 1
+            
+            if (promotion){
+                result.push(
+                    HomePromoSection({
+                        promotion,
+                        isReversed,
+                    })
+                )
 
-            result.push(
-                HomePromoSection({
-                    promotion,
-                    isReversed,
-                })
-            )
-
-            promoIndex++
+                promoIndex++
+            }
         }
     })
 

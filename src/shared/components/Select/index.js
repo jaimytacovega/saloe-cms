@@ -6,11 +6,16 @@ const Select = ({
     label,
     options = [],
     value,
+    data = '',
 }) => {
     return html`
         <inputgroup>
             <label for="${id}">${label}</label>
-            <select id="${id}" value="${value ?? ''}">
+            <select 
+                id="${id}" 
+                value="${value ?? ''}"
+                ${data}
+            >
                 <option disabled value="" ${Boolean(value) ? '' : 'selected'}>Selecciona una opción</option>
                 ${
                     options.map((option) => html`

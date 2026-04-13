@@ -3,6 +3,7 @@ import { html } from 'saloe/html'
 import WebGridSection from '@/features/web/components/WebGridSection'
 import WebInfoCard from '@/features/web/components/WebInfoCard'
 import WebSearchButton from '@/features/web/components/WebSearchButton'
+import WebAddToQuotationButton, { AddToQuotationButtonTypes } from '@/features/web/components/WebAddToQuotationButton'
 
 import { MIN_BRANDS_LENGTH } from '@/features/web/utils'
 
@@ -51,7 +52,17 @@ const PromotionsGrid = ({
                 </p>
             `,
             toolbox: html`
-                <button class="Button PrimaryButton PrimaryBlue">Quiero esta promoción</button>
+                ${
+                    WebAddToQuotationButton({
+                        toastId: `addPromotionToQuotationToast-${promotion.id}`,
+                        toastMessage: 'Promoción agregada al pedido',
+                        toastTimeout: 2_500,
+                        itemId: promotion.id,
+                        itemType: AddToQuotationButtonTypes.Promotion,
+                        className: 'Button PrimaryButton PrimaryBlue',
+                        children: 'Quiero esta promoción'
+                    })
+                }
             `,
             isItem: true,
             thumbnail: promotion.image.downloadURL,

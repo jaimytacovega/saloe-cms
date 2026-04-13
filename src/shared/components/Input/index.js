@@ -10,6 +10,7 @@ const Input = ({
     name = '',
     checked = false,
     reverse = false,
+    data = '',
 }) => {
     const labelHtml = label
         ? html`
@@ -25,6 +26,7 @@ const Input = ({
             value="${value}" 
             ${name ? `name="${name}"` : ''}
             ${checked ? `checked` : ''}
+            ${data}
         />
     `
 

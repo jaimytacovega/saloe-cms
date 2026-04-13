@@ -2,6 +2,7 @@ import { html } from 'saloe/html'
 
 import HomePromoGridSection from '@/features/web/features/Home/components/HomePromoGridSection'
 import WebInfoCard from '@/features/web/components/WebInfoCard'
+import WebAddToQuotationButton, { AddToQuotationButtonTypes } from '@/features/web/components/WebAddToQuotationButton'
 
 import * as WebHook from '@/features/web/hooks/WebHook'
 import {
@@ -36,7 +37,17 @@ const HomeFeaturedPromoGridSections = async () => {
                     </p>
                 `,
                 toolbox: html`
-                    <button class="Button PrimaryButton PrimaryBlue">Quiero esta promoción</button>
+                    ${
+                        WebAddToQuotationButton({
+                            toastId: `addPromotionToQuotationToast-${promotion.id}`,
+                            toastMessage: 'Promoción agregada al pedido',
+                            toastTimeout: 2_500,
+                            itemId: promotion.id,
+                            itemType: AddToQuotationButtonTypes.Promotion,
+                            className: 'Button PrimaryButton PrimaryBlue',
+                            children: 'Quiero esta promoción'
+                        })
+                    }
                 `,
                 isThumbnailWithTag: true,
                 isPromo: true,
