@@ -6,6 +6,16 @@ import { keywords } from '@/shared/utils/utils'
 import { searchParamsToListArguments } from '@/shared/services/DatabaseService'
 
 
+const getInputFilePathsMarkedForRemoval = ({ form, inputId }) => {
+    const el = form.querySelector(`#${inputId}__filesToRemove`)
+    if (!el?.value) return {}
+    try {
+        return JSON.parse(decodeURIComponent(el.value))
+    } catch {
+        return {}
+    }
+}
+
 const submit = ({
     e,
     srcElement: form,
@@ -23,6 +33,12 @@ const submit = ({
     const brandIds = Array.from(form.querySelector('#brandIds').selectedOptions).map((option) => option.value.trim())
     const technicalSheetPath = form.querySelector('#technicalSheetPath').value.trim()
     const technicalSheet = form.querySelector('#technicalSheet').files[0]
+    const technicalSheetRemoveMap = getInputFilePathsMarkedForRemoval({ form, inputId: 'technicalSheet' })
+    const removeTechnicalSheet = Boolean(
+        technicalSheetPath
+        && technicalSheetRemoveMap[technicalSheetPath]
+        && !technicalSheet,
+    )
 
     const product = {
         id,
@@ -35,6 +51,7 @@ const submit = ({
         brandIds,
         technicalSheetPath,
         technicalSheet,
+        ...(removeTechnicalSheet ? { removeTechnicalSheet: true } : {}),
         keywords: keywords({ 
             keys: [
                 correlative,

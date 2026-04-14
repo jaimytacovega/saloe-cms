@@ -37,16 +37,23 @@ const ProductHeroSection = async ({
                                 <a
                                     href="${technicalSheetUrl}"
                                     download="${technicalSheetFilename}"
-                                    class="Button PrimaryButton PrimaryBlue"
+                                    class="Button PrimaryButton PrimaryButtonLarge PrimaryBlue"
                                     target="_blank"
                                     rel="noopener noreferrer"
+
+                                    lg
                                 >Descargar ficha técnica</a>
+                                <a href="/" class="Button PrimaryButton PrimaryButtonLarge ColorBlue">
+                                    <u>Regresar al inicio</u>
+                                </a>
                             `
-                            : ''
+                            : html`
+                                <a href="/" class="Button PrimaryButton PrimaryButtonLarge PrimaryBlue">
+                                    Regresar al inicio
+                                </a>
+                            `
                     }
-                    <a href="/" class="Button PrimaryButton ColorBlue">
-                        <u>Regresar al inicio</u>
-                    </a>
+                    
                 `,
                 isReversed: true,
                 thumbnail: product.image.downloadURL,

@@ -156,9 +156,19 @@ const update = async({
 
         if (technicalSheetStorageResult?.err) return technicalSheetStorageResult
         data.technicalSheet = technicalSheetStorageResult.data
+    } else if (data.removeTechnicalSheet) {
+        if (data.technicalSheetPath) {
+            const technicalSheetRemoveResult = await StorageService.remove({
+                source,
+                filePath: data.technicalSheetPath,
+            })
+            if (technicalSheetRemoveResult?.err) return technicalSheetRemoveResult
+        }
+        data.technicalSheet = {}
     }
 
     delete data.technicalSheetPath
+    delete data.removeTechnicalSheet
 
     return DatabaseService.update({
         source,

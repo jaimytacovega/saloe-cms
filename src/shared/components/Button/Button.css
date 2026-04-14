@@ -11,6 +11,11 @@
         min-block-size: 34px;
         gap: 8px;
 
+        &.PrimaryButtonLarge{
+            padding-block: 14px;
+            padding-inline: 20px;
+        }
+
         &.PrimaryGray{
             background: var(--color-gray-3);
             color: var(--color-gray-1);

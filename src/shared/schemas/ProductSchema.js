@@ -45,11 +45,14 @@ const UpdateProductSchema = z.object({
     brandIds: z.array(z.string()).optional(),
     technicalSheetPath: z.string().trim(),
     technicalSheet: z.instanceof(File).optional(),
+    /** Set when the user removed the existing file via InputFile (see `#technicalSheet__filesToRemove`). */
+    removeTechnicalSheet: z.boolean().optional(),
     keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
     updatedAt: DateSchema,
 }).transform((data) => {
     if (data.image === undefined) delete data.image
     if (data.technicalSheet === undefined) delete data.technicalSheet
+    if (data.removeTechnicalSheet === undefined) delete data.removeTechnicalSheet
     return data
 })
 
