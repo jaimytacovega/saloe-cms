@@ -13,6 +13,7 @@ const submit = ({
 
     const name = form.querySelector('#name').value.trim()
     const sku = form.querySelector('#sku').value.trim()
+    const description = form.querySelector('#description').value.trim()
     const image = form.querySelector('#image').files[0]
     const subCategoryIds = Array.from(form.querySelector('#subCategoryIds').selectedOptions).map((option) => option.value.trim())
     const brandIds = Array.from(form.querySelector('#brandIds').selectedOptions).map((option) => option.value.trim())
@@ -22,6 +23,7 @@ const submit = ({
     const product = {
         name,
         sku,
+        description,
         image,
         subCategoryIds,
         brandIds,
