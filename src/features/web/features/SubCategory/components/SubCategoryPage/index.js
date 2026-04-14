@@ -8,14 +8,16 @@ const SubCategoryPage = async ({
     subCategoryId,
 }) => {
     return html`
-        ${
-            await SubCategoryMenu()
-        }
-        ${
-            await SubCategoryHeroSection({
-                subCategoryId,
-            })
-        }
+        <main>
+            ${
+                await SubCategoryMenu()
+            }
+            ${
+                await SubCategoryHeroSection({
+                    subCategoryId,
+                })
+            }
+        </main>
     `
 }
 

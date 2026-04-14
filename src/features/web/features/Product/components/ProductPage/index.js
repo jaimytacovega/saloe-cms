@@ -8,14 +8,16 @@ const ProductPage = async ({
     productId,
 }) => {
     return html`
-        ${
-            await ProductMenu()
-        }
-        ${
-            await ProductHeroSection({
-                productId,
-            })
-        }
+        <main>
+            ${
+                await ProductMenu()
+            }
+            ${
+                await ProductHeroSection({
+                    productId,
+                })
+            }
+        </main>
     `
 }
 

@@ -2,6 +2,7 @@ import { html } from 'saloe/html'
 
 import WebHeroSection from '@/features/web/components/WebHeroSection'
 import WebLegalsSection from '@/features/web/components/WebLegalsSection'
+import WebAddToQuotationButton, { AddToQuotationButtonTypes } from '@/features/web/components/WebAddToQuotationButton'
 
 import * as WebHook from '@/features/web/hooks/WebHook'
 
@@ -28,7 +29,17 @@ const SubCategoryHeroSection = async ({
                     -->
                 `,
                 toolbox: html`
-                    <button class="Button PrimaryButton PrimaryBlue">Me interesa</button>
+                    ${
+                        WebAddToQuotationButton({
+                            toastId: `addSubCategoryToQuotationToast-${subCategory.id}`,
+                            toastMessage: 'Subcategoría agregada al pedido',
+                            toastTimeout: 2_500,
+                            itemId: subCategory.id,
+                            itemType: AddToQuotationButtonTypes.SubCategory,
+                            className: 'Button PrimaryButton PrimaryBlue',
+                            children: 'Me interesa'
+                        })
+                    }
                     <button class="Button PrimaryButton ColorBlue">
                         <u>Regresar al inicio</u>
                     </button>

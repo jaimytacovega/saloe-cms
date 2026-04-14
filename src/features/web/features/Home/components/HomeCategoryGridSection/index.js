@@ -16,9 +16,11 @@ const HomeCategoryGridSection = ({
                 `,
                 description: html`
                     <span>Hasta ${category.brandIds.length} marcas disponibles</span>
+                    <!--
                     <button class="ColorBlue">
                         <u>Descargar catálogos</u>
                     </button>
+                    -->
                 `,
                 grid,
                 columns,
