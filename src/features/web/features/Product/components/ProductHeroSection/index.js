@@ -14,6 +14,9 @@ const ProductHeroSection = async ({
         ttl: 10_000,
     })
 
+    const technicalSheetUrl = product.technicalSheet?.downloadURL
+    const technicalSheetFilename = product.technicalSheet?.path?.split('/').at(-1) ?? 'ficha-tecnica.pdf'
+
     return html`
         ${
             WebHeroSection({
@@ -22,14 +25,28 @@ const ProductHeroSection = async ({
                 `,
                 description: html`
                     <span>${product.description}</span>
+                    <!--
                     <br/>
                     <strong class="ColorRed">Gratis codo 20x90</strong>
+                    -->
                 `,
                 toolbox: html`
-                    <button class="Button PrimaryButton PrimaryBlue">Me interesa</button>
-                    <button class="Button PrimaryButton ColorBlue">
+                    ${
+                        technicalSheetUrl
+                            ? html`
+                                <a
+                                    href="${technicalSheetUrl}"
+                                    download="${technicalSheetFilename}"
+                                    class="Button PrimaryButton PrimaryBlue"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >Descargar ficha técnica</a>
+                            `
+                            : ''
+                    }
+                    <a href="/" class="Button PrimaryButton ColorBlue">
                         <u>Regresar al inicio</u>
-                    </button>
+                    </a>
                 `,
                 isReversed: true,
                 thumbnail: product.image.downloadURL,
