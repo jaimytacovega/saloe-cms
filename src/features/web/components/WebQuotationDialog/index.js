@@ -157,8 +157,12 @@ const WebQuotationDialog = async ({
                     </fieldset>
                 </div>
                 <inputgroup>
-                    <button class="Button PrimaryButton PrimaryGray">
-                        <img src="/img/icon/corner-up-left-black.svg" width="18" height="18" alt="go back">
+                    <button
+                        type="button"
+                        class="Button PrimaryButton PrimaryGray"
+                        onclick="this.closest('dialog')?.hidePopover()"
+                    >
+                        <img src="/img/icon/corner-up-left-black.svg" width="18" height="18" alt="">
                     </button>
                     <hr/>
                     <button type="submit" class="Button PrimaryButton PrimaryBlue">Enviar</button>
