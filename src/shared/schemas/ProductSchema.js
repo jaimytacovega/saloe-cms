@@ -43,16 +43,16 @@ const UpdateProductSchema = z.object({
     imagePath: z.string().min(1, 'La ruta es obligatoria').trim(),
     subCategoryIds: z.array(z.string()).optional(),
     brandIds: z.array(z.string()).optional(),
-    technicalSheetPath: z.string().trim(),
-    technicalSheet: z.instanceof(File).optional(),
-    /** Set when the user removed the existing file via InputFile (see `#technicalSheet__filesToRemove`). */
-    removeTechnicalSheet: z.boolean().optional(),
+    technicalSheets: z.array(z.instanceof(File)).optional(),
+    technicalSheetsToKeep: z.array(FileSchema).optional(),
+    technicalSheetsToRemove: z.array(z.string()).optional(),
     keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
     updatedAt: DateSchema,
 }).transform((data) => {
     if (data.image === undefined) delete data.image
-    if (data.technicalSheet === undefined) delete data.technicalSheet
-    if (data.removeTechnicalSheet === undefined) delete data.removeTechnicalSheet
+    if (data.technicalSheets === undefined) delete data.technicalSheets
+    if (data.technicalSheetsToKeep === undefined) delete data.technicalSheetsToKeep
+    if (data.technicalSheetsToRemove === undefined) delete data.technicalSheetsToRemove
     return data
 })
 

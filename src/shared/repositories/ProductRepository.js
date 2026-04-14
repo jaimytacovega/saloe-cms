@@ -146,29 +146,48 @@ const update = async({
 
     delete data.imagePath
 
-    if (Boolean(data.technicalSheet)) {
-        const technicalSheetStorageResult = await StorageService.update({
+    if (Boolean(data.technicalSheetsToRemove)) {
+        const technicalSheetsRemoveResult = await StorageService.removeMultiple({
             source,
-            file: data.technicalSheet,
-            newFilePath: storagePath({ id: data.id, name: data.technicalSheet.name }),
-            currentFilePath: data.technicalSheetPath,
+            filePaths: data.technicalSheetsToRemove,
         })
 
-        if (technicalSheetStorageResult?.err) return technicalSheetStorageResult
-        data.technicalSheet = technicalSheetStorageResult.data
-    } else if (data.removeTechnicalSheet) {
-        if (data.technicalSheetPath) {
-            const technicalSheetRemoveResult = await StorageService.remove({
-                source,
-                filePath: data.technicalSheetPath,
-            })
-            if (technicalSheetRemoveResult?.err) return technicalSheetRemoveResult
-        }
-        data.technicalSheet = {}
+        if (technicalSheetsRemoveResult?.err) return technicalSheetsRemoveResult
     }
 
-    delete data.technicalSheetPath
-    delete data.removeTechnicalSheet
+    delete data.technicalSheetsToRemove
+
+    const technicalSheets = data.technicalSheets ?? []
+    const addTechnicalSheetsResult = await StorageService.addMultiple({
+        source,
+        files: technicalSheets,
+        paths: technicalSheets.map((sheet) => storagePath({ id: data.id, name: sheet.name })),
+    })
+    if (addTechnicalSheetsResult?.err) return addTechnicalSheetsResult
+
+    const mergedTechnicalSheets = [
+        ...(data.technicalSheetsToKeep ?? []),
+        ...(addTechnicalSheetsResult.data ?? []),
+    ]
+
+    delete data.technicalSheetsToKeep
+    delete data.technicalSheets
+
+    const finalSheet = mergedTechnicalSheets.length ? mergedTechnicalSheets.at(-1) : null
+    const finalPath = finalSheet?.path
+    const orphanPaths = mergedTechnicalSheets
+        .map((sheet) => sheet.path)
+        .filter((path) => path && path !== finalPath)
+
+    if (orphanPaths.length > 0) {
+        const orphanRemoveResult = await StorageService.removeMultiple({
+            source,
+            filePaths: orphanPaths,
+        })
+        if (orphanRemoveResult?.err) return orphanRemoveResult
+    }
+
+    data.technicalSheet = finalSheet ?? {}
 
     return DatabaseService.update({
         source,

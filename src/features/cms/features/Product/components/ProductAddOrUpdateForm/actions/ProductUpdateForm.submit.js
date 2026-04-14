@@ -6,16 +6,6 @@ import { keywords } from '@/shared/utils/utils'
 import { searchParamsToListArguments } from '@/shared/services/DatabaseService'
 
 
-const getInputFilePathsMarkedForRemoval = ({ form, inputId }) => {
-    const el = form.querySelector(`#${inputId}__filesToRemove`)
-    if (!el?.value) return {}
-    try {
-        return JSON.parse(decodeURIComponent(el.value))
-    } catch {
-        return {}
-    }
-}
-
 const submit = ({
     e,
     srcElement: form,
@@ -31,14 +21,19 @@ const submit = ({
     const image = form.querySelector('#image').files[0]
     const subCategoryIds = Array.from(form.querySelector('#subCategoryIds').selectedOptions).map((option) => option.value.trim())
     const brandIds = Array.from(form.querySelector('#brandIds').selectedOptions).map((option) => option.value.trim())
-    const technicalSheetPath = form.querySelector('#technicalSheetPath').value.trim()
-    const technicalSheet = form.querySelector('#technicalSheet').files[0]
-    const technicalSheetRemoveMap = getInputFilePathsMarkedForRemoval({ form, inputId: 'technicalSheet' })
-    const removeTechnicalSheet = Boolean(
-        technicalSheetPath
-        && technicalSheetRemoveMap[technicalSheetPath]
-        && !technicalSheet,
+
+    const technicalSheets = Array.from(form.querySelector('#technicalSheet').files)
+    const technicalSheetsToRemoveJson = JSON.parse(
+        decodeURIComponent(
+            form.querySelector('#technicalSheet__filesToRemove').value,
+        ),
     )
+    const technicalSheetsToRemove = Object.keys(technicalSheetsToRemoveJson)
+    const technicalSheetsToKeep = JSON.parse(
+        decodeURIComponent(
+            form.querySelector('#technicalSheet__oldFiles').value,
+        ),
+    ).filter((sheet) => !technicalSheetsToRemoveJson[sheet.path])
 
     const product = {
         id,
@@ -49,16 +44,16 @@ const submit = ({
         imagePath,
         subCategoryIds,
         brandIds,
-        technicalSheetPath,
-        technicalSheet,
-        ...(removeTechnicalSheet ? { removeTechnicalSheet: true } : {}),
-        keywords: keywords({ 
+        technicalSheets,
+        technicalSheetsToKeep,
+        technicalSheetsToRemove,
+        keywords: keywords({
             keys: [
                 correlative,
                 name,
                 sku.substring(0, 4),
                 sku.substring(4),
-            ] 
+            ],
         }),
         updatedAt: new Date(),
     }
