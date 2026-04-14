@@ -5,8 +5,6 @@ import WebInfoCard from '@/features/web/components/WebInfoCard'
 import WebSearchButton from '@/features/web/components/WebSearchButton'
 import WebAddToQuotationButton, { AddToQuotationButtonTypes } from '@/features/web/components/WebAddToQuotationButton'
 
-import { MIN_BRANDS_LENGTH } from '@/features/web/utils'
-
 
 const ItemGrid = ({
     category,
@@ -29,6 +27,13 @@ const ItemGrid = ({
             isItem: true,
             thumbnail: subCategory.image.downloadURL,
             isButton: true,
+            webQuotationData: {
+                toastId: `addSubCategoryToQuotationToast-${subCategory.id}`,
+                toastMessage: 'Subcategoría agregada al pedido',
+                toastTimeout: 2_500,
+                itemId: subCategory.id,
+                itemType: AddToQuotationButtonTypes.SubCategory,
+            },
         })
     }).join(''),
     columns,

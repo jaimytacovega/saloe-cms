@@ -13,6 +13,7 @@ const WebAddToQuotationButton = ({
     itemId,
     itemType,
     className,  
+    attributes,
     children,
 }) => {
     return html`
@@ -24,6 +25,8 @@ const WebAddToQuotationButton = ({
             data-toast-timeout="${toastTimeout}"
             data-item-id="${itemId}"
             data-item-type="${itemType}"
+
+            ${attributes}
 
             on-click="WebAddToQuotationButton.click"
         >
