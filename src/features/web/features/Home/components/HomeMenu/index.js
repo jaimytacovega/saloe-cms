@@ -27,7 +27,9 @@ const HomeMenu = async ({
                 ? ''
                 : html`
                     ${
-                        WebStickyBanner()
+                        WebStickyBanner({
+                            brands,
+                        })
                     }
                     ${
                         WebNavigation({
