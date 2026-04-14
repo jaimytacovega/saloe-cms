@@ -188,7 +188,7 @@ const useListPromotionsByBrands = ({
         queryKey: ['web', 'listPromotionsByBrands', brandIds.join(',')],
         queryFn: async () => {
             const searchParams = new URLSearchParams()
-            searchParams.set('filter', `brandId:${OperatorSymbols.In.at(0)}${brandIds.join(';')}${OperatorSymbols.In.at(1)}`)
+            if (brandIds.length > 0) searchParams.set('filter', `brandId:${OperatorSymbols.In.at(0)}${brandIds.join(';')}${OperatorSymbols.In.at(1)}`)
 
             const { data: promotions } = await queryBySearchParams({
                 query: ({ listArguments }) => {

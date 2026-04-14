@@ -27,10 +27,7 @@ const HomeMenu = async ({
                 ? ''
                 : html`
                     ${
-                        WebStickyBanner({
-                            brands,
-                            navigateToId: 'HomeBrandFilterStickySection',
-                        })
+                        WebStickyBanner()
                     }
                     ${
                         WebNavigation({

@@ -10,6 +10,10 @@ const page = async ({
     env,
     cookies,
 }) => {
+    const url = new URL(request.url)
+    const isSearch = url.pathname.includes('/search')
+    const searchParams = url.searchParams
+
     return stream({
         head: () => html`
             ${
@@ -19,7 +23,8 @@ const page = async ({
         body: async () => html`
             ${
                 await HomePage({
-                    isSearch: false,
+                    isSearch,
+                    searchParams,
                 })
             }
         `,

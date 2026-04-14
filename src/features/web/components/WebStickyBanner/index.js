@@ -3,7 +3,6 @@ import { html } from 'saloe/html'
 
 const WebStickyBanner = ({
     brands,
-    navigateToId,
 }) => {
     return brands?.length > 0
         ? html`
@@ -11,15 +10,12 @@ const WebStickyBanner = ({
                 <div class="WebStickyBanner">
                     <p>
                         Trabajamos con más de <strong>${brands.length} marcas</strong>, mira lo que tenemos disponible
-                        <button 
+                        <a 
                             class="ColorBlue" 
-
-                            ${navigateToId ? `data-navigate-to="${navigateToId}"` : ''}
-
-                            on-click="HomeBrandFilterStickySectionNavigateButton.click"
+                            href="/search"
                         >
                             <u>Buscar por marca</u>
-                        </button>
+                        </a>
                     </p>
                 </div>
             </container>

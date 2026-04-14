@@ -46,7 +46,7 @@ const getFilteredBrandsMapBySearchParams = ({
     searchParams,
 }) => {
     return (searchParams.get('brandIds') ?? '').split(',')?.map((brandId) => brandId.trim())?.reduce((acc, brandId) => {
-        acc.set(brandId, true)
+        if (Boolean(brandId)) acc.set(brandId, true)
         return acc
     }, new Map())
 }

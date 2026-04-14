@@ -14,28 +14,26 @@ const HomeBrandFilterStickySection = async ({
     const filteredBrandsMap = getFilteredBrandsMapBySearchParams({ searchParams })
 
     const { data: categories } = isSearch
-        ? { data: [] }
-        : await WebHook.useListCategoriesByBrandIds({ brandIds: [...filteredBrandsMap.keys()], ttl: 10_000 })
+        ? await WebHook.useListCategoriesByBrandIds({ brandIds: [...filteredBrandsMap.keys()], ttl: 0 })
+        : { data: [] }
 
     const { data: brandsByCategories } = isSearch
-        ? { data: [] }
-        : await WebHook.useListBrandsByCategories({ categories, ttl: 10_000 })
+        ? await WebHook.useListBrandsByCategories({ categories, ttl: 10_000 })
+        : { data: [] }
 
     const { data: allBrands } = await WebHook.useListBrandsByCategories({ categories: [], ttl: 10_000 })
 
     const { data: category_subCategories } = isSearch
-        ? { data: [] }
-        : await WebHook.useListCategory_SubCategoriesByCategories({ categories, ttl: 10_000 })
+        ? await WebHook.useListCategory_SubCategoriesByCategories({ categories, ttl: 10_000 })
+        : { data: [] }
 
     const { data: promotions } = isSearch
-        ? { data: [] }
-        : await WebHook.useListPromotionsByBrands({ brands: brandsByCategories.filter((brand) => filteredBrandsMap.has(brand.id)), ttl: 10_000 })
+        ? await WebHook.useListPromotionsByBrands({ brands: brandsByCategories.filter((brand) => filteredBrandsMap.has(brand.id)), ttl: 10_000 })
+        : { data: [] }
     
     const subCategoryIdsMapByCategoryIdMap = isSearch
-        ? new Map()
-        : await getSubCategoryIdsMapByCategoryIdMap({
-            category_subCategories,
-        })
+        ? await getSubCategoryIdsMapByCategoryIdMap({ category_subCategories })
+        : new Map()
     
     return WebStickySection({
         id: 'HomeBrandFilterStickySection',
