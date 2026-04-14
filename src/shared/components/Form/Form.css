@@ -6,16 +6,27 @@ form {
 
     > header {
         padding-block: 0 8px;
-        display: flex;
-        flex-flow: column wrap;
-        gap: 2px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-areas:
+            "pretitle anchor"
+            "title anchor";
+        gap: 2px 8px;
 
         >p {
             font: var(--font-size-xs)/1.2 var(--font-family-semibold);
+            grid-area: pretitle;
         }
 
         >h2 {
             font: var(--font-size-h6)/1.2 var(--font-family-bold);
+            grid-area: title;
+        }
+
+        > a{
+            align-self: end;
+            justify-self: end;
+            grid-area: anchor;
         }
     }
 

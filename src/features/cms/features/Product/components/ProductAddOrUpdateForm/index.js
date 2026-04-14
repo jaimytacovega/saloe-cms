@@ -67,6 +67,16 @@ const ProductAddOrUpdateForm = async ({
                                 : correlative
                         }
                     </h2>
+                    ${
+                        productId !== 'new'
+                            ? html`
+                                <a href="/productos/${productId}" target="_blank" class="Button PrimaryButton PrimaryGray">
+                                    <span>Ir a</span>
+                                    <img src="/img/icon/arrow-up-right-gray-1.svg" width="16" height="16" alt="go to product">
+                                </a>
+                            `:
+                            ''
+                    }
                 </header>
                 <div class="form__scroller">
                     <fieldset columns="1">
