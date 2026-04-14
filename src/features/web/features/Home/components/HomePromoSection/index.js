@@ -16,8 +16,10 @@ const HomePromoSection = ({
                 `,
                 description: html`
                     <span>${promotion.description}</span>
+                    <!--
                     <br/>
                     <strong class="ColorRed">Gratis codo 20x90</strong>
+                    -->
                 `,
                 toolbox: html`
                     ${
@@ -31,9 +33,11 @@ const HomePromoSection = ({
                             children: 'Quiero esta promoción'
                         })
                     }
+                    <!--
                     <button class="Button PrimaryButton ColorBlue">
                         <u>Ver más promociones</u>
                     </button>
+                    -->
                 `,
                 isReversed,
                 thumbnail: promotion.image.downloadURL,

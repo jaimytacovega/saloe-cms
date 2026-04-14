@@ -22,8 +22,10 @@ const SubCategoryHeroSection = async ({
                 `,
                 description: html`
                     <span>${subCategory.description}</span>
+                    <!--
                     <br/>
                     <strong class="ColorRed">Gratis codo 20x90</strong>
+                    -->
                 `,
                 toolbox: html`
                     <button class="Button PrimaryButton PrimaryBlue">Me interesa</button>

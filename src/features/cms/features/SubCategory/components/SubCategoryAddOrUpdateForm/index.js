@@ -53,12 +53,22 @@ const SubCategoryAddOrUpdateForm = async ({
                 <header>
                     <p>SUBCATEGORÍA</p>
                     <h2>
-                    ${
-                        subCategoryId === 'new'
-                            ? 'Nueva subcategoría'
-                            : correlative
-                    }       
+                        ${
+                            subCategoryId === 'new'
+                                ? 'Nueva subcategoría'
+                                : correlative
+                        }      
                     </h2>
+                    ${
+                        subCategoryId !== 'new'
+                            ? html`
+                                <a href="/subcategoria/${subCategoryId}" target="_blank" class="Button PrimaryButton PrimaryGray">
+                                    <span>Ir a</span>
+                                    <img src="/img/icon/arrow-up-right-gray-1.svg" width="16" height="16" alt="go to subcategory">
+                                </a>
+                            `:
+                            ''
+                    }
                 </header>
                 <div class="form__scroller">
                     <fieldset columns="1">
