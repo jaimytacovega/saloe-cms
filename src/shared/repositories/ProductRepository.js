@@ -128,72 +128,96 @@ const add = async ({
     return addResult
 }
 
-const update = async({
+const update = async ({
     source,
     data,
 }) => {
-    if (Boolean(data.image)) {
-        const imageStorageResult = await StorageService.update({
-            source,
-            file: data.image,
-            newFilePath: storagePath({ id: data.id, name: data.image.name }),
-            currentFilePath: data.imagePath,
-        })
-
-        if (imageStorageResult?.err) return imageStorageResult
-        data.image = imageStorageResult.data
-    }
-
-    delete data.imagePath
-
-    if (Boolean(data.technicalSheetsToRemove)) {
-        const technicalSheetsRemoveResult = await StorageService.removeMultiple({
-            source,
-            filePaths: data.technicalSheetsToRemove,
-        })
-
-        if (technicalSheetsRemoveResult?.err) return technicalSheetsRemoveResult
-    }
-
-    delete data.technicalSheetsToRemove
-
-    const technicalSheets = data.technicalSheets ?? []
-    const addTechnicalSheetsResult = await StorageService.addMultiple({
+    const updateResult = await DatabaseService.onTransaction({
         source,
-        files: technicalSheets,
-        paths: technicalSheets.map((sheet) => storagePath({ id: data.id, name: sheet.name })),
+        transaction: async (tx) => {
+            try {
+                if (Boolean(data.image)) {
+                    const imageStorageResult = await StorageService.update({
+                        source,
+                        file: data.image,
+                        newFilePath: storagePath({ id: data.id, name: data.image.name }),
+                        currentFilePath: data.imagePath,
+                    })
+
+                    if (imageStorageResult?.err) throw imageStorageResult.err
+                    data.image = imageStorageResult.data
+                }
+
+                delete data.imagePath
+
+                if (Boolean(data.technicalSheetsToRemove)) {
+                    const technicalSheetsRemoveResult = await StorageService.removeMultiple({
+                        source,
+                        filePaths: data.technicalSheetsToRemove,
+                    })
+
+                    if (technicalSheetsRemoveResult?.err) throw technicalSheetsRemoveResult.err
+                }
+
+                delete data.technicalSheetsToRemove
+
+                const technicalSheets = data.technicalSheets ?? []
+                const addTechnicalSheetsResult = await StorageService.addMultiple({
+                    source,
+                    files: technicalSheets,
+                    paths: technicalSheets.map((sheet) => storagePath({ id: data.id, name: sheet.name })),
+                })
+                if (addTechnicalSheetsResult?.err) throw addTechnicalSheetsResult.err
+
+                const mergedTechnicalSheets = [
+                    ...(data.technicalSheetsToKeep ?? []),
+                    ...(addTechnicalSheetsResult.data ?? []),
+                ]
+
+                delete data.technicalSheetsToKeep
+                delete data.technicalSheets
+
+                const finalSheet = mergedTechnicalSheets.length ? mergedTechnicalSheets.at(-1) : null
+                const finalPath = finalSheet?.path
+                const orphanPaths = mergedTechnicalSheets
+                    .map((sheet) => sheet.path)
+                    .filter((path) => path && path !== finalPath)
+
+                if (orphanPaths.length > 0) {
+                    const orphanRemoveResult = await StorageService.removeMultiple({
+                        source,
+                        filePaths: orphanPaths,
+                    })
+                    if (orphanRemoveResult?.err) throw orphanRemoveResult.err
+                }
+
+                data.technicalSheet = finalSheet ?? {}
+
+                const productTx = await DatabaseService.getWithTransaction({
+                    source,
+                    tx,
+                    collectionName: 'products',
+                    id: data.id,
+                })
+
+                await DatabaseService.updateWithTransaction({
+                    source,
+                    tx,
+                    ref: productTx.ref,
+                    data,
+                })
+
+                return {
+                    id: productTx.ref.id,
+                    ...data,
+                }
+            } catch (err) {
+                return Promise.reject(err)
+            }
+        },
     })
-    if (addTechnicalSheetsResult?.err) return addTechnicalSheetsResult
 
-    const mergedTechnicalSheets = [
-        ...(data.technicalSheetsToKeep ?? []),
-        ...(addTechnicalSheetsResult.data ?? []),
-    ]
-
-    delete data.technicalSheetsToKeep
-    delete data.technicalSheets
-
-    const finalSheet = mergedTechnicalSheets.length ? mergedTechnicalSheets.at(-1) : null
-    const finalPath = finalSheet?.path
-    const orphanPaths = mergedTechnicalSheets
-        .map((sheet) => sheet.path)
-        .filter((path) => path && path !== finalPath)
-
-    if (orphanPaths.length > 0) {
-        const orphanRemoveResult = await StorageService.removeMultiple({
-            source,
-            filePaths: orphanPaths,
-        })
-        if (orphanRemoveResult?.err) return orphanRemoveResult
-    }
-
-    data.technicalSheet = finalSheet ?? {}
-
-    return DatabaseService.update({
-        source,
-        collectionName: 'products',
-        data,
-    })
+    return updateResult
 }
 
 const remove = async ({
