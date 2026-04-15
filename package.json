@@ -13,7 +13,7 @@
     "local:dev": "wrangler dev --env=dev --config wrangler.toml",
     "local:qa": "wrangler dev --env=qa --config wrangler.toml",
     "local:prod": "wrangler dev --env=prod --config wrangler.toml",
-    "deploy:dev": "npm run build:dev && wrangler publish --env=dev --config wrangler.toml",
+    "deploy:dev": "npm run build:dev && wrangler deploy --env=dev --config wrangler.toml",
     "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview"
