@@ -103,7 +103,7 @@ const ProductAddOrUpdateForm = async ({
                                 id: 'name',
                                 label: 'Nombre',
                                 value: product?.name ?? '',
-                                placeholder: 'Ingresa el nombre de la producto',
+                                placeholder: 'Ingresa el nombre del producto',
                             })
                         }
                         ${
@@ -186,6 +186,43 @@ const ProductAddOrUpdateForm = async ({
                                         ...product?.technicalSheet,
                                     }] 
                                     : [],
+                            })
+                        }
+                        <fieldset>
+                            <legend>SEO</legend>
+                        </fieldset>
+                        ${
+                            Input({
+                                id: 'seo-title',
+                                label: 'Título',
+                                value: product?.seoTitle ?? '',
+                                placeholder: 'Ingresa el título SEO del producto',
+                            })
+                        }
+                        ${
+                            Textarea({
+                                id: 'seo-description',
+                                label: 'Descripción',
+                                value: product?.seoDescription ?? '',
+                                placeholder: 'Ingresa la descripción SEO del producto',
+                            })
+                        }
+                        ${
+                            Input({
+                                id: 'seo-slug',
+                                label: 'Slug',
+                                value: product?.seoSlug ?? '',
+                                placeholder: 'Ingresa el slug SEO del producto',
+                            })
+                        }
+                        ${
+                            Input({
+                                id: 'seo-index-follow',
+                                label: 'Index, Follow',
+                                value: product?.seoIndexFollow ?? '',
+                                type: 'checkbox',
+                                checked: product?.seoIndexFollow ?? false,
+                                reverse: true,
                             })
                         }
                     </fieldset>

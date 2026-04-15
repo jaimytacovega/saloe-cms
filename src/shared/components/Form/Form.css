@@ -88,10 +88,16 @@ form {
 fieldset {
     --columns: 1;
     border: none;
-    overflow-y: auto;
+    /* overflow-y: auto; */
     display: grid;
     grid-template-columns: repeat(var(--columns), 1fr);
     gap: 8px;
+
+    > legend {
+        padding-block: 8px 0;
+        font: var(--font-size-xs) / 1.2 var(--font-family-semibold);
+        color: var(--color-black);
+    }
 }
 
 inputgroup {
