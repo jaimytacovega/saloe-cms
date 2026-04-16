@@ -18,6 +18,10 @@ const submit = ({
     const subCategoryIds = Array.from(form.querySelector('#subCategoryIds').selectedOptions).map((option) => option.value.trim())
     const brandIds = Array.from(form.querySelector('#brandIds').selectedOptions).map((option) => option.value.trim())
     const technicalSheet = form.querySelector('#technicalSheet').files[0]
+    const seoTitle = form.querySelector('#seo-title').value.trim()
+    const seoDescription = form.querySelector('#seo-description').value.trim()
+    const seoSlug = form.querySelector('#seo-slug').value.trim()
+    const seoIndexFollow = form.querySelector('#seo-index-follow').checked
     const now = new Date()
 
     const product = {
@@ -28,6 +32,10 @@ const submit = ({
         subCategoryIds,
         brandIds,
         technicalSheet,
+        seoTitle,
+        seoDescription,
+        seoSlug,
+        seoIndexFollow,
         createdAt: now,
         updatedAt: now,
     }

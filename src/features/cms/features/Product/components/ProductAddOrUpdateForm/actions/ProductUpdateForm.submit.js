@@ -35,6 +35,11 @@ const submit = ({
         ),
     ).filter((sheet) => !technicalSheetsToRemoveJson[sheet.path])
 
+    const seoTitle = form.querySelector('#seo-title').value.trim()
+    const seoDescription = form.querySelector('#seo-description').value.trim()
+    const seoSlug = form.querySelector('#seo-slug').value.trim()
+    const seoIndexFollow = form.querySelector('#seo-index-follow').checked
+
     const product = {
         id,
         name,
@@ -47,6 +52,10 @@ const submit = ({
         technicalSheets,
         technicalSheetsToKeep,
         technicalSheetsToRemove,
+        seoTitle,
+        seoDescription,
+        seoSlug,
+        seoIndexFollow,
         keywords: keywords({
             keys: [
                 correlative,
