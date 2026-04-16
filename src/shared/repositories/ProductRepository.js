@@ -1,6 +1,7 @@
 import * as DatabaseService from '@/shared/services/DatabaseService'
 import * as StorageService from '@/shared/services/StorageService'
 
+import { slugifySeoSlug } from '@/shared/schemas/utils/utils'
 import { keywords, getCMSCorrelative } from '@/shared/utils/utils'
 
 
@@ -9,7 +10,7 @@ const isUniqueProductSeoSlug = async ({
     seoSlug,
     excludeProductId,
 }) => {
-    const slug = typeof seoSlug === 'string' ? seoSlug.trim() : ''
+    const slug = slugifySeoSlug(seoSlug)
     if (!slug) return
 
     const listResult = await list({

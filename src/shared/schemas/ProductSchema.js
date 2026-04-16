@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { FileSchema } from '@/shared/schemas/utils/FileSchema'
 import { DateSchema } from '@/shared/schemas/utils/DateSchema'
+import { SeoSlugSchema } from '@/shared/schemas/utils/SeoSlugSchema'
 
 
 const ProductSKUSchema = z.string().regex(/^[A-Z]{4}\d{6}$/, 'El SKU debe tener 4 letras mayúsculas y 6 dígitos numéricos').trim()
@@ -17,6 +18,7 @@ const ProductSchema = z.object({
     technicalSheet: FileSchema.optional(),
     seoTitle: z.string().trim().optional(),
     seoDescription: z.string().trim().optional(),
+    /** Legacy docs may not match URL rules; keep permissive for list/get. */
     seoSlug: z.string().trim().optional(),
     seoIndexFollow: z.boolean().optional(),
     keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
@@ -36,7 +38,7 @@ const AddProductSchema = z.object({
     technicalSheet: z.instanceof(File).optional(),
     seoTitle: z.string().trim().optional(),
     seoDescription: z.string().trim().optional(),
-    seoSlug: z.string().trim().optional(),
+    seoSlug: SeoSlugSchema,
     seoIndexFollow: z.boolean().optional(),
     createdAt: DateSchema,
     updatedAt: DateSchema,
@@ -56,7 +58,7 @@ const UpdateProductSchema = z.object({
     technicalSheetsToRemove: z.array(z.string()).optional(),
     seoTitle: z.string().trim().optional(),
     seoDescription: z.string().trim().optional(),
-    seoSlug: z.string().trim().optional(),
+    seoSlug: SeoSlugSchema,
     seoIndexFollow: z.boolean().optional(),
     keywords: z.array(z.string()).nonempty('Las palabras clave son obligatorias'),
     updatedAt: DateSchema,
