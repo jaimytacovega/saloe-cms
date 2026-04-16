@@ -1,7 +1,7 @@
 import { html, stream } from 'saloe/html'
 import { getScriptListener } from 'saloe/listener'
 
-import WebMeta from '@/features/web/components/WebMeta'
+import ProductMeta from '@/features/cms/features/Product/components/ProductMeta'
 import ProductPage from '@/features/web/features/Product/components/ProductPage'
 
 
@@ -16,9 +16,11 @@ const page = async ({
     const productId = match?.pathname?.groups?.id
 
     return stream({
-        head: () => html`
+        head: async() => html`
             ${
-                WebMeta({})
+                await ProductMeta({
+                    productId,
+                })
             }
         `,
         body: async () => html`

@@ -58,10 +58,12 @@ const WebMeta = ({
             `).join('')
         }
 
+        <!--
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
         <meta name="robots-txt" content="/robots.txt" />
 
         <script type="application/ld+json">${schema}</script>
+        -->
     `
 }
 
