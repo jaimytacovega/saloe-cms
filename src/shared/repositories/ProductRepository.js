@@ -4,6 +4,30 @@ import * as StorageService from '@/shared/services/StorageService'
 import { keywords, getCMSCorrelative } from '@/shared/utils/utils'
 
 
+const isUniqueProductSeoSlug = async ({
+    source,
+    seoSlug,
+    excludeProductId,
+}) => {
+    const slug = typeof seoSlug === 'string' ? seoSlug.trim() : ''
+    if (!slug) return
+
+    const listResult = await list({
+        source,
+        filters: [{
+            field: 'seoSlug',
+            operator: DatabaseService.Operators.EqualTo,
+            value: slug,
+        }],
+        pageSize: 2,
+    })
+
+    if (listResult?.err) return listResult.err
+
+    const conflict = (listResult.data ?? []).find((product) => product.id !== excludeProductId)
+    if (conflict) return { err: 'El slug SEO ya está en uso.' }
+}
+
 const storagePath = ({
     id = null,
     name,
@@ -45,6 +69,13 @@ const add = async ({
         source,
         transaction: async (tx) => {
             try {
+                const isUniqueSeoSlugResult = await isUniqueProductSeoSlug({
+                    source,
+                    seoSlug: data.seoSlug,
+                    excludeProductId: undefined,
+                })
+                if (isUniqueSeoSlugResult?.err) throw isUniqueSeoSlugResult.err
+
                 const imageStorageResult = await StorageService.add({
                     source,
                     file: data.image,
@@ -136,6 +167,13 @@ const update = async ({
         source,
         transaction: async (tx) => {
             try {
+                const isUniqueSeoSlugResult = await isUniqueProductSeoSlug({
+                    source,
+                    seoSlug: data.seoSlug,
+                    excludeProductId: data.id,
+                })
+                if (isUniqueSeoSlugResult?.err) throw isUniqueSeoSlugResult.err
+
                 if (Boolean(data.image)) {
                     const imageStorageResult = await StorageService.update({
                         source,
