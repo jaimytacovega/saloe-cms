@@ -32,8 +32,10 @@ const HomeFeaturedPromoGridSections = async () => {
                 description: html`
                     <p>
                         <span>${promotion.description}</span>
+                        <!--
                         <br/>
                         <strong class="ColorRed">Gratis 10 codos</strong>
+                        -->
                     </p>
                 `,
                 toolbox: html`
