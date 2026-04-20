@@ -70,7 +70,7 @@ const ProductAddOrUpdateForm = async ({
                     ${
                         productId !== 'new'
                             ? html`
-                                <a href="/productos/${productId}" target="_blank" class="Button PrimaryButton PrimaryGray">
+                                <a href="/productos/${product.seoSlug ?? productId}" target="_blank" class="Button PrimaryButton PrimaryGray">
                                     <span>Ir a</span>
                                     <img src="/img/icon/arrow-up-right-gray-1.svg" width="16" height="16" alt="go to product">
                                 </a>
