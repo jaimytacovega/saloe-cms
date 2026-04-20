@@ -14,6 +14,7 @@ import {
     increment,
     orderBy,
     deleteDoc,
+    deleteField,
     documentId,
 } from 'firebase/firestore/lite'
 
@@ -207,11 +208,17 @@ const formatDoc = ({ data }) => {
     return data
 }
 
+/** Top-level only. Firestore rejects `undefined`; `deleteField()` removes the field on update/set. */
 const formatDocForDB = ({ doc }) => {
     const { id, ...data } = doc
-    for (const key of Object.keys(data))
+    for (const key of Object.keys(data)) {
+        if (data[key] === undefined) {
+            data[key] = deleteField()
+            continue
+        }
         if (typeof data[key] instanceof Date)
             data[key] = dateToTimestamp({ date: data[key] })
+    }
     return data
 }
 
