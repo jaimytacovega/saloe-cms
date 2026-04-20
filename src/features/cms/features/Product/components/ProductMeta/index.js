@@ -7,11 +7,12 @@ import * as WebHook from '@/features/web/hooks/WebHook'
 
 const ProductMeta = async ({
     productId,
+    productSlug,
 }) => {
-    const { data: product } = await WebHook.useGetProductById({
-        id: productId,
-        ttl: 10_000,
-    })
+    const productResult = productSlug
+        ? await WebHook.useGetProductBySlug({ slug: productSlug, ttl: 10_000 })
+        : await WebHook.useGetProductById({ id: productId, ttl: 10_000 })
+    const { data: product } = productResult
 
     return html`
         ${

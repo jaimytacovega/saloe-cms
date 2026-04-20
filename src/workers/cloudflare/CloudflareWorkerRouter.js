@@ -31,7 +31,7 @@ import * as AuthLoginPage from '@/app/auth/login/page'
 
 import * as HomeWebPage from '@/app/page'
 import * as SubCategoryWebPage from '@/app/subcategoria/[id]'
-import * as ProductWebPage from '@/app/productos/[id]'
+import * as ProductWebPage from '@/app/productos/[id-or-slug]'
 import * as SearchWebPage from '@/app/search/page'
 
 
@@ -67,6 +67,8 @@ const setRouter = () => {
 
     addRoute({ pathname: '/', route: HomeWebPage.default })
     addRoute({ pathname: '/subcategoria/:id', route: SubCategoryWebPage.default })
+    // Slug-shaped segment (lowercase, digits, hyphens) must be registered before the catch-all `:id` route.
+    addRoute({ pathname: '/productos/:slug([a-z0-9\\-]+)', route: ProductWebPage.default })
     addRoute({ pathname: '/productos/:id', route: ProductWebPage.default })
     addRoute({ pathname: '/search', route: SearchWebPage.default })
 }

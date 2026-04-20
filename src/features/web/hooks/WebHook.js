@@ -5,10 +5,11 @@ import * as CategoryHook from '@/shared/hooks/CategoryHook'
 import * as SubCategoryHook from '@/shared/hooks/SubCategoryHook'
 import * as PromotionHook from '@/shared/hooks/PromotionHook'
 import * as Category_SubCategoryHook from '@/shared/hooks/Category_SubCategoryHook'
-import * as ProductHook from '@/shared/hooks/ProductHook'
+import * as ProductManager from '@/shared/managers/ProductManager'
+import { slugifySeoSlug } from '@/shared/schemas/utils/utils'
 
 import { Source } from '@/shared/utils/constants'
-import { queryBySearchParams, OperatorSymbols } from '@/shared/services/DatabaseService'
+import { queryBySearchParams, OperatorSymbols, Operators } from '@/shared/services/DatabaseService'
 
 
 const useListCategories = ({
@@ -213,12 +214,44 @@ const useGetProductById = ({
 }) => {
     return useQuery({
         queryKey: ['web', 'getProductById', id],
+        queryFn: () => ProductManager.get({
+            source: Source.FIREBASE,
+            id,
+        }),
+        ttl,
+    })
+}
+
+/**
+ * `slug` is a URL segment; it is normalized with `slugifySeoSlug` before querying `seoSlug`.
+ */
+const useGetProductBySlug = ({
+    slug,
+    ttl,
+}) => {
+    return useQuery({
+        queryKey: ['web', 'getProductBySlug', slug],
         queryFn: async () => {
-            const { data: product } = await ProductHook.useGet({
+            const normalized = slugifySeoSlug(slug)
+            if (!normalized) {
+                return { err: 'product-not-found' }
+            }
+
+            const listResult = await ProductManager.list({
                 source: Source.FIREBASE,
-                id,
-                ttl: 0,
+                filters: [{
+                    field: 'seoSlug',
+                    operator: Operators.EqualTo,
+                    value: normalized,
+                }],
+                pageSize: 2,
             })
+            if (listResult?.err) throw listResult.err
+
+            const product = listResult.data?.at(0)
+            if (!product) {
+                return { err: 'product-not-found' }
+            }
 
             return { data: product }
         },
@@ -240,4 +273,5 @@ export {
     useListPromotionsByBrands,
 
     useGetProductById,
+    useGetProductBySlug,
 }

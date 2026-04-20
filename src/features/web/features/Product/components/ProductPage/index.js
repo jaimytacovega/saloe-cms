@@ -6,6 +6,7 @@ import ProductHeroSection from '@/features/web/features/Product/components/Produ
 
 const ProductPage = async ({
     productId,
+    productSlug,
 }) => {
     return html`
         <main>
@@ -15,6 +16,7 @@ const ProductPage = async ({
             ${
                 await ProductHeroSection({
                     productId,
+                    productSlug,
                 })
             }
         </main>
