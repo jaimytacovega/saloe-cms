@@ -52,7 +52,7 @@ const HomeFeaturedPromoGridSections = async () => {
                 isThumbnailWithTag: true,
                 isPromo: true,
                 thumbnail: promotion.image.downloadURL,
-                tagThumbnail: brandIdsMap.get(promotion.brandId).image.downloadURL,
+                tagThumbnail: brandIdsMap.get(promotion.brandId)?.image.downloadURL,
             })
         }).join(''),
     })
