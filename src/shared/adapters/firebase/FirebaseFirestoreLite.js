@@ -94,7 +94,7 @@ const get = async ({
 const add = async ({ collectionName, docData }) => {
     const { id, ...data } = docData
     try {
-        const docRef = await addDoc(collection(firestore, collectionName), formatDocForDB({ doc: data }))
+        const docRef = await addDoc(collection(firestore, collectionName), formatDocForDB({ doc: data, mode: 'set' }))
         return {
             data: {
                 id: docRef.id,
@@ -110,7 +110,7 @@ const update = async ({ collectionName, docData }) => {
     const { id, ...data } = docData
     const docRef = doc(firestore, collectionName, id)
     try {
-        await updateDoc(docRef, formatDocForDB({ doc: data }))
+        await updateDoc(docRef, formatDocForDB({ doc: data, mode: 'update' }))
         return {
             data: {
                 id: docRef.id,
@@ -189,7 +189,7 @@ const addWithTransaction = ({
     ref,
     data,
 }) => {
-    return tx.set(ref ?? getDocRef({ collectionName, id: data?.id }), formatDocForDB({ doc: data }))
+    return tx.set(ref ?? getDocRef({ collectionName, id: data?.id }), formatDocForDB({ doc: data, mode: 'set' }))
 }
 
 const updateWithTransaction = ({
@@ -198,7 +198,7 @@ const updateWithTransaction = ({
     ref,
     data,
 }) => {
-    return tx.update(ref ?? getDocRef({ collectionName, id: data?.id }), formatDocForDB({ doc: data }))
+    return tx.update(ref ?? getDocRef({ collectionName, id: data?.id }), formatDocForDB({ doc: data, mode: 'update' }))
 }
 
 const formatDoc = ({ data }) => {
@@ -208,14 +208,29 @@ const formatDoc = ({ data }) => {
     return data
 }
 
-/** Top-level only. Firestore rejects `undefined`; `deleteField()` removes the field on update/set. */
-const formatDocForDB = ({ doc }) => {
+/**
+ * Top-level only.
+ * - `set` / `addDoc`: omit `undefined` (cannot use `deleteField()` without `{ merge: true }` on `set()`).
+ * - `update`: `undefined` → `deleteField()` so optional fields can be removed from the document.
+ */
+const formatDocForDB = ({ doc, mode }) => {
     const { id, ...data } = doc
-    for (const key of Object.keys(data)) {
-        if (data[key] === undefined) {
-            data[key] = deleteField()
-            continue
+
+    if (mode === 'set') {
+        for (const key of [...Object.keys(data)]) {
+            if (data[key] === undefined) {
+                delete data[key]
+            }
         }
+    } else {
+        for (const key of Object.keys(data)) {
+            if (data[key] === undefined) {
+                data[key] = deleteField()
+            }
+        }
+    }
+
+    for (const key of Object.keys(data)) {
         if (typeof data[key] instanceof Date)
             data[key] = dateToTimestamp({ date: data[key] })
     }
