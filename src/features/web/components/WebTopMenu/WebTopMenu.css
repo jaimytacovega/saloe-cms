@@ -17,6 +17,10 @@ container.WebTopMenu__container{
 
     > a{
         margin-inline: 0 auto;
+
+        > img{
+            object-fit: contain;
+        }
     }
 
     > nav{

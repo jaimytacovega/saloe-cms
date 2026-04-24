@@ -37,13 +37,13 @@ container.WebHeroSection__container{
             max-inline-size: 100%;
             border-radius: 0;
 
-            &::before{
+            /* &::before{
                 content: '';
                 position: absolute;
                 inset: 0;
                 background: var(--color-black);
                 opacity: .4;
-            }
+            } */
 
             > img{
                 border-radius: 0;
@@ -94,8 +94,8 @@ container.WebHeroSection__container{
     > .WebHeroSection__figure{
         inline-size: 100%;
         max-inline-size: var(--webherosection-thumbnail__max-inline-size);
-        min-block-size: var(--webherosection-thumbnail__min-block-size);
-        background: var(--color-gray-3);
+        /* min-block-size: var(--webherosection-thumbnail__min-block-size); */
+        /* background: var(--color-gray-3); */
         border-radius: 8px;
 
         > img{
