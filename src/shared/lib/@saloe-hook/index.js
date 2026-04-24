@@ -5,9 +5,23 @@ import { prettifyError } from '@/shared/schemas/utils/utils'
 
 const CACHE_NAME = 'HOOKS_DEV'
 
+/**
+ * KV cache key is always `~/hooks/h-` + SHA-256 hex (10 + 64 = 74 ASCII bytes ≪ Cloudflare 512-byte limit).
+ */
+const HOOK_KV_CACHE_PREFIX = '~/hooks/h-'
+const SHA256_HEX_LENGTH = 64
+
 const transformQueryKey = ({ queryKey }) => {
     if (Array.isArray(queryKey)) return queryKey.join('-')
     return queryKey
+}
+
+const sha256Hex = async (text) => {
+    const bytes = new TextEncoder().encode(text)
+    const digest = await crypto.subtle.digest('SHA-256', bytes)
+    return [...new Uint8Array(digest)]
+        .map((b) => b.toString(16).padStart(2, '0'))
+        .join('')
 }
 
 const getCacheAsServiceWorker = async ({ cacheUrl }) => {
@@ -126,7 +140,7 @@ const useGetCache = async ({ queryKey }) => {
         ? getCacheAsCloudflareWorker 
         : getCacheAsServiceWorker
 
-    const cacheUrl = useGetCacheUrl({ queryKey })
+    const cacheUrl = await useGetCacheUrl({ queryKey })
     return getCacheFn({ cacheUrl })
 }
 
@@ -138,13 +152,22 @@ const useSetCache = async ({ queryKey, data }) => {
         ? setCacheAsCloudflareWorker 
         : setCacheAsServiceWorker
 
-    const cacheUrl = useGetCacheUrl({ queryKey })
+    const cacheUrl = await useGetCacheUrl({ queryKey })
     return setCacheFn({ cacheUrl, data })
 }
 
-const useGetCacheUrl = ({ queryKey }) => {
-    const cacheKey = transformQueryKey({ queryKey })
-    return `~/hooks/${cacheKey}`
+const useGetCacheUrl = async ({ queryKey }) => {
+    const fingerprint = JSON.stringify(queryKey)
+    const hash = await sha256Hex(fingerprint)
+    if (hash.length !== SHA256_HEX_LENGTH) {
+        throw new Error('@saloe-hook: expected 64-character SHA-256 hex digest')
+    }
+    const cacheUrl = `${HOOK_KV_CACHE_PREFIX}${hash}`
+    const keyBytes = new TextEncoder().encode(cacheUrl).length
+    if (keyBytes > 512) {
+        throw new Error(`@saloe-hook: KV cache key is ${keyBytes} bytes (max 512)`)
+    }
+    return cacheUrl
 }
 
 const QUERIES_BY_KEY = new Map()

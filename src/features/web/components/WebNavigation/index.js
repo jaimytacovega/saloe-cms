@@ -1,7 +1,5 @@
 import { html } from 'saloe/html'
 
-import { MIN_CATEGORIES_LENGTH } from '@/features/web/utils'    
-
 
 const WebNavigation = ({
     categories,

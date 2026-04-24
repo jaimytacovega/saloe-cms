@@ -23,9 +23,6 @@ const BrandAddOrUpdateForm = async ({
             ttl: 10_000,
         })
 
-    console.log('brand =', brand)
-    console.log('isCached =', isCached)
-
     const correlative = getCMSCorrelative({ collectionName: 'brands', count: brand?.count ?? '' })
 
     return Boolean(brand)
