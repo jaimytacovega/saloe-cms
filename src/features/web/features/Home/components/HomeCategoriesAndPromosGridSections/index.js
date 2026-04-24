@@ -22,14 +22,11 @@ const HomeCategoriesAndPromosGridSections = async () => {
         category_subCategories,
     })
     const { regularPromotions } = getRegularAndFeaturedPromotions({ promotions })
-    
-    const result = []
-    let promoIndex = 0
 
-    categories.forEach((category, i) => {
-        const columns = i % 2 === 0 ? '2mobile4desktop' : '1mobile2desktop'
-        result.push(
-            HomeCategoryGridSection({
+    const { sections } = categories.reduce(
+        (acc, category, i) => {
+            const columns = i % 2 === 0 ? '2mobile4desktop' : '1mobile2desktop'
+            const gridSection = HomeCategoryGridSection({
                 category,
                 columns,
                 grid: [...(subCategoryIdsMapByCategoryIdMap.get(category.id) ?? new Map()).values().map((subCategory) => {
@@ -57,28 +54,33 @@ const HomeCategoriesAndPromosGridSections = async () => {
                     })
                 })].join(''),
             })
-        )
 
-        const shouldInsertPromotion = (i + 1) % 2 === 0 && promoIndex < promotions.length
+            const shouldInsertPromotion = (i + 1) % 2 === 0 && acc.promoIndex < promotions.length
+            const promotion = shouldInsertPromotion ? regularPromotions[acc.promoIndex] : undefined
 
-        if (shouldInsertPromotion) {
-            const promotion = regularPromotions[promoIndex]
-            const isReversed = promoIndex % 2 === 1
-            
-            if (promotion){
-                result.push(
-                    HomePromoSection({
-                        promotion,
-                        isReversed,
-                    })
-                )
-
-                promoIndex++
+            if (shouldInsertPromotion && promotion) {
+                return {
+                    sections: [
+                        ...acc.sections,
+                        gridSection,
+                        HomePromoSection({
+                            promotion,
+                            isReversed: acc.promoIndex % 2 === 1,
+                        }),
+                    ],
+                    promoIndex: acc.promoIndex + 1,
+                }
             }
-        }
-    })
 
-    return result.join('')
+            return {
+                sections: [...acc.sections, gridSection],
+                promoIndex: acc.promoIndex,
+            }
+        },
+        { sections: [], promoIndex: 0 },
+    )
+
+    return sections.join('')
 }
 
 export default HomeCategoriesAndPromosGridSections
