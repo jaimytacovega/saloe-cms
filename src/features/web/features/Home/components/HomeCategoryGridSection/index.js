@@ -11,6 +11,7 @@ const HomeCategoryGridSection = ({
     return html`
         ${
             WebGridSection({
+                id: `HomeCategoryGridSection-${category.id}`,
                 title: html`
                     <h3>${category.name}</h3>
                 `,
@@ -24,6 +25,10 @@ const HomeCategoryGridSection = ({
                 `,
                 grid,
                 columns,
+                attributes: html`
+                    on-observe="WebGridSection.observe"
+                    on-observer-threshold=".15"
+                `,
             })
         }
     `

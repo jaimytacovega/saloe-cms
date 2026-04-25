@@ -65,15 +65,19 @@ import * as A32 from '@/features/cms/features/SubCategory/components/SubCategory
 console.log(A32)
 import * as A33 from '@/features/web/components/WebAddToQuotationButton/actions/WebAddToQuotationButton.click'
 console.log(A33)
-import * as A34 from '@/features/web/components/WebQuotationDialog/actions/WebQuotationDialogForm.change'
+import * as A34 from '@/features/web/components/WebGridSection/actions/WebGridSection.observe'
 console.log(A34)
-import * as A35 from '@/features/web/components/WebQuotationDialog/actions/WebQuotationDialogTargetButton.click'
+import * as A35 from '@/features/web/components/WebNavigation/actions/WebNavigationButton.click'
 console.log(A35)
-import * as A36 from '@/features/web/components/WebQuotationInput/actions/WebQuotationInput.change'
+import * as A36 from '@/features/web/components/WebQuotationDialog/actions/WebQuotationDialogForm.change'
 console.log(A36)
-import * as A37 from '@/features/web/components/WebSearchButton/actions/WebSearchButton.click'
+import * as A37 from '@/features/web/components/WebQuotationDialog/actions/WebQuotationDialogTargetButton.click'
 console.log(A37)
-import * as A38 from '@/features/web/features/Home/components/HomeBrandFilterStickySection/actions/HomeBrandFilterStickySectionCloseButton.click'
+import * as A38 from '@/features/web/components/WebQuotationInput/actions/WebQuotationInput.change'
 console.log(A38)
-import * as A39 from '@/features/web/features/Home/components/HomeBrandFilterStickySection/actions/HomeBrandFilterStickySectionNavigateButton.click'
+import * as A39 from '@/features/web/components/WebSearchButton/actions/WebSearchButton.click'
 console.log(A39)
+import * as A40 from '@/features/web/features/Home/components/HomeBrandFilterStickySection/actions/HomeBrandFilterStickySectionCloseButton.click'
+console.log(A40)
+import * as A41 from '@/features/web/features/Home/components/HomeBrandFilterStickySection/actions/HomeBrandFilterStickySectionNavigateButton.click'
+console.log(A41)

@@ -10,7 +10,11 @@ const WebNavigation = ({
                 <nav>
                     ${
                         categories?.map((category) => html`
-                            <button>${category.name}</button>
+                            <button 
+                                data-navigate-to="HomeCategoryGridSection-${category.id}"
+
+                                on-click="WebNavigationButton.click"
+                            >${category.name}</button>
                         `).join('')
                     }
                 </nav>

@@ -18,6 +18,8 @@ container.WebGridSection__container{
     flex-flow: column nowrap;
     gap: var(--webgridsection__gap);
 
+    scroll-margin-block-start: 132px;
+
     &[item]{
         padding-inline: 0;
         padding-block: 0;

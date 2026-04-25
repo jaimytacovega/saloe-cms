@@ -22,17 +22,19 @@ container.WebNavigation__container{
         overflow-y: auto;
         display: flex;
         flex-flow: row nowrap;
-        gap: 16px;
+        gap: 30px;
         flex-grow: 1;
 
         > :is(a, button){
             font-family: var(--font-family-semibold);
             white-space: nowrap;
             color: var(--color-gray-1);
+            scroll-margin-inline-start: var(--webnavigation__padding-inline);
 
-            &[toggled]{
+            &:is([toggled], :hover){
                 /* font-family: var(--font-family-semibold); */
                 color: var(--color-black);
+                transition: color .3s ease;
             }
         }
 

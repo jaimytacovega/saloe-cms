@@ -1,5 +1,5 @@
 import { html, stream } from 'saloe/html'
-import { getScriptListener } from 'saloe/listener'
+import { getScriptListener } from '@/shared/lib/@saloe-listener'
 
 import WebMeta from '@/features/web/components/WebMeta'
 import HomePage from '@/features/web/features/Home/components/HomePage'

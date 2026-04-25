@@ -4,19 +4,26 @@ import WebInfoCard from '@/features/web/components/WebInfoCard'
 
 
 const WebGridSection = ({
+    id = '',
     title,
     description,
     grid,
     columns,
     isSticky = false,
     isItem = false,
+    attributes = '',
 }) => {
     return html`
-        <container class="WebGridSection__container">
+        <container 
+            class="WebGridSection__container"
+        >
             <section 
+                ${Boolean(id) ? `id="${id}"` : ''}
                 class="WebGridSection"
                 ${isSticky ? ' sticky' : ''}
                 ${isItem ? ' item' : ''}
+                
+                ${Boolean(attributes) ? attributes : ''}
             >
                 <header>
                     ${title}

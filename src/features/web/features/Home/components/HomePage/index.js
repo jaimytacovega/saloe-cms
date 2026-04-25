@@ -12,7 +12,6 @@ const HomePage = async ({
     isSearch = false,
     searchParams = new URLSearchParams(),
 }) => {
-    
     return html`
         <main>
             ${
