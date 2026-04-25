@@ -96,6 +96,14 @@ const PromotionAddOrUpdateForm = async ({
                         }
                         ${
                             Input({
+                                id: 'reward',
+                                label: 'Recompensa (opcional)',
+                                value: promotion?.reward ?? '',
+                                placeholder: 'Ej. beneficio o detalle de la recompensa',
+                            })
+                        }
+                        ${
+                            Input({
                                 id: 'imagePath',
                                 value: promotion?.image?.path ?? '',
                                 type: 'hidden',

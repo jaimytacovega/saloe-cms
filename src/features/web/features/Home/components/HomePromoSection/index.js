@@ -16,10 +16,15 @@ const HomePromoSection = ({
                 `,
                 description: html`
                     <span>${promotion.description}</span>
-                    <!--
-                    <br/>
-                    <strong class="ColorRed">Gratis codo 20x90</strong>
-                    -->
+                    ${
+                        Boolean(promotion.reward)
+                            ? html`
+                                <br/>
+                                <strong class="ColorRed">${promotion.reward}</strong>
+                            `
+                            : ''
+                    }
+                   
                 `,
                 toolbox: html`
                     ${

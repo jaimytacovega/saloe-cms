@@ -14,6 +14,7 @@ const submit = ({
 
     const name = form.querySelector('#name').value.trim()
     const description = form.querySelector('#description').value.trim()
+    const reward = form.querySelector('#reward').value.trim()
     const image = form.querySelector('#image').files[0]
     const brandId = form.querySelector('#brandId').selectedOptions[0].value.trim()
     // TODO: categoryIds
@@ -22,6 +23,7 @@ const submit = ({
     const promotion = {
         name,
         description,
+        reward,
         image,  
         brandId,
         // TODO: categoryIds

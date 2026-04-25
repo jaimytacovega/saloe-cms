@@ -16,6 +16,7 @@ const submit = ({
     const correlative = form.querySelector('#correlative').value.trim()
     const name = form.querySelector('#name').value.trim()
     const description = form.querySelector('#description').value.trim()
+    const reward = form.querySelector('#reward').value.trim()
     const brandId = form.querySelector('#brandId').selectedOptions[0].value.trim()
     const imagePath = form.querySelector('#imagePath').value.trim()
     const image = form.querySelector('#image').files[0]
@@ -24,6 +25,7 @@ const submit = ({
         id,
         name,
         description,
+        reward,
         brandId,
         image,
         imagePath,
