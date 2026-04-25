@@ -59,7 +59,7 @@ const ProductAddOrUpdateForm = async ({
         ? html`
             <form on-submit="Product${productId === 'new' ? 'Add' : 'Update'}Form.submit">
                 <header>
-                    <p>PRODUCTO</p>
+                    <h6>PRODUCTO</h6>
                     <h2>
                         ${
                             productId === 'new'

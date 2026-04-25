@@ -13,12 +13,25 @@ form {
             "title anchor";
         gap: 2px 8px;
 
-        >p {
+        &:has(> p){
+            grid-template-areas:
+            "pretitle pretitle"
+            "title title"
+            "description description";
+
+            > p {
+                font: var(--font-size-xs)/1.2 var(--font-family-semibold);
+                grid-area: description;
+            }
+        }
+
+        > h6 {
             font: var(--font-size-xs)/1.2 var(--font-family-semibold);
+            color: var(--color-gray-1);
             grid-area: pretitle;
         }
 
-        >h2 {
+        > h2 {
             font: var(--font-size-h6)/1.2 var(--font-family-bold);
             grid-area: title;
         }

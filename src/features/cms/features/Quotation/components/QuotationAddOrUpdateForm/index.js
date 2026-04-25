@@ -52,7 +52,7 @@ const QuotationAddOrUpdateForm = async ({
         ? html`
             <form on-submit="Quotation${quotationId === 'new' ? 'Add' : 'Update'}Form.submit">
                 <header>
-                    <p>COTIZACIÓN</p>
+                    <h6>COTIZACIÓN</h6>
                     <h2>
                         ${
                             quotationId === 'new'

@@ -49,7 +49,7 @@ const PromotionAddOrUpdateForm = async ({
         ? html`
             <form on-submit="Promotion${promotionId === 'new' ? 'Add' : 'Update'}Form.submit">
                 <header>
-                    <p>PROMOCIÓN</p>
+                    <h6>PROMOCIÓN</h6>
                     <h2>
                         ${
                             promotionId === 'new'

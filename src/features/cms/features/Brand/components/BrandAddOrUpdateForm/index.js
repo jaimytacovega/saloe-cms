@@ -29,7 +29,7 @@ const BrandAddOrUpdateForm = async ({
         ? html`
             <form on-submit="Brand${brandId === 'new' ? 'Add' : 'Update'}Form.submit">
                 <header>
-                    <p>MARCA</p>
+                    <h6>MARCA</h6>
                     <h2>
                         ${
                             brandId === 'new'
