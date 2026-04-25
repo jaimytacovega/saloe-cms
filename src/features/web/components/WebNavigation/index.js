@@ -18,7 +18,11 @@ const WebNavigation = ({
                         `).join('')
                     }
                 </nav>
-                <button class="Button PrimaryButton">
+                <button 
+                    class="Button PrimaryButton"
+
+                    on-click="WebNavigationNextButton.click"
+                >
                     <img loading="lazy" src="/img/icon/chevron-right-gray-1.svg" width="20" height="20" alt="search">
                 </button>
             </div>
