@@ -5,6 +5,11 @@ import { Source } from '@/shared/utils/constants'
 import { keywords } from '@/shared/utils/utils'
 import { searchParamsToListArguments } from '@/shared/services/DatabaseService'
 
+import {
+    encodeFileToWebp,
+    DEFAULT_ENCODE_WEBP_OPTIONS,
+} from '@/shared/lib/@saloe-webp'
+
 
 const submit = ({
     e,
@@ -15,23 +20,27 @@ const submit = ({
     const pretitle = form.querySelector('#pretitle').value.trim()
     const title = form.querySelector('#title').value.trim()
     const description = form.querySelector('#description').value.trim()
-    const image = form.querySelector('#image').files[0]
+    const rawImage = form.querySelector('#image').files[0]
     const isPublished = Boolean(form.querySelector('#isPublished')?.checked)
     const now = new Date()
-
-    const banner = {
-        pretitle,
-        title,
-        description,
-        image,
-        isPublished,
-        createdAt: now,
-        updatedAt: now,
-    }
 
     Form.submit({
         form,
         onProcess: async () => {
+            const image = rawImage
+                ? await encodeFileToWebp(rawImage, DEFAULT_ENCODE_WEBP_OPTIONS)
+                : rawImage
+
+            const banner = {
+                pretitle,
+                title,
+                description,
+                image,
+                isPublished,
+                createdAt: now,
+                updatedAt: now,
+            }
+
             const listArguments = searchParamsToListArguments({
                 searchParams: (new URL(location.href)).searchParams,
             })
