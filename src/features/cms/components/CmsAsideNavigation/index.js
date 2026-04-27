@@ -27,6 +27,10 @@ const CmsAsideNavigation = ({
                                 <img loading="lazy" src="/img/icon/percent-gray-1.svg" width="20" height="20" alt="brand"/>
                                 <span>Promociones</span>
                             </a>
+                            <a class="Button" href="/cms/banners"${isListUrl({ pathname, listUrl: '/cms/banners' }) ? ' aria-current="page"' : ''}>
+                                <img loading="lazy" src="/img/icon/image-black.svg" width="20" height="20" alt="banners"/>
+                                <span>Banners</span>
+                            </a>
                             <a class="Button" href="/cms/subcategorias"${isListUrl({ pathname, listUrl: '/cms/subcategorias' }) ? ' aria-current="page"' : ''}>
                                 <img loading="lazy" src="/img/icon/hash-gray-1.svg" width="20" height="20" alt="brand"/>
                                 <span>Subcategorías</span>

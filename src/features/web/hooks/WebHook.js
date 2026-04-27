@@ -2,6 +2,7 @@ import { useQuery } from '@/shared/lib/@saloe-hook'
 
 import * as BrandHook from '@/shared/hooks/BrandHook'
 import * as CategoryHook from '@/shared/hooks/CategoryHook'
+import * as BannerHook from '@/shared/hooks/BannerHook'
 import * as SubCategoryHook from '@/shared/hooks/SubCategoryHook'
 import * as PromotionHook from '@/shared/hooks/PromotionHook'
 import * as Category_SubCategoryHook from '@/shared/hooks/Category_SubCategoryHook'
@@ -259,6 +260,27 @@ const useGetProductBySlug = ({
     })
 }
 
+const useListPublishedBanners = ({
+    ttl,
+}) => {
+    return useQuery({
+        queryKey: ['web', 'listPublishedBanners'],
+        queryFn: () => {
+            return BannerHook.useList({ 
+                source: Source.FIREBASE, 
+                filters: [{ 
+                    field: 'isPublished', 
+                    operator: Operators.EqualTo, 
+                    value: true 
+                }], 
+                pageSize: 1, 
+                ttl: 0,
+            })
+        },
+        ttl,
+    })
+}
+
 export {
     useListCategories,
     useListCategoriesByBrandIds,
@@ -274,4 +296,6 @@ export {
 
     useGetProductById,
     useGetProductBySlug,
+
+    useListPublishedBanners,
 }

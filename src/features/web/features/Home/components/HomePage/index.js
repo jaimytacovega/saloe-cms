@@ -22,7 +22,7 @@ const HomePage = async ({
             ${
                 isSearch
                     ? ''
-                    : HomeHeroSection()
+                    : await HomeHeroSection()
             }
             ${
                 await HomeBrandFilterStickySection({

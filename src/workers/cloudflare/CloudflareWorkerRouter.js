@@ -24,6 +24,10 @@ import * as CmsQuotationsPage from '@/app/cms/cotizaciones/page'
 import * as CmsQuotationsCreatePage from '@/app/cms/cotizaciones/crear/page'
 import * as CmsQuotationsByIdPage from '@/app/cms/cotizaciones/[id]'
 
+import * as CmsBannersPage from '@/app/cms/banners/page'
+import * as CmsBannersCreatePage from '@/app/cms/banners/crear/page'
+import * as CmsBannersByIdPage from '@/app/cms/banners/[id]'
+
 import * as Category_SubCategoryListPage from '@/app/api/Category_SubCategory/list/page'
 import * as BrandListPage from '@/app/api/Brand/list/page'
 
@@ -59,6 +63,10 @@ const setRouter = () => {
     addRoute({ pathname: '/cms/cotizaciones', route: CmsQuotationsPage.default })
     addRoute({ pathname: '/cms/cotizaciones/crear', route: CmsQuotationsCreatePage.default })
     addRoute({ pathname: '/cms/cotizaciones/:id', route: CmsQuotationsByIdPage.default })
+    
+    addRoute({ pathname: '/cms/banners', route: CmsBannersPage.default })
+    addRoute({ pathname: '/cms/banners/crear', route: CmsBannersCreatePage.default })
+    addRoute({ pathname: '/cms/banners/:id', route: CmsBannersByIdPage.default })
 
     addRoute({ pathname: '/api/category_subCategory/list', route: Category_SubCategoryListPage.default })
     addRoute({ pathname: '/api/brand/list', route: BrandListPage.default })

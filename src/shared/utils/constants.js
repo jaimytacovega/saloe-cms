@@ -19,6 +19,7 @@ const DEFAULT_SORTERS = 'updatedAt:desc'
 
 const CMS_CODES = {
     brands: 'MAR',
+    banners: 'BAN',
     subCategories: 'SUBCAT',
     categories: 'CAT',
     promotions: 'PROM',
