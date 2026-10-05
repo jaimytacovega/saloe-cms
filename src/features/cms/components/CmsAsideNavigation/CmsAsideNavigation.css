@@ -35,13 +35,14 @@
         & > nav{
             display: flex;
             flex-flow: column wrap;
-            gap: 4px;
+            gap: 2px;
 
             & + nav{
                 margin-block: auto 0;
             }
 
             & > :is(a, button){
+                font-size: var(--font-size-xs);
                 font-family: var(--font-family-semibold);
                 border-radius: 8px;
                 padding-inline: 12px;
