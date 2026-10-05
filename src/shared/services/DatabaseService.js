@@ -1,5 +1,6 @@
 import * as FirestoreAdapter from '@/shared/adapters/firebase/FirebaseFirestoreLite'
-import { FIREBASE_CREDENTIALS, Source } from '@/shared/utils/constants'
+import * as IndexedDBAdapter from '@/shared/adapters/indexeddb/IndexedDB'
+import { FIREBASE_CREDENTIALS, INDEXEDDB_DATABASE_NAME, Source } from '@/shared/utils/constants'
 
 
 const Operators = {
@@ -35,6 +36,16 @@ const list = ({
             pageSize,
         })
     }
+
+    if (source === Source.INDEXEDDB) {
+        IndexedDBAdapter.init({ name: INDEXEDDB_DATABASE_NAME })
+        return IndexedDBAdapter.list({
+            collectionName,
+            filters,
+            sorters,
+            pageSize,
+        })
+    }
 }
 
 const get = ({
@@ -45,6 +56,14 @@ const get = ({
     if (source === Source.FIREBASE) {
         FirestoreAdapter.init({ credentials: FIREBASE_CREDENTIALS })
         return FirestoreAdapter.get({
+            collectionName,
+            id,
+        })
+    }
+
+    if (source === Source.INDEXEDDB) {
+        IndexedDBAdapter.init({ name: INDEXEDDB_DATABASE_NAME })
+        return IndexedDBAdapter.get({
             collectionName,
             id,
         })
@@ -63,6 +82,14 @@ const add = ({
             docData: data,
         })
     }
+
+    if (source === Source.INDEXEDDB) {
+        IndexedDBAdapter.init({ name: INDEXEDDB_DATABASE_NAME })
+        return IndexedDBAdapter.add({
+            collectionName,
+            docData: data,
+        })
+    }
 }
 
 const update = ({
@@ -77,6 +104,14 @@ const update = ({
             docData: data,
         })
     }
+
+    if (source === Source.INDEXEDDB) {
+        IndexedDBAdapter.init({ name: INDEXEDDB_DATABASE_NAME })
+        return IndexedDBAdapter.update({
+            collectionName,
+            docData: data,
+        })
+    }
 }
 
 const remove = ({
@@ -87,6 +122,14 @@ const remove = ({
     if (source === Source.FIREBASE) {
         FirestoreAdapter.init({ credentials: FIREBASE_CREDENTIALS })
         return FirestoreAdapter.remove({
+            collectionName,
+            id,
+        })
+    }
+
+    if (source === Source.INDEXEDDB) {
+        IndexedDBAdapter.init({ name: INDEXEDDB_DATABASE_NAME })
+        return IndexedDBAdapter.remove({
             collectionName,
             id,
         })

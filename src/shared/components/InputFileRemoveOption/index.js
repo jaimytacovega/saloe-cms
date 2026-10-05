@@ -4,6 +4,7 @@ import { html } from 'saloe/html'
 const InputFileRemoveOption = ({
     id,
     file,
+    onClick = 'InputFileRemoveOptionButton.click',
 }) => {
     return html`
         <div class="InputFileRemoveOption Button PrimaryButton PrimaryGray">
@@ -22,7 +23,7 @@ const InputFileRemoveOption = ({
                 data-id="${id}"
                 data-path="${file.path}"
 
-                on-click="InputFileRemoveOptionButton.click"
+                on-click="${onClick}"
             >
                 <u>Eliminar</u>
             </button>

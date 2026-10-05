@@ -11,7 +11,10 @@ const FIREBASE_CREDENTIALS = {
 
 const Source = {
     FIREBASE: 'firebase',
+    INDEXEDDB: 'indexeddb',
 }
+
+const INDEXEDDB_DATABASE_NAME = 'webquotation-attachments'
 
 const DEFAULT_PAGE_SIZE = 20
 const DEFAULT_PAGE = 1
@@ -37,6 +40,7 @@ export {
     COMPANY_NAME,
     FIREBASE_CREDENTIALS,
     Source,
+    INDEXEDDB_DATABASE_NAME,
     DEFAULT_PAGE_SIZE,
     DEFAULT_PAGE,
     DEFAULT_SORTERS,

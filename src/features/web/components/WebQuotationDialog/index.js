@@ -2,18 +2,18 @@ import { html } from 'saloe/html'
 
 import Dialog from '@/shared/components/Dialog'
 import Input from '@/shared/components/Input'
-import InputFile from '@/shared/components/InputFile'
 import Select from '@/shared/components/Select'
 import Textarea from '@/shared/components/Textarea'
 import MultipleSelect from '@/shared/components/MultipleSelect'
 import { get as getQuotation } from '@/features/web/components/WebQuotation'
 import { fill as fillMultipleSelect } from '@/shared/components/MultipleSelect'
+import { fill as fillAttachments } from '@/features/web/components/WebQuotationAttachmentsInputFile'
+import WebQuotationAttachmentsInputFile from '@/features/web/components/WebQuotationAttachmentsInputFile'
 
 import { CLIENT_TYPES, CLIENT_TYPE_LABELS } from '@/shared/repositories/QuotationRepository'
 import { getCMSCorrelative } from '@/shared/utils/utils'
 
 import * as WebHook from '@/features/web/hooks/WebHook'
-
 
 const fill = async () => {
     const quotation = getQuotation()
@@ -26,7 +26,10 @@ const fill = async () => {
     form.querySelector('#clientEmail').value = quotation.client.email ?? ''
     form.querySelector('#clientPhone').value = quotation.client.phone ?? ''
     form.querySelector('#clientType').value = quotation.client.type ?? ''
-    // TODO: Add attachments
+
+    await fillAttachments({
+        id: 'attachments',
+    })
 
     form.querySelector('#request').value = quotation.request ?? ''
     form.querySelector('#deliveryLocation').value = quotation.deliveryLocation ?? ''
@@ -113,15 +116,7 @@ const WebQuotationDialog = async ({
                             })
                         }
                         ${
-                            InputFile({
-                                id: 'attachments',
-                                label: 'Pedido adjunto (opcional)',
-                                type: 'file',
-                                accept: 'application/pdf',
-                                acceptLabel: 'PDF',
-                                multiple: true,
-                                files: [],
-                            })
+                            WebQuotationAttachmentsInputFile()
                         }
                         ${
                             Textarea({
