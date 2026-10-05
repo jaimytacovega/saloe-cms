@@ -57,6 +57,25 @@ const removeCredentialsFromCookies = () => {
     })
 }
 
+const checkAndRedirectToCms = ({
+    request,
+    cookies,
+}) => {
+    const { authId } = getCredentialsFromCookies({ cookies })
+    if (authId) {
+        return {
+            response: new Response(null, {
+                status: 302,
+                headers: {
+                    Location: new URL('/cms/marcas', request.url).toString(),
+                    'Cache-Control': 'no-store',
+                },
+            }),
+        }
+    }
+    return { response: null }
+}
+
 export {
     signInWithEmailAndPassword,
     signOut,
@@ -64,4 +83,6 @@ export {
     getCredentialsFromCookies,
     setCredentialsInCookies,
     removeCredentialsFromCookies,
+
+    checkAndRedirectToCms,
 }

@@ -22,7 +22,7 @@ const get = ({
     cookies,
 }) => {
     const cookieStore = getCookieStore()
-    if (!cookieStore && cookies) return cookies.match(new RegExp(`${key}=([^;]+)`)).at(1)
+    if (!cookieStore && cookies) return cookies.match(new RegExp(`${key}=([^;]+)`))?.at(1)
     return cookieStore?.get(key)
 }
 
