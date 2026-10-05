@@ -61,8 +61,8 @@ const addMultiple = async ({
             })
         )
     
-        const addResultsErr = addResults.find((result) => result.status === 'rejected')
-        if (addResultsErr) throw addResultsErr.reason
+        const addResultsErr = addResults.find((result) => result.status === 'rejected' || result.value?.err)
+        if (addResultsErr) throw addResultsErr.reason ?? addResultsErr.value.err
     
         return {
             data: addResults.map((result) => result.value.data)

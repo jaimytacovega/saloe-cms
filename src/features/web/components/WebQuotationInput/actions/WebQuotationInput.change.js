@@ -53,7 +53,9 @@ const change = ({
 }) => {
     const input = srcElement.closest(':is(input, select, textarea)')
     const field = input.getAttribute('data-field')
-    const value = input.value
+    const value = input.multiple
+        ? [...input.selectedOptions].map((option) => option.value)
+        : input.value
 
     console.log('field =', field)
     console.log('value =', value)

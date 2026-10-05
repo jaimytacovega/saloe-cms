@@ -60,7 +60,10 @@ const WebQuotationDialog = async ({
         id: 'WebQuotationDialog',
         className: 'WebQuotationDialog',
         children: html`
-            <form on-change="WebQuotationDialogForm.change">
+            <form 
+                on-change="WebQuotationDialogForm.change"
+                on-submit="WebQuotationDialogForm.submit"
+            >
                 <header>
                     <h2>Quieres que coticemos tu obra?</h2>
                     <p>Indicanos tus datos para poder enviarte una cotización.</p>
@@ -148,7 +151,8 @@ const WebQuotationDialog = async ({
                                     acc[promotionId] = true
                                     return acc
                                 }, {}),
-                                data: html`data-field="promotionIds" on-change="WebQuotationInput.change"`,
+                                data: html`data-field="promotionIds"`,
+                                onChange: 'WebQuotationInput.change',
                             })
                         }
                     </fieldset>

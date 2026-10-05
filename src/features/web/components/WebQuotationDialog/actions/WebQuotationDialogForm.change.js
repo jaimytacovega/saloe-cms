@@ -1,3 +1,6 @@
+export { submit } from '@/features/web/components/WebQuotationDialog/actions/WebQuotationDialogForm.submit'
+
+
 const change = ({
     e,
     srcElement: form,

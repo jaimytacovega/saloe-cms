@@ -11,6 +11,9 @@ const click = ({
 
     option.selected = false
     multipleSelectOption.remove()
+
+    const event = new Event('change', { bubbles: true })
+    multipleSelect.dispatchEvent(event)
 }
 
 export {

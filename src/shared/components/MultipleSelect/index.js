@@ -55,11 +55,12 @@ const MultipleSelect = ({
     selectedOptions = {},
     placeholder = 'Selecciona una o más opciones',
     data = '',
+    onChange,
 }) => {
     return html`
         <inputgroup>
             <label for="${id}__selector">${label}</label>
-            <select id="${id}" multiple on-change="MultipleSelect.change">
+            <select id="${id}" multiple on-change="MultipleSelect.change${onChange ? `,${onChange}` : ''}" ${data}>
                 <optgroup label="${placeholder}">
                     ${
                         options.map((option) => html`

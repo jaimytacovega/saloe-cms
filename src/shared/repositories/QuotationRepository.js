@@ -79,6 +79,21 @@ const add = async ({
                     }),
                 }
 
+                if (quotation.attachments?.length) {
+                    const addAttachmentsStorageResults = await StorageService.addMultiple({
+                        source,
+                        files: quotation.attachments,
+                        paths: quotation.attachments.map((attachment) => storagePath({
+                            id: quotationTx.ref.id,
+                            name: attachment.name,
+                        })),
+                    })
+
+                    if (addAttachmentsStorageResults?.err) throw addAttachmentsStorageResults.err
+
+                    quotation.attachments = addAttachmentsStorageResults.data
+                }
+
                 Boolean(counterTx?.data)
                     ? await DatabaseService.updateWithTransaction({
                         source,

@@ -46,7 +46,7 @@ const init = () => {
         deliveryLocation: '',
         subCategoryIds: [],
         promotionIds: [],
-        type: QUOTATION_TYPES.WEB,
+        type: QUOTATION_TYPES.ONLINE,
         status: QUOTATION_STATUSES.PENDING,
         createdAt: now,
         updatedAt: now,
