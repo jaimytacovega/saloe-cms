@@ -78,5 +78,9 @@ table{
             font-family: var(--font-family-medium);
             color: var(--color-black);
         }
+
+        &:last-child{
+            font-size: var(--font-size-xxs);
+        }
     }
 }
