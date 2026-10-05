@@ -5,8 +5,8 @@ import Toast, { showToast } from '@/shared/components/Toast'
 import { Source } from '@/shared/utils/constants'
 import { searchParamsToListArguments } from '@/shared/services/DatabaseService'
 import { QUOTATION_TYPES, QUOTATION_STATUSES } from '@/shared/repositories/QuotationRepository'
-import { get as getQuotation, init as initQuotation } from '@/features/web/components/WebQuotation'
-import { remove as removeAttachment } from '@/features/web/components/WebQuotationAttachmentsInputFile'
+import { get as getQuotation } from '@/features/web/components/WebQuotation'
+import { unfill as unfillQuotationDialog } from '@/features/web/components/WebQuotationDialog'
 
 
 const submit = ({
@@ -64,10 +64,7 @@ const submit = ({
             return addResult
         },
         onSuccess: async () => {
-            await Promise.allSettled(
-                (draft.attachments ?? []).map((id) => removeAttachment({ id }))
-            )
-            initQuotation()
+            await unfillQuotationDialog()
 
             form.removeAttribute('submitting')
             form.closest('dialog')?.hidePopover()

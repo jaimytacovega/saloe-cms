@@ -5,9 +5,9 @@ import Input from '@/shared/components/Input'
 import Select from '@/shared/components/Select'
 import Textarea from '@/shared/components/Textarea'
 import MultipleSelect from '@/shared/components/MultipleSelect'
-import { get as getQuotation } from '@/features/web/components/WebQuotation'
+import { get as getQuotation, init as initQuotation } from '@/features/web/components/WebQuotation'
 import { fill as fillMultipleSelect } from '@/shared/components/MultipleSelect'
-import { fill as fillAttachments } from '@/features/web/components/WebQuotationAttachmentsInputFile'
+import { fill as fillAttachments, remove as removeAttachment } from '@/features/web/components/WebQuotationAttachmentsInputFile'
 import WebQuotationAttachmentsInputFile from '@/features/web/components/WebQuotationAttachmentsInputFile'
 
 import { CLIENT_TYPES, CLIENT_TYPE_LABELS } from '@/shared/repositories/QuotationRepository'
@@ -40,6 +40,25 @@ const fill = async () => {
     })
 }
 
+const unfill = async () => {
+    const form = document?.getElementById('WebQuotationDialog')?.querySelector('form')
+    const draft = getQuotation()
+
+    form.reset()
+
+    const promotionSelect = form.querySelector('#promotionIds')
+    if (promotionSelect) {
+        for (const option of promotionSelect.options) option.selected = false
+    }
+    form.querySelector('#promotionIds__options')?.replaceChildren()
+    form.querySelector('#attachments__files')?.replaceChildren()
+
+    await Promise.allSettled(
+        (draft.attachments ?? []).map((id) => removeAttachment({ id }))
+    )
+    initQuotation()
+}
+
 const WebQuotationDialog = async ({
     client = {
         name: '',
@@ -61,7 +80,6 @@ const WebQuotationDialog = async ({
         className: 'WebQuotationDialog',
         children: html`
             <form 
-                on-change="WebQuotationDialogForm.change"
                 on-submit="WebQuotationDialogForm.submit"
             >
                 <header>
@@ -177,4 +195,5 @@ export default WebQuotationDialog
 
 export {
     fill,
+    unfill,
 }
