@@ -1,5 +1,6 @@
 import { addRoute } from 'saloe/router'
 
+import * as CmsPage from '@/app/cms/page'
 import * as CmsBrandsPage from '@/app/cms/marcas/page'
 import * as CmsBrandsCreatePage from '@/app/cms/marcas/crear/page'
 import * as CmsBrandsByIdPage from '@/app/cms/marcas/[id]'  
@@ -40,6 +41,7 @@ import * as SearchWebPage from '@/app/search/page'
 
 
 const setRouter = () => {
+    addRoute({ pathname: '/cms', route: CmsPage.default })
     addRoute({ pathname: '/cms/marcas', route: CmsBrandsPage.default })
     addRoute({ pathname: '/cms/marcas/crear', route: CmsBrandsCreatePage.default })
     addRoute({ pathname: '/cms/marcas/:id', route: CmsBrandsByIdPage.default }) 
