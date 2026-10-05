@@ -1,4 +1,4 @@
-const COMPANY_NAME = 'Nombre empresa'
+const COMPANY_NAME = 'Ferretería AyV'
 
 const FIREBASE_CREDENTIALS = {
     apiKey: "AIzaSyB5NJbhKBzseqpw4fTg8e0Pmzyv4ZhtLec",

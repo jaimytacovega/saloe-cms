@@ -5,17 +5,29 @@ container.TopMenu__container{
 }
 
 .TopMenu{
+    min-block-size: 36px;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
     justify-content: space-between;
 
-    > p{
-        font-family: var(--font-family-semibold);
-        color: var(--color-black);
+    > menu {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        gap: 12px;
 
-        @container topmenu (min-inline-size: 1000px){
-            padding-inline: 12px 0;
+        > p{
+            font-family: var(--font-family-semibold);
+            color: var(--color-black);
+
+            @container topmenu (min-inline-size: 1000px){
+                padding-inline: 12px 0;
+            }
+        }
+
+        > a{
+            font-size: var(--font-size-xs);
         }
     }
 }

@@ -19,6 +19,7 @@
 
         &:popover-open {
             display: flex;
+            transform: none;
 
             &::backdrop{
                 display: none;
@@ -88,5 +89,9 @@
                 background: none !important;
             }
         }
+    }
+
+    .CmsAsideNavigationTrigger{
+        display: none;
     }
 }

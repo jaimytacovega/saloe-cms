@@ -9,10 +9,13 @@ const TopMenu = ({
     return html`
         <container class="TopMenu__container">
             <menu class="TopMenu">
-            <p>${companyName}</p>
-            ${
-                CmsAsideNavigationTrigger()
-            }
+                <menu>
+                    <p>${companyName}</p>
+                    <a class="Button PrimaryButton PrimaryGray" href="/" target="_blank">Ir al sitio</a>
+                </menu>
+                ${
+                    CmsAsideNavigationTrigger()
+                }
             </menu>
         </container>
     `
