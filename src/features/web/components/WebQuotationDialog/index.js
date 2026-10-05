@@ -26,6 +26,8 @@ const update = async () => {
     form.querySelector('#clientEmail').value = quotation.client.email ?? ''
     form.querySelector('#clientPhone').value = quotation.client.phone ?? ''
     form.querySelector('#clientType').value = quotation.client.type ?? ''
+    // TODO: Add attachments
+    
     form.querySelector('#request').value = quotation.request ?? ''
     form.querySelector('#deliveryLocation').value = quotation.deliveryLocation ?? ''
 

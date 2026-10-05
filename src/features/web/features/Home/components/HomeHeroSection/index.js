@@ -27,7 +27,11 @@ const HomeHeroSection = async () => {
                 `,
                 description: banner.description,
                 toolbox: html`
-                    <button class="Button PrimaryButton PrimaryBlue">Cotizar pedido</button>
+                    <button 
+                        class="Button PrimaryButton PrimaryBlue"
+
+                        on-click="WebQuotationDialogTargetButton.click"
+                    >Cotizar pedido</button>
                 `,
                 isHeroImage: true,
                 thumbnail: banner.image.downloadURL,

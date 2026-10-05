@@ -1,6 +1,6 @@
 import * as FirebaseAuthAdapter from '@/shared/adapters/firebase/FirebaseAuth'
 import * as CookieService from '@/shared/services/CookieService'
-import { FIREBASE_CREDENTIALS, Source } from '@/shared/utils/constants'
+import { FIREBASE_CREDENTIALS, Source, CMS_REDIRECT_PATHNAME } from '@/shared/utils/constants'
 
 
 const signInWithEmailAndPassword = ({
@@ -67,7 +67,7 @@ const checkAndRedirectToCms = ({
             response: new Response(null, {
                 status: 302,
                 headers: {
-                    Location: new URL('/cms/marcas', request.url).toString(),
+                    Location: new URL(CMS_REDIRECT_PATHNAME, request.url).toString(),
                     'Cache-Control': 'no-store',
                 },
             }),

@@ -1,6 +1,6 @@
 import * as AuthManager from '@/shared/managers/AuthManager'
 
-import { Source } from '@/shared/utils/constants'
+import { Source, CMS_REDIRECT_PATHNAME } from '@/shared/utils/constants'
 import * as Form from '@/shared/components/Form'
 
 
@@ -29,7 +29,7 @@ const submit = ({
             })
         },
         onSuccess: ({ result }) => {
-            location.href = '/cms/marcas'
+            location.href = CMS_REDIRECT_PATHNAME
         },
     })
 }
