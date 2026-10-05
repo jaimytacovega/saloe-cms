@@ -7,7 +7,7 @@ import Select from '@/shared/components/Select'
 import Textarea from '@/shared/components/Textarea'
 import MultipleSelect from '@/shared/components/MultipleSelect'
 import { get as getQuotation } from '@/features/web/components/WebQuotation'
-import { update as updateMultipleSelect } from '@/shared/components/MultipleSelect'
+import { fill as fillMultipleSelect } from '@/shared/components/MultipleSelect'
 
 import { CLIENT_TYPES, CLIENT_TYPE_LABELS } from '@/shared/repositories/QuotationRepository'
 import { getCMSCorrelative } from '@/shared/utils/utils'
@@ -15,7 +15,7 @@ import { getCMSCorrelative } from '@/shared/utils/utils'
 import * as WebHook from '@/features/web/hooks/WebHook'
 
 
-const update = async () => {
+const fill = async () => {
     const quotation = getQuotation()
     const form = document?.getElementById('WebQuotationDialog')?.querySelector('form')
 
@@ -27,11 +27,11 @@ const update = async () => {
     form.querySelector('#clientPhone').value = quotation.client.phone ?? ''
     form.querySelector('#clientType').value = quotation.client.type ?? ''
     // TODO: Add attachments
-    
+
     form.querySelector('#request').value = quotation.request ?? ''
     form.querySelector('#deliveryLocation').value = quotation.deliveryLocation ?? ''
 
-    updateMultipleSelect({
+    fillMultipleSelect({
         id: 'promotionIds',
         selectedOptions: quotation.promotionIds ?? [],
     })
@@ -177,5 +177,5 @@ const WebQuotationDialog = async ({
 export default WebQuotationDialog
 
 export {
-    update,
+    fill,
 }

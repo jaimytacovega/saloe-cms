@@ -1,4 +1,4 @@
-import { update as updateQuotation } from '@/features/web/components/WebQuotationDialog'
+import { fill as fillQuotation } from '@/features/web/components/WebQuotationDialog'
 
 
 const click = async ({
@@ -9,7 +9,7 @@ const click = async ({
 
     const dialogId = 'WebQuotationDialog'
 
-    await updateQuotation()
+    await fillQuotation()
 
     const dialog = document.getElementById(dialogId)
     if (dialog) dialog.showPopover()

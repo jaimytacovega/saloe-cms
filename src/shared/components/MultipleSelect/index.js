@@ -3,7 +3,7 @@ import { html } from 'saloe/html'
 import MultipleSelectOption from '@/shared/components/MultipleSelectOption'
 
 
-const set = ({
+const select = ({
     id,
     selectedOption,
 }) => {
@@ -18,7 +18,7 @@ const set = ({
     }
 }
 
-const unset = ({
+const unselect = ({
     id, 
     selectedOption,
 }) => {
@@ -26,7 +26,7 @@ const unset = ({
     removeButton?.click()
 }
 
-const update = ({
+const fill = ({
     id, 
     selectedOptions,
 }) => {
@@ -34,14 +34,14 @@ const update = ({
     const optionsToUnselect = [...settedOptions].filter((option) => !selectedOptions[option.value])
 
     optionsToUnselect.forEach((option) => {
-        unset({
+        unselect({
             id,
             selectedOption: option.value,
         })
     })
 
     selectedOptions.forEach((option) => {
-        set({
+        select({
             id,
             selectedOption: option,
         })
@@ -102,8 +102,8 @@ const MultipleSelect = ({
 export default MultipleSelect
 
 export {
-    set,
-    unset,
+    select,
+    unselect,
 
-    update,
+    fill,
 }
