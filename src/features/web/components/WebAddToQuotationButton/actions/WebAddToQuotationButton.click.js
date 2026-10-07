@@ -32,8 +32,6 @@ const click = async ({
 
     const quotation = getQuotation()
 
-    console.log('pre quotation =', quotation)
-
     if (itemType === AddToQuotationButtonTypes.SubCategory && !quotation.subCategoryIds.includes(itemId)) {
         quotation.subCategoryIds.push(itemId)
     } else if (itemType === AddToQuotationButtonTypes.Promotion && !quotation.promotionIds.includes(itemId)) {

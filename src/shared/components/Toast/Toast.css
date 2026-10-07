@@ -5,21 +5,29 @@ dialog[role="toast"] {
     top: 100%;
     left: 50%;
     transform: translate(-50%, 100%);
+    background: var(--color-black);
+    color: var(--color-white);
+    text-align: center;
     inline-size: 100%;
     min-inline-size: 320px;
     max-inline-size: calc(100% - calc(var(--toast-padding-inline) * 2));
     padding-inline: 16px;
     padding-block: 12px;
-    border: 2px solid var(--color-gray-4);
+    border: .5px solid var(--color-gray-4);
     max-inline-size: 320px;
     border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, .1);
+    box-shadow: 0 8px 24px rgba(255, 255, 255, .5);
     opacity: 0;
     transition: transform .3s, opacity .3s, display .3s;
     transition-behavior: allow-discrete;
 
+    > p{
+        font-size: var(--font-size-sm);
+        color: var(--color-white);
+    }
+
     &:popover-open {
-        transform: translate(-50%, -200%);
+        transform: translate(-50%, -180%);
         opacity: 1;
 
         @starting-style {
