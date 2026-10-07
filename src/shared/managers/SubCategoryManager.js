@@ -14,6 +14,7 @@ const list = async ({
     filters,
     sorters,
     pageSize,
+    page,
 }) => {
     try{
         const listResult = await SubCategoryRepository.list({
@@ -21,6 +22,7 @@ const list = async ({
             filters,
             sorters,
             pageSize,
+            page,
         })
         
         if (listResult?.err) throw listResult.err

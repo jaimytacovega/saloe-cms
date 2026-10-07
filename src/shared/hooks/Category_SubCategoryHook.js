@@ -10,12 +10,13 @@ const useList = ({
     filters,
     sorters,
     pageSize,
+    page,
     ttl,
 }) => {
     return useQuery({
-        queryKey: ['category_subCategory', 'list', source, listArgumentsToQueryString({ filters, sorters, pageSize })],
+        queryKey: ['category_subCategory', 'list', source, listArgumentsToQueryString({ filters, sorters, pageSize, page })],
         queryGroup: ['category_subCategory', 'list', source],
-        queryFn: () => Category_SubCategoryManager.list({ source, filters, sorters, pageSize }),
+        queryFn: () => Category_SubCategoryManager.list({ source, filters, sorters, pageSize, page }),
         querySchema: ListCategory_SubCategoryArraySchema,
         ttl,
     })

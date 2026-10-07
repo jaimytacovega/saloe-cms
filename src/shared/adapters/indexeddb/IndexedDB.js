@@ -22,6 +22,7 @@ const list = async ({
     filters,
     sorters,
     pageSize,
+    offset = 0,
 }) => {
     try {
         const records = await withStore({
@@ -42,6 +43,7 @@ const list = async ({
                 filters,
                 sorters,
                 pageSize,
+                offset,
             }),
         }
     } catch (err) {
@@ -348,6 +350,7 @@ const applyList = ({
     filters,
     sorters,
     pageSize,
+    offset = 0,
 }) => {
     const filtered = filters?.length
         ? records.filter((record) => filters.every((filter) => matchesFilter({ record, filter })))
@@ -359,7 +362,9 @@ const applyList = ({
 
     if (!pageSize) return sorted
 
-    return sorted.slice(0, Number(pageSize))
+    const size = Number(pageSize)
+    const start = Number(offset) || 0
+    return sorted.slice(start, start + size)
 }
 
 const matchesFilter = ({

@@ -18,6 +18,7 @@ const list = ({
     filters,
     sorters,
     pageSize,
+    page,
 }) => {
     return DatabaseService.list({
         source,
@@ -25,6 +26,7 @@ const list = ({
         filters,
         sorters,
         pageSize,
+        page,
     })
 }
 

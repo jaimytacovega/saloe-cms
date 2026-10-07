@@ -14,6 +14,7 @@ const list = async ({
     filters,
     sorters,
     pageSize,
+    page,
 }) => {
     try{
         const listResult = await QuotationRepository.list({
@@ -21,6 +22,7 @@ const list = async ({
             filters,
             sorters,
             pageSize,
+            page,
         })
         if (listResult?.err) throw listResult.err
 

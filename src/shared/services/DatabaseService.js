@@ -20,20 +20,44 @@ const OperatorSymbols = {
     ContainsAny: '[]',
 }
 
+const pageWindow = ({
+    page,
+    pageSize,
+}) => {
+    const size = Number(pageSize)
+    if (!Number.isFinite(size) || size <= 0) {
+        return { offset: 0, pageSize }
+    }
+
+    const pageNumber = Number(page)
+    const safePage = Number.isFinite(pageNumber) && pageNumber >= 1
+        ? Math.floor(pageNumber)
+        : 1
+
+    return {
+        offset: (safePage - 1) * size,
+        pageSize: size,
+    }
+}
+
 const list = ({
     source,
     collectionName,
     filters,
     sorters,
     pageSize,
+    page,
 }) => {
+    const pagination = pageWindow({ page, pageSize })
+
     if (source === Source.FIREBASE) {
         FirestoreAdapter.init({ credentials: FIREBASE_CREDENTIALS })
         return FirestoreAdapter.list({
             collectionName,
             filters,
             sorters,
-            pageSize,
+            pageSize: pagination.pageSize,
+            offset: pagination.offset,
         })
     }
 
@@ -43,7 +67,8 @@ const list = ({
             collectionName,
             filters,
             sorters,
-            pageSize,
+            pageSize: pagination.pageSize,
+            offset: pagination.offset,
         })
     }
 }
@@ -220,8 +245,9 @@ const listArgumentsToQueryString = ({
     filters,
     sorters,
     pageSize,
+    page,
 }) => {
-    return listArgumentsToSearchParams({ filters, sorters, pageSize }).toString()
+    return listArgumentsToSearchParams({ filters, sorters, pageSize, page }).toString()
 }
 
 const listArgumentsToSearchParams = ({

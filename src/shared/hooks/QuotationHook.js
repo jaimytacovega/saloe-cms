@@ -10,12 +10,13 @@ const useList = ({
     filters,
     sorters,
     pageSize,
+    page,
     ttl,
 }) => {
     return useQuery({
-        queryKey: ['quotation', 'list', source, listArgumentsToQueryString({ filters, sorters, pageSize })],
+        queryKey: ['quotation', 'list', source, listArgumentsToQueryString({ filters, sorters, pageSize, page })],
         queryGroup: ['quotation', 'list', source],
-        queryFn: () => QuotationManager.list({ source, filters, sorters, pageSize }),
+        queryFn: () => QuotationManager.list({ source, filters, sorters, pageSize, page }),
         querySchema: ListQuotationArraySchema,
         ttl,
     })
@@ -40,6 +41,7 @@ const useAdd = async ({
     filters,
     sorters,
     pageSize,
+    page,
 }) => {
     try{
         const addResult = await QuotationManager.add({ source, data })
@@ -47,7 +49,7 @@ const useAdd = async ({
 
         const [useGetRevalidate, useListRevalidate] = await Promise.allSettled([
             useGet({ source, id: addResult.data.id, ttl: 0 }),
-            useList({ source, filters, sorters, pageSize, ttl: 0 }),
+            useList({ source, filters, sorters, pageSize, page, ttl: 0 }),
         ])  
 
         if (useGetRevalidate.status === 'rejected') throw useGetRevalidate.reason
@@ -72,6 +74,7 @@ const useUpdate = async ({
     filters,
     sorters,
     pageSize,
+    page,
 }) => {
     try{
         const updateResult = await QuotationManager.update({ source, data })
@@ -79,7 +82,7 @@ const useUpdate = async ({
 
         const [useGetRevalidate, useListRevalidate] = await Promise.allSettled([
             useGet({ source, id: data.id, ttl: 0 }),
-            useList({ source, filters, sorters, pageSize, ttl: 0 }),
+            useList({ source, filters, sorters, pageSize, page, ttl: 0 }),
         ])  
 
         if (useGetRevalidate.status === 'rejected') throw useGetRevalidate.reason
@@ -105,13 +108,14 @@ const useRemove = async ({
     filters,
     sorters,
     pageSize,
+    page,
 }) => {
     try{
         const removeResult = await QuotationManager.remove({ source, id, attachmentPaths })
         if (removeResult?.err) return removeResult
 
         const [useListRevalidate] = await Promise.allSettled([
-            useList({ source, filters, sorters, pageSize, ttl: 0 }),
+            useList({ source, filters, sorters, pageSize, page, ttl: 0 }),
         ])  
 
         if (useListRevalidate.status === 'rejected') throw useListRevalidate.reason

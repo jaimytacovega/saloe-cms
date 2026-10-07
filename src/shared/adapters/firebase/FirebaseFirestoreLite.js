@@ -36,10 +36,14 @@ const buildQuery = ({
     filters,
     sorters,
     pageSize,
+    offset = 0,
 }) => {
     const coll = collection(firestore, collectionName)
     const whr = filters?.map((filter) => where(filter.field === 'id' ? documentId() : filter.field, filter.operator, filter.value)) ?? []
-    const lim = pageSize ? [limit(pageSize)] : []
+    const size = Number(pageSize)
+    const skip = Number(offset) || 0
+    // Firestore has no offset. Read through the requested page, then keep that page.
+    const lim = Number.isFinite(size) && size > 0 ? [limit(skip + size)] : []
     const ord = sorters?.map((sorter) => orderBy(sorter.field, sorter.direction)) ?? []
 
     return query(coll, ...whr, ...ord, ...lim)
@@ -50,6 +54,7 @@ const list = async ({
     filters,
     sorters,
     pageSize,
+    offset = 0,
 }) => {
     try{
         const q = buildQuery({
@@ -57,12 +62,18 @@ const list = async ({
             filters,
             sorters,
             pageSize,
+            offset,
         })
 
         const snapshot = await getDocs(q)
+        const size = Number(pageSize)
+        const skip = Number(offset) || 0
+        const docs = Number.isFinite(size) && size > 0
+            ? snapshot.docs.slice(skip, skip + size)
+            : snapshot.docs
 
         return {
-            data: snapshot.docs
+            data: docs
                 .map((doc) => {
                     const data = formatDoc({ data: doc?.data() })
                     data.id = doc?.id
