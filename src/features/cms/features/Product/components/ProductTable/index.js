@@ -2,7 +2,7 @@ import { html } from 'saloe/html'
 
 import Table from '@/shared/components/Table'
 
-import { Source } from '@/shared/utils/constants'
+import { Source, TABLE_ROW_WHITESPACE } from '@/shared/utils/constants'
 import { queryBySearchParams } from '@/shared/services/DatabaseService'
 import { getCMSCorrelative, lastUpdatedMessage } from '@/shared/utils/utils'
 
@@ -52,7 +52,11 @@ const ProductTable = async ({
                 rows: products.map((product) => ProductTableRow({
                     id: product.id,
                     name: `${product.name}`,
-                    correlative: `${getCMSCorrelative({ collectionName: 'products', count: product.count })}&nbsp;&nbsp;-&nbsp;&nbsp;SKU: ${product.sku}`,
+                    correlative: `
+                        ${getCMSCorrelative({ collectionName: 'products', count: product.count })}
+                        ${TABLE_ROW_WHITESPACE}
+                        SKU: ${product.sku}
+                    `,
                     createdAt: product.createdAt,
                     updatedAt: product.updatedAt,
                     toggled: product.id === productId,

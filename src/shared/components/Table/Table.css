@@ -72,15 +72,13 @@ table{
     }
 
     > span{
+        font-size: var(--font-size-xxs);
         color: var(--color-gray-1);
 
         &:first-child{
+            font-size: var(--font-size-sm);
             font-family: var(--font-family-medium);
             color: var(--color-black);
-        }
-
-        &:last-child{
-            font-size: var(--font-size-xxs);
         }
     }
 }

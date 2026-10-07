@@ -61,7 +61,8 @@ const QuotationTable = async ({
                         ${CLIENT_TYPE_LABELS[quotation.clientType]}
                     `,
                     correlative: `${
-                        getCMSCorrelative({ collectionName: 'quotations', count: quotation.count })}&nbsp;&nbsp;-&nbsp;&nbsp;
+                        getCMSCorrelative({ collectionName: 'quotations', count: quotation.count })}
+                        ${TABLE_ROW_WHITESPACE}
                         Tipo: ${QUOTATION_TYPE_LABELS[quotation.type]}
                         ${TABLE_ROW_WHITESPACE}
                         Estado: ${QUOTATION_STATUS_LABELS[quotation.status]}
