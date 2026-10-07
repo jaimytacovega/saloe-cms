@@ -51,6 +51,28 @@ const CmsSortDropdown = ({
                     })
                 }
                 ${
+                    Input({
+                        id: 'count:desc',
+                        label: 'Últimos creados',
+                        type: 'radio',
+                        value: 'count:desc',
+                        name: id,
+                        checked: sortersMap.get('count:desc'),
+                        reverse: true,
+                    })
+                }
+                ${
+                    Input({
+                        id: 'count:asc',
+                        label: 'Primeros creados',
+                        type: 'radio',
+                        value: 'count:asc',
+                        name: id,
+                        checked: sortersMap.get('count:asc'),
+                        reverse: true,
+                    })
+                }
+                ${
                     includeSortByName
                         ? html`
                             ${
