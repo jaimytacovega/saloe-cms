@@ -122,6 +122,7 @@ const add = async ({
                             data.name,
                             data.sku.substring(0, 4),
                             data.sku.substring(4),
+                            data.sku,
                         ] 
                     }),
                 }

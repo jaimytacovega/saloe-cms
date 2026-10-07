@@ -62,6 +62,7 @@ const submit = ({
                 name,
                 sku.substring(0, 4),
                 sku.substring(4),
+                sku,
             ],
         }),
         updatedAt: new Date(),
