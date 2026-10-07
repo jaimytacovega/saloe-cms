@@ -20,6 +20,7 @@ const submit = ({
     const request = form.querySelector('#request').value.trim()
     const deliveryLocation = form.querySelector('#deliveryLocation').value.trim()
     const promotionIds = Array.from(form.querySelector('#promotionIds').selectedOptions).map((option) => option.value.trim())
+    const subCategoryIds = Array.from(form.querySelector('#subCategoryIds').selectedOptions).map((option) => option.value.trim())
     const type = form.querySelector('#type').value.trim()
     const status = form.querySelector('#status').value.trim()
     const now = new Date()
@@ -37,6 +38,7 @@ const submit = ({
         request,
         deliveryLocation,
         promotionIds,
+        subCategoryIds,
         type,
         status,
         createdAt: now,

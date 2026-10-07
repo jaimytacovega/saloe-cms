@@ -10,6 +10,7 @@ import NotFoundItem from '@/features/cms/components/NotFoundItem'
 
 import * as QuotationHook from '@/shared/hooks/QuotationHook'
 import * as PromotionHook from '@/shared/hooks/PromotionHook'
+import * as SubCategoryHook from '@/shared/hooks/SubCategoryHook'
 import { Source } from '@/shared/utils/constants'
 import { lastUpdatedMessage, getCMSCorrelative } from '@/shared/utils/utils'
 import { QUOTATION_TYPES, QUOTATION_TYPE_LABELS, QUOTATION_STATUSES, QUOTATION_STATUS_LABELS, CLIENT_TYPES, CLIENT_TYPE_LABELS } from '@/shared/repositories/QuotationRepository'
@@ -23,6 +24,7 @@ const QuotationAddOrUpdateForm = async ({
     const [
         quotationGetResult, 
         promotionListResult,
+        subCategoryListResult,
     ] = await Promise.allSettled([
         quotationId === 'new'
             ? { data: {}, isCached: false }
@@ -36,15 +38,21 @@ const QuotationAddOrUpdateForm = async ({
             source: Source.FIREBASE,
             ttl: 10_000,
         }),
+        SubCategoryHook.useList({
+            source: Source.FIREBASE,
+            ttl: 10_000,
+        }),
     ])
 
     if (
         quotationGetResult.status === 'rejected' || 
-        promotionListResult.status === 'rejected'
+        promotionListResult.status === 'rejected' ||
+        subCategoryListResult.status === 'rejected'
     ) return html`error`
 
     const { data: quotation } = quotationGetResult.value
     const { data: promotions } = promotionListResult.value
+    const { data: subCategories } = subCategoryListResult.value
 
     const correlative = getCMSCorrelative({ collectionName: 'quotations', count: quotation?.count ?? '' })
 
@@ -167,6 +175,20 @@ const QuotationAddOrUpdateForm = async ({
                                 })),
                                 selectedOptions: (quotation?.promotionIds ?? []).reduce((acc, promotionId) => {
                                     acc[promotionId] = true
+                                    return acc
+                                }, {}),
+                            })
+                        }
+                        ${
+                            MultipleSelect({
+                                id: 'subCategoryIds',
+                                label: 'Subcategorías',
+                                options: (subCategories ?? []).map((subCategory) => ({
+                                    value: subCategory.id,
+                                    label: `${getCMSCorrelative({ collectionName: 'subCategories', count: subCategory.count })}: ${subCategory.name}`,
+                                })),
+                                selectedOptions: (quotation?.subCategoryIds ?? []).reduce((acc, subCategoryId) => {
+                                    acc[subCategoryId] = true
                                     return acc
                                 }, {}),
                             })
