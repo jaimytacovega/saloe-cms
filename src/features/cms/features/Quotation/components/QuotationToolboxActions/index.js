@@ -1,6 +1,7 @@
 import { html } from 'saloe/html'
 
 import QuotationFilterDropdown from '@/features/cms/features/Quotation/components/QuotationFilterDropdown'
+import CmsPaginationDropdown from '@/features/cms/components/CmsPaginationDropdown'
 import CmsSortDropdown from '@/features/cms/components/CmsSortDropdown'
 
 
@@ -12,6 +13,11 @@ const QuotationToolboxActions = async ({
         <inputgroup>
             ${
                 await QuotationFilterDropdown({
+                    searchParams,
+                })
+            }
+            ${
+                CmsPaginationDropdown({
                     searchParams,
                 })
             }

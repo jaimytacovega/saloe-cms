@@ -1,6 +1,7 @@
 import { html } from 'saloe/html'
 
 import PromotionFilterDropdown from '@/features/cms/features/Promotion/components/PromotionFilterDropdown'
+import CmsPaginationDropdown from '@/features/cms/components/CmsPaginationDropdown'
 import CmsSortDropdown from '@/features/cms/components/CmsSortDropdown'
 
 
@@ -12,6 +13,11 @@ const PromotionToolboxActions = async ({
         <inputgroup>
             ${
                 await PromotionFilterDropdown({
+                    searchParams,
+                })
+            }
+            ${
+                CmsPaginationDropdown({
                     searchParams,
                 })
             }

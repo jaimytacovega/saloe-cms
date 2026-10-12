@@ -1,5 +1,6 @@
 import { html } from 'saloe/html'
 
+import CmsPaginationDropdown from '@/features/cms/components/CmsPaginationDropdown'
 import CmsSortDropdown from '@/features/cms/components/CmsSortDropdown'
 
 
@@ -9,6 +10,11 @@ const BannerToolboxActions = async ({
 }) => {
     return html`
         <inputgroup>
+            ${
+                CmsPaginationDropdown({
+                    searchParams,
+                })
+            }
             ${
                 CmsSortDropdown({
                     searchParams,
