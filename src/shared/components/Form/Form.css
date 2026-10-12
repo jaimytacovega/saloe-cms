@@ -143,6 +143,8 @@ inputgroup {
 
         &:has(~ input:is([type="checkbox"], [type="radio"])){
             inline-size: auto;
+            flex: 1;
+            min-inline-size: 0;
         }
     }
 

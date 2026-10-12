@@ -22,9 +22,12 @@
         inline-size: 16px;
         block-size: 16px;
         accent-color: var(--color-gray-1);
+        align-self: start;
 
         &~label{
             inline-size: auto;
+            flex: 1;
+            min-inline-size: 0;
             color: var(--color-gray-1);
         }
     }
