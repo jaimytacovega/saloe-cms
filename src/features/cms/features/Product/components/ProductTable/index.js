@@ -40,7 +40,7 @@ const ProductTable = async ({
                 source: Source.FIREBASE,
                 pageSize: 20,
                 ...listArguments,
-                ttl: 60_000,
+                ttl: 10_000,
             })
         },
         searchParams,
