@@ -495,6 +495,21 @@ const getUrlBySearchForm = ({
     return url
 }
 
+const getUrlByPageForm = ({
+    form,
+    pageKey,
+    url,
+}) => {
+    const pageNumber = Number(form.querySelector(`[name="${pageKey}"]`).value)
+    const page = Number.isFinite(pageNumber) && pageNumber >= 1
+        ? Math.floor(pageNumber)
+        : 1
+
+    url.searchParams.set(pageKey, page)
+
+    return url
+}
+
 export {
     Operators,
     OperatorSymbols,
@@ -521,4 +536,5 @@ export {
     getUrlByFilterForm,
     getUrlBySortForm,
     getUrlBySearchForm,
+    getUrlByPageForm,
 }

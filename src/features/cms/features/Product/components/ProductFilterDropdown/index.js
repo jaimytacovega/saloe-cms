@@ -58,28 +58,30 @@ const ProductFilterDropdown = async ({
                 <inputgroup>
                     <h6>Marcas</h6>
                 </inputgroup>
-                ${
-                    brands.map((brand) => {
-                        return html`
-                            ${
-                                Input({
-                                    id: `brandIds-${brand.id}`,
-                                    label: brand.name,
-                                    type: 'checkbox',
-                                    name: 'brandIds',
-                                    value: brand.id,
-                                    reverse: true,
-                                    checked: Boolean(brandIdsMap.get(brand.id)),
-                                })
-                            }
-                        `
-                    }).join('')
-                }
+                <inputgroup class="form__scroller">
+                    ${
+                        brands.map((brand) => {
+                            return html`
+                                ${
+                                    Input({
+                                        id: `brandIds-${brand.id}`,
+                                        label: brand.name,
+                                        type: 'checkbox',
+                                        name: 'brandIds',
+                                        value: brand.id,
+                                        reverse: true,
+                                        checked: Boolean(brandIdsMap.get(brand.id)),
+                                    })
+                                }
+                            `
+                        }).join('')
+                    }
+                </inputgroup>
                 <inputgroup></inputgroup>
                 <inputgroup>
                     <h6>Subcategorías</h6>
                 </inputgroup>
-                <inputgroup>
+                <inputgroup class="form__scroller">
                     ${
                         subCategories.map((subCategory) => {
                             return html`

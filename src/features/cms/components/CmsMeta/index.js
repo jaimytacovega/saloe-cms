@@ -16,6 +16,7 @@ const CmsMeta = () => {
         <link rel="stylesheet" href="/Table.css">
         <link rel="stylesheet" href="/Dialog.css">
         <link rel="stylesheet" href="/Dropdown.css">
+        <link rel="stylesheet" href="/CmsPaginationDropdown.css">
 
         <link rel="stylesheet" href="/InputFileRemoveOption.css">
         <link rel="stylesheet" href="/MultipleSelectOption.css">

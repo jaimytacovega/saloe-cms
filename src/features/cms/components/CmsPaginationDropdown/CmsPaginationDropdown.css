@@ -1,0 +1,24 @@
+.Dropdown > dialog:has(> form.CmsPaginationDropdown){
+    inline-size: max-content;
+    min-inline-size: 230px;
+    max-inline-size: 360px;
+}
+
+.CmsPaginationDropdown__stepper{
+    flex-wrap: nowrap;
+
+    > input{
+        inline-size: 72px;
+        flex: 0 0 auto;
+        text-align: center;
+        padding-inline: 8px;
+        padding-block: 8px;
+        appearance: textfield;
+
+        &::-webkit-inner-spin-button,
+        &::-webkit-outer-spin-button{
+            appearance: none;
+            margin: 0;
+        }
+    }
+}
