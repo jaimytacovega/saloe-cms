@@ -78,65 +78,71 @@ const QuotationFilterDropdown = async ({
                 <inputgroup>
                     <h6>Tipos de cotización</h6>
                 </inputgroup>
-                ${
-                    types.map((type) => {
-                        return html`
-                            ${
-                                Input({
-                                    id: `type-${type.value}`,
-                                    label: type.label,
-                                    type: 'checkbox',
-                                    name: 'type',
-                                    value: type.value,
-                                    reverse: true,
-                                    checked: Boolean(typesMap.get(type.value)),
-                                })
-                            }
-                        `
-                    }).join('')
-                }
+                <inputgroup>
+                    ${
+                        types.map((type) => {
+                            return html`
+                                ${
+                                    Input({
+                                        id: `type-${type.value}`,
+                                        label: type.label,
+                                        type: 'checkbox',
+                                        name: 'type',
+                                        value: type.value,
+                                        reverse: true,
+                                        checked: Boolean(typesMap.get(type.value)),
+                                    })
+                                }
+                            `
+                        }).join('')
+                    }
+                </inputgroup>
                 <inputgroup></inputgroup>
                 <inputgroup>
                     <h6>Tipos de cliente</h6>
                 </inputgroup>
-                ${
-                    clientTypes.map((clientType) => {
-                        return html`
-                            ${
-                                Input({
-                                    id: `clientType-${clientType.value}`,
-                                    label: clientType.label,
-                                    type: 'checkbox',
-                                    name: 'clientType',
-                                    value: clientType.value,
-                                    reverse: true,
-                                    checked: Boolean(clientTypesMap.get(clientType.value)),
-                                })
-                            }
-                        `
-                    }).join('')
-                }
+                <inputgroup>
+                    ${
+                        clientTypes.map((clientType) => {
+                            return html`
+                                ${
+                                    Input({
+                                        id: `clientType-${clientType.value}`,
+                                        label: clientType.label,
+                                        type: 'checkbox',
+                                        name: 'clientType',
+                                        value: clientType.value,
+                                        reverse: true,
+                                        checked: Boolean(clientTypesMap.get(clientType.value)),
+                                    })
+                                }
+                            `
+                        }).join('')
+                    }
+                </inputgroup>
                 <inputgroup></inputgroup>
                 <inputgroup>
                     <h6>Estados de cotización</h6>
                 </inputgroup>
-                ${
-                    statuses.map((status) => {
-                        return html`
-                            ${
-                                Input({
-                                    id: `status-${status.value}`,
-                                    label: status.label,
-                                    type: 'checkbox',
-                                    name: 'status',
-                                    value: status.value,
-                                    reverse: true,
-                                    checked: Boolean(statusesMap.get(status.value)),
-                                })
-                            }
-                        `
-                    }).join('')
-                }
+                <inputgroup>
+                    ${
+                        statuses.map((status) => {
+                            return html`
+                                ${
+                                    Input({
+                                        id: `status-${status.value}`,
+                                        label: status.label,
+                                        type: 'checkbox',
+                                        name: 'status',
+                                        value: status.value,
+                                        reverse: true,
+                                        checked: Boolean(statusesMap.get(status.value)),
+                                    })
+                                }
+                            `
+                        }).join('')
+                    }
+                </inputgroup>
                 <inputgroup></inputgroup>
                 <inputgroup>
                     <button 

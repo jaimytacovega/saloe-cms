@@ -58,7 +58,7 @@ const ProductFilterDropdown = async ({
                 <inputgroup>
                     <h6>Marcas</h6>
                 </inputgroup>
-                <inputgroup class="form__scroller">
+                <inputgroup class="form__scroller" sm>
                     ${
                         brands.map((brand) => {
                             return html`
@@ -81,7 +81,7 @@ const ProductFilterDropdown = async ({
                 <inputgroup>
                     <h6>Subcategorías</h6>
                 </inputgroup>
-                <inputgroup class="form__scroller">
+                <inputgroup class="form__scroller" sm>
                     ${
                         subCategories.map((subCategory) => {
                             return html`

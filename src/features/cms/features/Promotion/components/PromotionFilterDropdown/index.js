@@ -45,23 +45,25 @@ const PromotionFilterDropdown = async ({
                 <inputgroup>
                     <h6>Marcas</h6>
                 </inputgroup>
-                ${
-                    brands.map((brand) => {
-                        return html`
-                            ${
-                                Input({
-                                    id: `brandId-${brand.id}`,
-                                    label: brand.name,
-                                    type: 'checkbox',
-                                    name: 'brandId',
-                                    value: brand.id,
-                                    reverse: true,
-                                    checked: Boolean(brandIdsMap.get(brand.id)),
-                                })
-                            }
-                        `
-                    }).join('')
-                }
+                <inputgroup class="form__scroller" md>
+                    ${
+                        brands.map((brand) => {
+                            return html`
+                                ${
+                                    Input({
+                                        id: `brandId-${brand.id}`,
+                                        label: brand.name,
+                                        type: 'checkbox',
+                                        name: 'brandId',
+                                        value: brand.id,
+                                        reverse: true,
+                                        checked: Boolean(brandIdsMap.get(brand.id)),
+                                    })
+                                }
+                            `
+                        }).join('')
+                    }
+                </inputgroup>
                 <inputgroup></inputgroup>
                 <inputgroup>
                     <button 
