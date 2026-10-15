@@ -15,7 +15,7 @@ container.WebHeroSection__container{
 
     --webherosection-header__max-inline-size: 420px;
 
-    --webherosection-thumbnail__max-inline-size: 500px;
+    --webherosection-thumbnail__max-inline-size: 320px;
     --webherosection-thumbnail__min-block-size: 280px;
 
     padding-inline: var(--webherosection__padding-inline);
@@ -53,6 +53,10 @@ container.WebHeroSection__container{
 
     &[reversed]{
         flex-flow: column-reverse wrap;
+    }
+
+    &[product-detail]{
+        gap: 0;
     }
 
     > header{

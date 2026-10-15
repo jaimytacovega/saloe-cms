@@ -8,6 +8,7 @@ const WebHeroSection = ({
     toolbox,
     isHeroImage = false,
     isReversed = false,
+    isProductDetail = false,
     thumbnail,
 }) => {
     return html`
@@ -16,6 +17,7 @@ const WebHeroSection = ({
                 class="WebHeroSection"
                 ${isHeroImage ? ' hero-image' : ''}
                 ${isReversed ? ' reversed' : ''}
+                ${isProductDetail ? ' product-detail' : ''}
             >
                 <header>
                     ${

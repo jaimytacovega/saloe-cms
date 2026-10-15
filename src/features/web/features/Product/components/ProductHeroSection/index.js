@@ -57,6 +57,7 @@ const ProductHeroSection = async ({
                     
                 `,
                 isReversed: true,
+                isProductDetail: true,
                 thumbnail: product.image.downloadURL,
             })
         }
