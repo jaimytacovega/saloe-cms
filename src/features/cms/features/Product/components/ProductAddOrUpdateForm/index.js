@@ -6,6 +6,7 @@ import Textarea from '@/shared/components/Textarea'
 import MultipleSelect from '@/shared/components/MultipleSelect'
 
 import NotFoundItem from '@/features/cms/components/NotFoundItem'
+import { escapeHtml } from '@/features/cms/utils/utils'
 
 import * as ProductHook from '@/shared/hooks/ProductHook'
 import * as SubCategoryHook from '@/shared/hooks/SubCategoryHook'
@@ -102,7 +103,7 @@ const ProductAddOrUpdateForm = async ({
                             Input({
                                 id: 'name',
                                 label: 'Nombre',
-                                value: product?.name ?? '',
+                                value: escapeHtml({ value: product?.name ?? '' }),
                                 placeholder: 'Ingresa el nombre del producto',
                             })
                         }

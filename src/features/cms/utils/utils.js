@@ -26,7 +26,17 @@ const isListUrl = ({
     return `${parts.at(0)}/${parts.at(1)}/${parts.at(2)}` === listUrl
 }
 
+const escapeHtml = ({ value }) => {
+    return `${value ?? ''}`
+        .replaceAll('&', '&amp;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+}
+
 export {
     redirectIfMissingSearchParams,
     isListUrl,
+    escapeHtml,
 }
