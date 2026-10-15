@@ -15,7 +15,7 @@ container.WebHeroSection__container{
 
     --webherosection-header__max-inline-size: 420px;
 
-    --webherosection-thumbnail__max-inline-size: 320px;
+    --webherosection-thumbnail__max-inline-size: 500px;
     --webherosection-thumbnail__min-block-size: 280px;
 
     padding-inline: var(--webherosection__padding-inline);
@@ -56,6 +56,10 @@ container.WebHeroSection__container{
     }
 
     &[product-detail]{
+        --webherosection__padding-block: 32px;
+
+        --webherosection-thumbnail__max-inline-size: 320px;
+
         gap: 0;
     }
 
