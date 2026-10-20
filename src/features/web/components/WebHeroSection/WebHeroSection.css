@@ -58,7 +58,7 @@ container.WebHeroSection__container{
     &[product-detail]{
         --webherosection__padding-block: 32px;
 
-        --webherosection-thumbnail__max-inline-size: 320px;
+        --webherosection-thumbnail__max-inline-size: 400px;
 
         gap: 0;
     }
