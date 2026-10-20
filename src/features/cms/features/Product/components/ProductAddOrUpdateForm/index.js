@@ -196,7 +196,7 @@ const ProductAddOrUpdateForm = async ({
                             Input({
                                 id: 'seo-title',
                                 label: 'Título',
-                                value: product?.seoTitle ?? '',
+                                value: escapeHtml({ value: product?.seoTitle ?? '' }),
                                 placeholder: 'Ingresa el título SEO del producto',
                             })
                         }
