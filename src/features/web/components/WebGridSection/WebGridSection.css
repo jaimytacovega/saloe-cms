@@ -38,16 +38,47 @@ container.WebGridSection__container{
         flex-flow: column wrap;
         gap: 1ch;
 
-        > p{
+        > .WebGridSection__description{
             display: flex;
             flex-flow: row wrap;
-            /* justify-content: space-between; */
+            align-items: center;
             gap: .5ch;
+            font: var(--font-size-p)/1.2 var(--font-family-regular);
+            color: var(--color-gray-1);
 
-            > :is(a, button){
-                font-family: var(--font-family-semibold);
+            > :is(a, button),
+            > .Dropdown {
+                > button{
+                    font-family: var(--font-family-semibold);
+                    font-size: var(--font-size-xs);
+                }
             }
         }
+    }
+
+    .WebGridSection__catalogs{
+        display: flex;
+        flex-flow: column nowrap;
+
+        > a{
+            padding-inline: 16px;
+            padding-block: 10px;
+            color: var(--color-black);
+            font-family: var(--font-family-medium);
+            font-size: var(--font-size-xs);
+            overflow-wrap: anywhere;
+
+            &:hover{
+                background: var(--color-gray-4);
+            }
+        }
+    }
+
+    .Dropdown:has(.WebGridSection__catalogs) > dialog{
+        inline-size: max-content;
+        min-inline-size: 180px;
+        max-inline-size: min(360px, 80vw);
+        padding-block: 8px;
     }
 
     > .WebGridSection__grid{

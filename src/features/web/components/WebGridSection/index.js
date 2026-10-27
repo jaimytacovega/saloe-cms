@@ -27,9 +27,9 @@ const WebGridSection = ({
             >
                 <header>
                     ${title}
-                    <p>
+                    <div class="WebGridSection__description">
                         ${description}
-                    </p>
+                    </div>
                 </header>
                 <div class="WebGridSection__grid" columns="${columns ?? 1}">
                     ${grid}
