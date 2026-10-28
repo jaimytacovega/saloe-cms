@@ -39,6 +39,7 @@ const WebMeta = ({
         <link rel="stylesheet" href="/WebQuotationDialog.css">
         <link rel="stylesheet" href="/WebStickySection.css">
         <link rel="stylesheet" href="/WebLegalsSection.css">
+        <link rel="stylesheet" href="/HomeSalesAdvisorsCarrousel.css">
 
         <link rel="canonical" href="${canonical}" />
 

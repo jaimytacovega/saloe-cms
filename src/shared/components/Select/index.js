@@ -3,20 +3,31 @@ import { html } from 'saloe/html'
 
 const Select = ({
     id,
-    label,
+    label = '',
     options = [],
     value,
     data = '',
+    disabledOption = '',
 }) => {
     return html`
         <inputgroup>
-            <label for="${id}">${label}</label>
+            ${
+                Boolean(label)
+                    ? html`<label for="${id}">${label}</label>`
+                    : ''
+            }
             <select 
                 id="${id}" 
                 value="${value ?? ''}"
                 ${data}
             >
-                <option disabled value="" ${Boolean(value) ? '' : 'selected'}>Selecciona una opción</option>
+                <option disabled value="" ${Boolean(value) ? '' : 'selected'}>
+                    ${
+                        Boolean(disabledOption)
+                            ? html`${disabledOption}`
+                            : 'Selecciona una opción'
+                    }
+                </option>
                 ${
                     options.map((option) => html`
                         <option value="${option.value}"${option.value === value ? ' selected' : ''}>${option.label}</option>

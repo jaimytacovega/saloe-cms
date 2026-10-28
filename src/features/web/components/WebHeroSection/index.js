@@ -9,7 +9,9 @@ const WebHeroSection = ({
     isHeroImage = false,
     isReversed = false,
     isProductDetail = false,
+    isSalesAdvisors = false,
     thumbnail,
+    content,
 }) => {
     return html`
         <container class="WebHeroSection__container">
@@ -18,6 +20,7 @@ const WebHeroSection = ({
                 ${isHeroImage ? ' hero-image' : ''}
                 ${isReversed ? ' reversed' : ''}
                 ${isProductDetail ? ' product-detail' : ''}
+                ${isSalesAdvisors ? ' sales-advisors' : ''}
             >
                 <header>
                     ${
@@ -27,19 +30,34 @@ const WebHeroSection = ({
                     }
                     ${title}
                     <p>${description}</p>
-                    <div class="WebHeroSection__header__toolbox">
-                        ${toolbox} 
-                    </div>
-                </header>
-                <figure class="WebHeroSection__figure">
                     ${
-                        Boolean(thumbnail)
+                        Boolean(toolbox)
                             ? html`
-                                <img loading="lazy" src="${thumbnail}" width="100%" height="100%" alt="hero section">
+                                <div class="WebHeroSection__header__toolbox">
+                                    ${toolbox}
+                                </div>
                             `
                             : ''
                     }
-                </figure>
+                </header>
+                ${
+                    Boolean(thumbnail)
+                        ? html`
+                            <figure class="WebHeroSection__figure">
+                                <img loading="lazy" src="${thumbnail}" width="100%" height="100%" alt="hero section">
+                            </figure>
+                        `
+                        : ''
+                }
+                ${
+                    Boolean(content)
+                        ? html`
+                            <div class="WebHeroSection__content">
+                                ${content}
+                            </div>
+                        `
+                        : ''
+                }
             </section>
         </container>
     `

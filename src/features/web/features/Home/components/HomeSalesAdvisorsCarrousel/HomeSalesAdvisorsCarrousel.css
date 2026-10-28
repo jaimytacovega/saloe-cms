@@ -1,0 +1,44 @@
+.HomeSalesAdvisorsCarrousel{
+    inline-size: 100%;
+    scrollbar-width: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 12px;
+
+    > figure{
+        &[hidden]{
+            display: none;
+        }
+
+        min-inline-size: 280px;
+        inline-size: 280px;
+        padding-inline: 16px;
+        padding-block: 16px;
+        border-radius: 8px;
+        background: var(--color-white);
+        scroll-snap-align: center;
+        display: flex;
+        flex-flow: column wrap;
+        align-items: center;
+        gap: 16px;
+
+        > figcaption{
+            inline-size: 100%;
+
+            &:not(:has(a)){
+                padding-inline: 12px;
+            }
+
+            > :is(h6, p){
+                font-size: var(--font-size-sm);
+            }
+
+            > a{
+                justify-content: center;
+            }
+        }
+    }
+}

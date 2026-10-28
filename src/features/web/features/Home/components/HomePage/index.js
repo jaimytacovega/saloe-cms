@@ -6,6 +6,7 @@ import WebQuotationDialog from '@/features/web/components/WebQuotationDialog'
 import HomeBrandFilterStickySection from '@/features/web/features/Home/components/HomeBrandFilterStickySection'
 import HomeCategoriesAndPromosGridSections from '@/features/web/features/Home/components/HomeCategoriesAndPromosGridSections'
 import HomeFeaturedPromoGridSections from '@/features/web/features/Home/components/HomeFeaturedPromoGridSections'
+import HomeSalesAdvisorsSection from '@/features/web/features/Home/components/HomeSalesAdvisorsSection'
 
 
 const HomePage = async ({
@@ -41,6 +42,9 @@ const HomePage = async ({
                             await HomeFeaturedPromoGridSections()
                         }
                     `
+            }
+            ${
+                HomeSalesAdvisorsSection()
             }
             ${
                 await WebQuotationDialog()

@@ -63,6 +63,24 @@ container.WebHeroSection__container{
         gap: 0;
     }
 
+    &[sales-advisors]{
+        background: var(--color-gray-4);
+
+        > header{
+            > p{
+                padding-block: 0 .5ch;
+            }
+
+            > inputgroup{
+                inline-size: 100%;
+
+                > select{
+                    background: var(--color-white);
+                }
+            }   
+        }
+    }
+
     > header{
         max-inline-size: var(--webherosection-header__max-inline-size);
         text-align: center;
@@ -112,6 +130,10 @@ container.WebHeroSection__container{
             block-size: 100%;
             object-fit: cover;
         }
+    }
+
+    > .WebHeroSection__content{
+        inline-size: 100%;
     }
 
     @container webherosection (min-inline-size: 768px){
